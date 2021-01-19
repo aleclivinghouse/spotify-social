@@ -9,11 +9,13 @@ export const registerUser = (userData, history) => dispatch => {
   axios
     .post("/api/users/register", userData)
     .then(res => history.push("/login"))
-    .catch(err =>
+    .catch((err) => {
+      console.log("this is an error on the client", err);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
       })
+     }
     );
 };
 

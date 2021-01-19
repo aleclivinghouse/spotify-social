@@ -16,12 +16,20 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "concurrently": "^4.0.1",
+    "dotenv": "^8.2.0",
     "express": "^4.16.4",
+    "express-handlebars": "^5.2.0",
     "is-empty": "^1.2.0",
     "jsonwebtoken": "^8.3.0",
-    "mongoose": "^5.3.11",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
+    "path": "^0.12.7",
+    "pg": "^8.5.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.4.0",
     "validator": "^10.9.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.2.0"
   }
 }
