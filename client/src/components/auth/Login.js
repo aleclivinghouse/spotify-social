@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { loginUser, loginSpotify } from "../../actions/authActions";
+import {loginUser} from "../../actions/authActions";
+import {loginSpotify} from "../../actions/authActions";
 import classnames from "classnames";
 
 class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       email: "",
       password: "",
@@ -16,6 +17,7 @@ class Login extends Component {
   }
 
   componentDidMount() {
+    console.log("these are the props: ", this.props);
     // If logged in and user navigates to Login page, should redirect them to dashboard
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/dashboard");
@@ -38,7 +40,8 @@ class Login extends Component {
     this.setState({ [e.target.id]: e.target.value });
   };
 
-  onSpotify(){
+  spotifyLogin(){
+    console.log("spotify login fired");
     this.props.loginSpotify();
   }
 
@@ -109,7 +112,7 @@ class Login extends Component {
               <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                 <button
                   style={{
-                    width: "150px",
+                    width: "300px",
                     borderRadius: "3px",
                     letterSpacing: "1.5px",
                     marginTop: "1rem"
@@ -121,21 +124,19 @@ class Login extends Component {
                 </button>
               </div>
             </form>
-
-            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-              <button
-                style={{
-                  width: "150px",
-                  borderRadius: "3px",
-                  letterSpacing: "1.5px",
-                  marginTop: "1rem"
-                }}
-                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                onSpotify={this.onSpotify}
+            <button
+              style={{
+                width: "300px",
+                borderRadius: "3px",
+                letterSpacing: "1.5px",
+                marginTop: "1rem",
+                marginLeft: "12px"
+              }}
+              className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+              onClick={() => this.spotifyLogin()}
               >
-                Login With Spotify
-              </button>
-          </div>
+              Login With Spotify
+            </button>
         </div>
       </div>
     </div>
@@ -146,6 +147,7 @@ class Login extends Component {
 
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
+  loginSpotify: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -156,7 +158,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(
-  mapStateToProps,
-  { loginUser, loginSpotify }
-)(Login);
+export default connect(mapStateToProps,{ loginUser, loginSpotify })(Login);

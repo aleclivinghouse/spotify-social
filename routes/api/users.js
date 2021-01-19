@@ -23,10 +23,12 @@ router.get("/auth/spotify/callback",
     passport.authenticate("spotify"),
         (req, res) => {
           console.log("this is the request from spotify", req);
+          console.log("this is the respnse from spotify", res);
           // const payload = {
           //   id: req.user.id,
           //   name: req.user.name
           // };
+          console.
           jwt.sign(
             payload,
             process.env.SECRET_OR_KEY,
