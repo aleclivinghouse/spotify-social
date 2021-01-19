@@ -2,18 +2,28 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const keys = require("../../config/keys");
-const passport = require("passport");
+const passport = require('../../config/passport')
 const db = require('../../config/database');
 const User = require("../../models/User");
 const Sequelize = require('sequelize');
+const dotenv = require('dotenv');
 const Op = Sequelize.Op;
+
+dotenv.config();
 
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 
-// Load User model
+// Spotify Strategy
+
+
+router.get("/auth/spotify", passport.authenticate("spotify"));
+router.get("/auth/spotify/callback",
+    passport.authenticate("spotify"),
+        (req, res) => {
+            res.redirect("/");
+        });
 
 // @route POST api/users/register
 // @desc Register user
@@ -51,7 +61,7 @@ router.post("/register", (req, res) => {
       });
 
       //else end
-    }
+    }x
   });
 });
 
@@ -91,7 +101,7 @@ router.post("/login", (req, res) => {
         // Sign token
         jwt.sign(
           payload,
-          keys.secretOrKey,
+          process.env.SECRET_OR_KEY,
           {
             expiresIn: 31556926 // 1 year in seconds
           },

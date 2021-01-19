@@ -1,17 +1,19 @@
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const passport = require("passport");
-const db = require('./database');
-const User = require("../models/User");
-const keys = require("../config/keys");
+const db = require('.././database');
+const User = require("../../models/User");
+
+
+const dotenv = require('dotenv');
+dotenv.config();
 
 const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = keys.secretOrKey;
+opts.secretOrKey = process.env.SECRET_OR_KEY;
 
-module.exports = passport => {
-  passport.use(
-    new JwtStrategy(opts, (jwt_payload, done) => {
+
+const strategy =  new JwtStrategy(opts, (jwt_payload, done) => {
       User.findByPk(jwt_payload.id)
         .then(user => {
           if (user) {
@@ -20,6 +22,6 @@ module.exports = passport => {
           return done(null, false);
         })
         .catch(err => console.log(err));
-    })
-  );
-};
+    });
+
+module.exports = strategy;
