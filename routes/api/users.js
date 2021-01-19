@@ -22,7 +22,24 @@ router.get("/auth/spotify", passport.authenticate("spotify"));
 router.get("/auth/spotify/callback",
     passport.authenticate("spotify"),
         (req, res) => {
-            res.redirect("/");
+          console.log("this is the request from spotify", req);
+          // const payload = {
+          //   id: req.user.id,
+          //   name: req.user.name
+          // };
+          jwt.sign(
+            payload,
+            process.env.SECRET_OR_KEY,
+            {
+              expiresIn: 31556926 // 1 year in seconds
+            },
+            (err, token) => {
+              res.json({
+                success: true,
+                token: "Bearer " + token
+              });
+            }
+          );
         });
 
 // @route POST api/users/register
@@ -88,7 +105,7 @@ router.post("/login", (req, res) => {
       return res.status(404).json({ emailnotfound: "Email not found" });
     }
     console.log("this is the user in the route: ", user)
-    // Check password
+
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
         // User matched

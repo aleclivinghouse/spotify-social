@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { loginUser } from "../../actions/authActions";
+import { loginUser, loginSpotify } from "../../actions/authActions";
 import classnames from "classnames";
 
 class Login extends Component {
@@ -38,6 +38,10 @@ class Login extends Component {
     this.setState({ [e.target.id]: e.target.value });
   };
 
+  onSpotify(){
+    this.props.loginSpotify();
+  }
+
   onSubmit = e => {
     e.preventDefault();
 
@@ -51,7 +55,6 @@ class Login extends Component {
 
   render() {
     const { errors } = this.state;
-
     return (
       <div className="container">
         <div style={{ marginTop: "4rem" }} className="row">
@@ -118,18 +121,35 @@ class Login extends Component {
                 </button>
               </div>
             </form>
+
+            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+              <button
+                style={{
+                  width: "150px",
+                  borderRadius: "3px",
+                  letterSpacing: "1.5px",
+                  marginTop: "1rem"
+                }}
+                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                onSpotify={this.onSpotify}
+              >
+                Login With Spotify
+              </button>
           </div>
         </div>
       </div>
+    </div>
     );
   }
 }
+
 
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
+
 
 const mapStateToProps = state => ({
   auth: state.auth,
@@ -138,5 +158,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { loginUser }
+  { loginUser, loginSpotify }
 )(Login);
