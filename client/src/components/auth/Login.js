@@ -2,13 +2,10 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {loginUser} from "../../actions/authActions";
-import {loginSpotify} from "../../actions/authActions";
+import {loginUser, loginSpotify, getSpotifyUser} from "../../actions/authActions";
 import classnames from "classnames";
 import PopupWindow from './PopupWindow';
 import { toQuery } from './utils';
-import setAuthToken from "../../utils/setAuthToken";
-import jwt_decode from "jwt-decode";
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -83,21 +80,12 @@ const popup = this.popup = PopupWindow.open(
 
 
  onSuccess = (data) => {
-   console.log('this is the data on success', data);
-   // if (!data.access_token) {
-   //   return this.onFailure(new Error('\'access_token\' not found'));
-   // }
-   // this.props.onSuccess(data);
-   // //make a get request to spotify/me
-   // // Set token to localStorage
-   // const  token  = data.access_token
-   // localStorage.setItem("spotifyToken", token);
-   // // Set token to Auth header
-   // setAuthToken(token);
-   // // Decode token to get user data
-   // const decoded = jwt_decode(token);
-   // // Set current user
-   // dispatch(setCurrentUser(decoded));
+   console.log('this is the data token on success', data.access_token);
+   if (!data.access_token) {
+     return this.onFailure(new Error('\'access_token\' not found'));
+   }
+   this.props.onSuccess(data);
+   this.props.getSpotifyUser(data.access_token);
  }
 
  onFailure = (error) => {
@@ -220,4 +208,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps,{ loginUser, loginSpotify })(Login);
+export default connect(mapStateToProps,{ loginUser, loginSpotify, getSpotifyUser })(Login);

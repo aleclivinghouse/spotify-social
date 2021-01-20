@@ -44,21 +44,6 @@ export const loginUser = userData => dispatch => {
     );
 };
 
-// export const loginSpotify = (code) => dispatch =>  {
-//   fetch('/api/auth/spotify', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({ code }),
-//   }).then((res) => {
-//     if (res.ok) {
-//       return res.json();
-//     } else {
-//       return Promise.reject(res);
-//     }
-//   });
-// };
 
 export const loginSpotify = () => dispatch => {
   fetch("/api/users/auth/spotify", {mode: 'no-cors'})
@@ -68,15 +53,14 @@ export const loginSpotify = () => dispatch => {
 
 
 export const getSpotifyUser = (token) => dispatch => {
-  fetch("https://api.spotify.com/v1/me", {
-    method: 'post',
+  axios.get("https://api.spotify.com/v1/me", {
     headers: {
-     'Authorization': `Bearer ${token}`,
-     'Content-Type': 'application/x-www-form-urlencoded'
+     "Content-Type": "application/json",
+     "Authorization": "Bearer " + token,
    }
  }).then((res) => {
-
-   dispatch(setCurrentUser(res));
+   console.log("this is the resonse with the user", res.data);
+   // dispatch(setCurrentUser(res));
  }).catch((err) => {
    console.log(err)
  });
