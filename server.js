@@ -28,6 +28,12 @@ app.use(passport.session())
 // Passport config
 // Routes
 app.use("/api/users", users);
+app.get("/auth/external/callback",
+    passport.authenticate("spotify"),
+        (req, res) => {
+          console.log("callback fired");
+        })
+
 
 const port = process.env.PORT || 5000;
 

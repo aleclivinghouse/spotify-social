@@ -16,33 +16,51 @@ const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 
 // Spotify Strategy
+//passport.authenticate("spotify"),
+router.get("/auth/spotify",  (req, res) => {
+  const scopes = encodeURIComponent('user-read-private user-read-email');
+  const redirectURI = encodeURIComponent('http://localhost:3000/register/');
+  const clientId = '0da0433d85ef4a50ba54ff6c04110986';
+  console.log("get firing");
+  console.log("this is the url ", `https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scope=${scopes}&redirect_uri=${redirectURI}`);
+  res.redirect(`https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scope=${scopes}&redirect_uri=${redirectURI}`)
+})
 
 
-router.get("/auth/spotify", passport.authenticate("spotify"));
-router.get("/auth/spotify/callback",
+
+router.get("/auth/spotify/callback/",
     passport.authenticate("spotify"),
         (req, res) => {
-          console.log("this is the request from spotify", req);
-          console.log("this is the respnse from spotify", res);
-          // const payload = {
-          //   id: req.user.id,
-          //   name: req.user.name
-          // };
-          console.
-          jwt.sign(
-            payload,
-            process.env.SECRET_OR_KEY,
-            {
-              expiresIn: 31556926 // 1 year in seconds
-            },
-            (err, token) => {
-              res.json({
-                success: true,
-                token: "Bearer " + token
-              });
-            }
-          );
-        });
+          console.log("callback fired");
+        })
+
+
+
+// router.get("/auth/spotify", passport.authenticate("spotify"));
+// router.get("/auth/spotify/callback",
+//     passport.authenticate("spotify"),
+//         (req, res) => {
+//           console.log("this is the request from spotify", req);
+//           console.log("this is the respnse from spotify", res);
+//           // const payload = {
+//           //   id: req.user.id,
+//           //   name: req.user.name
+//           // };
+//           console.
+//           jwt.sign(
+//             payload,
+//             process.env.SECRET_OR_KEY,
+//             {
+//               expiresIn: 31556926 // 1 year in seconds
+//             },
+//             (err, token) => {
+//               res.json({
+//                 success: true,
+//                 token: "Bearer " + token
+//               });
+//             }
+//           );
+//         });
 
 // @route POST api/users/register
 // @desc Register user

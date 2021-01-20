@@ -5,6 +5,12 @@ import { connect } from "react-redux";
 import {loginUser} from "../../actions/authActions";
 import {loginSpotify} from "../../actions/authActions";
 import classnames from "classnames";
+import PopupWindow from './PopupWindow';
+import { toQuery } from './utils';
+import setAuthToken from "../../utils/setAuthToken";
+import jwt_decode from "jwt-decode";
+import dotenv from 'dotenv';
+dotenv.config();
 
 class Login extends Component {
   constructor(props) {
@@ -17,7 +23,7 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    console.log("these are the props: ", this.props);
+    console.log("client id: ", process.env.REACT_APP_SPOTIFY_CLIENT_ID);
     // If logged in and user navigates to Login page, should redirect them to dashboard
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/dashboard");
@@ -40,10 +46,64 @@ class Login extends Component {
     this.setState({ [e.target.id]: e.target.value });
   };
 
-  spotifyLogin(){
-    console.log("spotify login fired");
-    this.props.loginSpotify();
+static defaultProps = {
+    onRequest: () => {},
+    onSuccess: () => {},
+    onFailure: () => {},
+}
+
+  onBtnClick = () => {
+const scopes = encodeURIComponent('user-read-private user-read-email');
+const redirectURI = encodeURIComponent('http://localhost:3000/register/');
+const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
+const url = `https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scope=${scopes}&redirect_uri=${redirectURI}`;
+const search = toQuery({
+   client_id: clientId,
+   scope: scopes,
+   redirect_uri: redirectURI,
+   response_type: 'token'
+ });
+const popup = this.popup = PopupWindow.open(
+      'spotify-authorization',
+      `https://accounts.spotify.com/authorize?${search}`,
+      { height: 1000, width: 600 }
+    );
+
+    this.onRequest();
+    popup.then(
+      data => this.onSuccess(data),
+      error => this.onFailure(error)
+    );
   }
+
+
+  onRequest = () => {
+   this.props.onRequest();
+ }
+
+
+ onSuccess = (data) => {
+   console.log('this is the data on success', data);
+   // if (!data.access_token) {
+   //   return this.onFailure(new Error('\'access_token\' not found'));
+   // }
+   // this.props.onSuccess(data);
+   // //make a get request to spotify/me
+   // // Set token to localStorage
+   // const  token  = data.access_token
+   // localStorage.setItem("spotifyToken", token);
+   // // Set token to Auth header
+   // setAuthToken(token);
+   // // Decode token to get user data
+   // const decoded = jwt_decode(token);
+   // // Set current user
+   // dispatch(setCurrentUser(decoded));
+ }
+
+ onFailure = (error) => {
+   console.log('this is the data on failure', error);
+ }
+
 
   onSubmit = e => {
     e.preventDefault();
@@ -124,22 +184,24 @@ class Login extends Component {
                 </button>
               </div>
             </form>
-            <button
-              style={{
-                width: "300px",
-                borderRadius: "3px",
-                letterSpacing: "1.5px",
-                marginTop: "1rem",
-                marginLeft: "12px"
-              }}
-              className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-              onClick={() => this.spotifyLogin()}
-              >
-              Login With Spotify
-            </button>
+            <div className="login-page">
         </div>
+        <button
+          style={{
+            width: "300px",
+            borderRadius: "3px",
+            letterSpacing: "1.5px",
+            marginTop: "1rem"
+          }}
+          type="submit"
+          className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+          onClick = {() => {this.onBtnClick()}}
+        >
+          Login With Spotify
+        </button>
       </div>
     </div>
+  </div>
     );
   }
 }
