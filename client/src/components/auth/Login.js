@@ -31,11 +31,19 @@ class Login extends Component {
     if (nextProps.auth.isAuthenticated) {
       this.props.history.push("/dashboard");
     }
-
     if (nextProps.errors) {
       this.setState({
         errors: nextProps.errors
       });
+    }
+  }
+
+  componentDidUpdate(prevProps){
+    console.log("this is prevProps ", prevProps.auth.spotifyUserData);
+    console.log("this is currentProps ", this.props.auth.spotifyUserData);
+    if ( prevProps.auth.spotifyUserData !== this.props.auth.spotifyUserData) {
+      console.log("inside the if ", this.props.auth.spotifyUserData);
+      this.props.loginSpotify(this.props.auth.spotifyUserData);
     }
   }
 
@@ -79,14 +87,14 @@ const popup = this.popup = PopupWindow.open(
  }
 
 
- onSuccess = (data) => {
-   console.log('this is the data token on success', data.access_token);
-   if (!data.access_token) {
-     return this.onFailure(new Error('\'access_token\' not found'));
-   }
-   this.props.onSuccess(data);
-   this.props.getSpotifyUser(data.access_token);
- }
+onSuccess = (data) => {
+     console.log('this is the data token on success', data.access_token);
+     if (!data.access_token) {
+       return this.onFailure(new Error('\'access_token\' not found'));
+     }
+    this.props.onSuccess(data);
+    this.props.getSpotifyUser(data.access_token);
+}
 
  onFailure = (error) => {
    console.log('this is the data on failure', error);

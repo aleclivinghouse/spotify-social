@@ -8,6 +8,22 @@ const db = require('./config/database');
 
 const app = express();
 
+const resolveCrossDomain = function(req, res,next) {
+
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header("Access-Control-Expose-Headers", "Authorization");
+
+    if ('OPTIONS' == req.method) {
+        res.send(200);
+    }
+    else {
+        next();
+    }
+};
+
 // Body Parser
 app.use(
   bodyParser.urlencoded({
@@ -27,13 +43,8 @@ app.use(passport.session())
 
 // Passport config
 // Routes
+app.use(resolveCrossDomain);
 app.use("/api/users", users);
-app.get("/auth/external/callback",
-    passport.authenticate("spotify"),
-        (req, res) => {
-          console.log("callback fired");
-        })
-
 
 const port = process.env.PORT || 5000;
 

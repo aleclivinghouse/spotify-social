@@ -3,7 +3,7 @@ const db = require('../config/database');
 
 // Create Schema
 const User = db.define('user', {
-  name: {
+  display_name: {
     type: Sequelize.STRING,
     allowNull: false
   },
@@ -13,7 +13,27 @@ const User = db.define('user', {
   },
   password: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: true
+  },
+  country: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  external_url: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  spotify_id: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  spotify_uri: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  followersCount: {
+    type: Sequelize.INTEGER,
+    allowNull: true
   },
   date: {
     type: Sequelize.DATE,
@@ -21,7 +41,7 @@ const User = db.define('user', {
   }
 });
 
-User.sync().then(() => {
+User.sync({force: true}).then(() => {
   console.log(' user table created');
 });
 module.exports = User;

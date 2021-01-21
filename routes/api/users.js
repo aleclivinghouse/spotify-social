@@ -8,7 +8,6 @@ const User = require("../../models/User");
 const Sequelize = require('sequelize');
 const dotenv = require('dotenv');
 const Op = Sequelize.Op;
-
 dotenv.config();
 
 // Load input validation
@@ -16,51 +15,54 @@ const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 
 // Spotify Strategy
-//passport.authenticate("spotify"),
-router.get("/auth/spotify",  (req, res) => {
-  const scopes = encodeURIComponent('user-read-private user-read-email');
-  const redirectURI = encodeURIComponent('http://localhost:3000/register/');
-  const clientId = '0da0433d85ef4a50ba54ff6c04110986';
-  console.log("get firing");
-  console.log("this is the url ", `https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scope=${scopes}&redirect_uri=${redirectURI}`);
-  res.redirect(`https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scope=${scopes}&redirect_uri=${redirectURI}`)
-})
+// passport.authenticate("spotify"),
+router.post("/login/spotify", (req, res) => {
+  const client_id = process.env.SPOTIFY_CLIENT_ID;
+  const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
+  console.log("spotify login server route fired");
+  console.log("this is req.body in /login/spotify: ", req.body);
+  let followers = req.body.followers.total;
+  if(followers === null){
+    followers = 0;
+  }
+    User.findOrCreate({
+      where: {spotify_id: req.body.id},
+      defaults: {
+        display_name: req.body.display_name,
+        email: req.body.email,
+        password: null,
+        country: req.body.country,
+        external_url:req.body.external_url,
+        spotify_id: req.body.id,
+        spotify_uri: req.body.uri,
+        followersCount: followers
+        }
+      }).then(user => {
+        console.log("find or create worked: ", user);
+        const payload = {
+          id: user.id,
+          name: user.display_name
+        };
+
+        // Sign token
+        jwt.sign(
+          payload,
+          process.env.SECRET_OR_KEY,
+          {
+            expiresIn: 31556926 // 1 year in seconds
+          },
+          (err, token) => {
+            res.json({
+              success: true,
+              token: "Bearer " + token
+            });
+          }
+        );
+      });
+});
 
 
 
-router.get("/auth/spotify/callback/",
-    passport.authenticate("spotify"),
-        (req, res) => {
-          console.log("callback fired");
-        })
-
-
-
-// router.get("/auth/spotify", passport.authenticate("spotify"));
-// router.get("/auth/spotify/callback",
-//     passport.authenticate("spotify"),
-//         (req, res) => {
-//           console.log("this is the request from spotify", req);
-//           console.log("this is the respnse from spotify", res);
-//           // const payload = {
-//           //   id: req.user.id,
-//           //   name: req.user.name
-//           // };
-//           console.
-//           jwt.sign(
-//             payload,
-//             process.env.SECRET_OR_KEY,
-//             {
-//               expiresIn: 31556926 // 1 year in seconds
-//             },
-//             (err, token) => {
-//               res.json({
-//                 success: true,
-//                 token: "Bearer " + token
-//               });
-//             }
-//           );
-//         });
 
 // @route POST api/users/register
 // @desc Register user
@@ -88,9 +90,14 @@ router.post("/register", (req, res) => {
         bcrypt.hash(req.body.password, salt, (err, hash) => {
           if (err) throw err;
           User.create({
-              name: req.body.name,
+              display_name: req.body.name,
               email: req.body.email,
-              password: hash
+              password: hash,
+              country: null,
+              external_url: null,
+              spotify_id: null,
+              spotify_uri: null,
+              followersCount: null
             })
             .then(user => res.json(user))
             .catch(err => console.log(err));
@@ -98,7 +105,7 @@ router.post("/register", (req, res) => {
       });
 
       //else end
-    }x
+    }
   });
 });
 
@@ -127,12 +134,12 @@ router.post("/login", (req, res) => {
     console.log("this is the user in the route: ", user)
 
     bcrypt.compare(password, user.password).then(isMatch => {
-      if (isMatch) {
+      if (isMatch & user.password.length > 0) {
         // User matched
         // Create JWT Payload
         const payload = {
           id: user.id,
-          name: user.name
+          name: user.display_name
         };
 
         // Sign token
