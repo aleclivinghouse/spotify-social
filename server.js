@@ -2,9 +2,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const passport = require("./config/passport");
 const path = require('path');
-
+const dotenv = require('dotenv');
 const users = require("./routes/api/users");
 const db = require('./config/database');
+dotenv.config();
 
 const app = express();
 
@@ -39,7 +40,17 @@ db.authenticate()
 
 // Passport middleware
 app.use(passport.initialize());
-app.use(passport.session())
+app.use(passport.session());
+
+// app.use(session({
+//   process.env.SESSION_SECRET,
+//   saveUnitialized: true,
+//   resave: false,
+//   cookie: {
+//     httpOnly: true,
+//     maxAge: parseInt(process.ENV.SESSION_MAX_AGE)
+//   }
+// }))
 
 // Passport config
 // Routes

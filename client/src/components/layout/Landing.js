@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
+
+//get the initial jwt
 class Landing extends Component {
   render() {
     return (

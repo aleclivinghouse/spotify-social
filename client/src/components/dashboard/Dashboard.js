@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { logoutUser } from "../../actions/authActions";
+import { logoutUser, getSpotifyRecentlyPlayed } from "../../actions/authActions";
 
 class Dashboard extends Component {
   onLogoutClick = e => {
@@ -9,8 +9,19 @@ class Dashboard extends Component {
     this.props.logoutUser();
   };
 
+
+
+  componentDidMount(){
+      const { user, spotifyAccessToken, spotifyUserData} = this.props.auth;
+      if(Object.keys(spotifyUserData).length > 0){
+        this.props.getSpotifyRecentlyPlayed(spotifyAccessToken);
+      }
+    }
+
+
   render() {
-    const { user } = this.props.auth;
+    const { user, spotifyRecentlyPlayed } = this.props.auth;
+    console.log("here are the recently played tracks: ", spotifyRecentlyPlayed);
 
     return (
       <div style={{ height: "75vh" }} className="container valign-wrapper">
@@ -53,5 +64,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser, getSpotifyRecentlyPlayed }
 )(Dashboard);

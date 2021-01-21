@@ -17,10 +17,6 @@ const validateLoginInput = require("../../validation/login");
 // Spotify Strategy
 // passport.authenticate("spotify"),
 router.post("/login/spotify", (req, res) => {
-  const client_id = process.env.SPOTIFY_CLIENT_ID;
-  const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
-  console.log("spotify login server route fired");
-  console.log("this is req.body in /login/spotify: ", req.body);
   let followers = req.body.followers.total;
   if(followers === null){
     followers = 0;

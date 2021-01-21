@@ -2,7 +2,14 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import dotenv from 'dotenv';
-import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING, GET_SPOTIFY_USER_DATA } from "./types";
+import {
+   GET_ERRORS,
+   SET_CURRENT_USER,
+   USER_LOADING,
+   GET_SPOTIFY_USER_DATA,
+   GET_SPOTIFY_RECENTLY_PLAYED,
+   SET_SPOTIFY_ACCESS_TOKEN
+  } from "./types";
 
 dotenv.config();
 
@@ -76,17 +83,58 @@ export const getSpotifyUser = (token) => dispatch => {
      "Authorization": "Bearer " + token,
    }
  }).then((res) => {
-   console.log("this is the client response with the userdata in getSpotifyUser", res.data);
-   dispatch(gotSpotifyUserData(res.data));
- }).catch((err) => {
-   console.log(err)
- });
+      dispatch({
+        type: GET_SPOTIFY_USER_DATA,
+        payload: res.data
+      })
+     }
+    )
+    .catch((err) => {
+      console.log("getSpotifyUser error: ", err);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err
+      })
+     }
+    );
+ };
+
+export const getSpotifyRecentlyPlayed = (token) => dispatch => {
+     console.log("this is the token in getSpotifyRecentlyPlayed", token);
+  axios.get("https://api.spotify.com/v1/me/player/recently-played", {
+    headers: {
+     "Content-Type": "application/json",
+     "Authorization": "Bearer " + token,
+   }
+ }).then((res) => {
+   console.log("this is the action in getSpotifyRecentlyPlayed", res.data);
+   dispatch({
+        type: GET_SPOTIFY_RECENTLY_PLAYED,
+        payload: res.data
+      })
+     }
+    )
+    .catch((err) => {
+      console.log("getSpotifyRecentlyPlayed error: ", err);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err
+      })
+      }
+    );
 }
 
 export const gotSpotifyUserData = spotifyUserData => {
   return {
     type: GET_SPOTIFY_USER_DATA,
     payload: spotifyUserData
+  };
+};
+
+export const setSpotifyAccessToken = accessToken => {
+  return {
+    type: SET_SPOTIFY_ACCESS_TOKEN,
+    payload: accessToken
   };
 };
 

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {loginUser, loginSpotify, getSpotifyUser} from "../../actions/authActions";
+import {loginUser, loginSpotify, getSpotifyUser, setSpotifyAccessToken} from "../../actions/authActions";
 import classnames from "classnames";
 import PopupWindow from '../misc/PopupWindow';
 import { toQuery } from '../../utils/utils';
@@ -31,10 +31,7 @@ class Login extends Component {
   }
 
   componentDidUpdate(prevProps){
-    console.log("this is prevProps ", prevProps.auth.spotifyUserData);
-    console.log("this is currentProps ", this.props.auth.spotifyUserData);
     if ( prevProps.auth.spotifyUserData !== this.props.auth.spotifyUserData) {
-      console.log("inside the if ", this.props.auth.spotifyUserData);
       this.props.loginSpotify(this.props.auth.spotifyUserData);
     }
   }
@@ -50,7 +47,7 @@ static defaultProps = {
 }
 
   onBtnClick = () => {
-const scopes = encodeURIComponent('user-read-private user-read-email');
+const scopes = encodeURIComponent('user-read-private user-read-email user-read-recently-played');
 const redirectURI = encodeURIComponent('http://localhost:3000/register/');
 const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
 const url = `https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scope=${scopes}&redirect_uri=${redirectURI}`;
@@ -86,6 +83,7 @@ onSuccess = (data) => {
      }
     this.props.onSuccess(data);
     this.props.getSpotifyUser(data.access_token);
+    this.props.setSpotifyAccessToken(data.access_token);
 }
 
  onFailure = (error) => {
@@ -208,4 +206,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps,{ loginUser, loginSpotify, getSpotifyUser })(Login);
+export default connect(mapStateToProps,{ loginUser, loginSpotify, getSpotifyUser, setSpotifyAccessToken })(Login);
