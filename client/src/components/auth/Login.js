@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {loginUser, loginSpotify, getSpotifyUser} from "../../actions/authActions";
 import classnames from "classnames";
-import PopupWindow from './PopupWindow';
-import { toQuery } from './utils';
+import PopupWindow from '../misc/PopupWindow';
+import { toQuery } from '../../utils/utils';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -17,14 +17,6 @@ class Login extends Component {
       password: "",
       errors: {}
     };
-  }
-
-  componentDidMount() {
-    console.log("client id: ", process.env.REACT_APP_SPOTIFY_CLIENT_ID);
-    // If logged in and user navigates to Login page, should redirect them to dashboard
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
-    }
   }
 
   componentWillReceiveProps(nextProps) {
