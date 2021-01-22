@@ -61,8 +61,8 @@ router.post("/login/spotify", (req, res) => {
       }).then(user => {
         console.log("find or create worked: ", user);
         const payload = {
-          id: user.id,
-          name: user.display_name
+          id: user[0].dataValues.id,
+          name: user[0].dataValues.display_name
         };
 
         // Sign token

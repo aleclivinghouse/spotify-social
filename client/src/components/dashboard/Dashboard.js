@@ -21,6 +21,8 @@ class Dashboard extends Component {
 
   render() {
     const { user, spotifyRecentlyPlayed } = this.props.auth;
+    let name = ""
+    console.log("user on dashboard: ", user);
     console.log("here are the recently played tracks: ", spotifyRecentlyPlayed);
 
     return (
@@ -28,7 +30,7 @@ class Dashboard extends Component {
         <div className="row">
           <div className="landing-copy col s12 center-align">
             <h4>
-              <b>Hey there,</b> {user.display_name}
+              <b>Hey there,</b> {user.name}
               <p className="flow-text grey-text text-darken-1">
                 You are logged into a full-stack{" "}
                 <span style={{ fontFamily: "monospace" }}>MERN</span> app 👏
