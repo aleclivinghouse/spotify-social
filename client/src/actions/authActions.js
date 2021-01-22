@@ -8,7 +8,8 @@ import {
    USER_LOADING,
    GET_SPOTIFY_USER_DATA,
    GET_SPOTIFY_RECENTLY_PLAYED,
-   SET_SPOTIFY_ACCESS_TOKEN
+   SET_SPOTIFY_ACCESS_TOKEN,
+   SET_LANDING_TOKEN
   } from "./types";
 
 dotenv.config();
@@ -54,14 +55,10 @@ export const loginUser = userData => dispatch => {
 };
 
 
-export const loginSpotify = userData => dispatch => {
-    console.log("userData in action", userData);
-//append a spotify secret to the user
+export const loginSpotify = (userData) => dispatch => {
   axios.post("/api/users/login/spotify", userData)
     .then(res => {
       // Save to localStorage
-        console.log("this is the client response loginSpotify ", res);
-        console.log("this is the client response data loginSpotify ", res.data);
       //Set token to localStorage
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);
@@ -73,6 +70,21 @@ export const loginSpotify = userData => dispatch => {
       dispatch(setCurrentUser(decoded));
     })
     .catch(err => console.log(" this is the error loginSpotify: ", err));
+}
+
+
+export const setLandingToken = landingToken => dispatch => {
+  axios.get("/api/users/landing")
+    .then((res) => {
+      const { token } = res.data;
+      localStorage.setItem("landingToken", token);
+      // Set token to Auth header
+      console.log("this is the token before being decoded", token);
+      setAuthToken(token);
+      // Decode token to get user data
+      const decoded = jwt_decode(token);
+      dispatch(setLandingTokenReducer(token));
+    })
 }
 
 //send the spotify user /dashboard
@@ -142,6 +154,14 @@ export const setSpotifyAccessToken = accessToken => {
 export const setCurrentUser = decoded => {
   return {
     type: SET_CURRENT_USER,
+    payload: decoded
+  };
+};
+
+
+export const setLandingTokenReducer = decoded => {
+  return {
+    type: SET_LANDING_TOKEN,
     payload: decoded
   };
 };

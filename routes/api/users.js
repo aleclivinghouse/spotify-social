@@ -8,6 +8,7 @@ const User = require("../../models/User");
 const Sequelize = require('sequelize');
 const dotenv = require('dotenv');
 const Op = Sequelize.Op;
+const jwt_decode = require("jwt-decode");
 dotenv.config();
 
 // Load input validation
@@ -16,7 +17,31 @@ const validateLoginInput = require("../../validation/login");
 
 // Spotify Strategy
 // passport.authenticate("spotify"),
+
+router.get("/landing", (req,res) => {
+     jwt.sign({ landingValue: process.env.SECRET_LANDING_VALUE},
+       process.env.SECRET_OR_KEY,
+       {
+         expiresIn: 31556926
+       },
+       (err, token) => {
+         res.json({
+           success: true,
+           token: "Bearer " + token
+         });
+       }
+     )
+})
+
 router.post("/login/spotify", (req, res) => {
+  //right now this is empty
+  console.log("this is the spotify login secret", req.body.secret);
+  const toDecode = req.body.secret;
+  const decoded = jwt_decode(toDecode);
+  if(decoded.landingValue !== process.env.SECRET_LANDING_VALUE){
+    console.log("landing jwt failed");
+    return res.status(401).json({ message: "You do not have the landing token"  });
+  }
   let followers = req.body.followers.total;
   if(followers === null){
     followers = 0;
@@ -109,8 +134,15 @@ router.post("/register", (req, res) => {
 // @desc Login user and return JWT token
 // @access Public
 router.post("/login", (req, res) => {
-  // Form validation
+  console.log("this is the normal login secret ", req.body.secret);
+  const toDecode = req.body.secret;
+  const decoded = jwt_decode(toDecode);
+  if(decoded.landingValue !== process.env.SECRET_LANDING_VALUE){
+    console.log("landing jwt failed");
+    return res.status(401).json({ message: "You do not have the landing token"  });
+  }
 
+  // Form validation
   const { errors, isValid } = validateLoginInput(req.body);
 
   // Check validation

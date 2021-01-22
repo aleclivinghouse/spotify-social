@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {loginUser, loginSpotify, getSpotifyUser, setSpotifyAccessToken} from "../../actions/authActions";
+import {loginUser, loginSpotify, getSpotifyUser, setSpotifyAccessToken, setLandingToken} from "../../actions/authActions";
 import classnames from "classnames";
 import PopupWindow from '../misc/PopupWindow';
 import { toQuery } from '../../utils/utils';
@@ -19,6 +19,10 @@ class Login extends Component {
     };
   }
 
+  componentDidMount(){
+    this.props.setLandingToken();
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
       this.props.history.push("/dashboard");
@@ -31,8 +35,11 @@ class Login extends Component {
   }
 
   componentDidUpdate(prevProps){
+    const userData = this.props.auth.spotifyUserData;
+    userData.secret = this.props.auth.landingToken;
+    console.log("this is the landing token in log in Spotify", this.props.auth.landingToken);
     if ( prevProps.auth.spotifyUserData !== this.props.auth.spotifyUserData) {
-      this.props.loginSpotify(this.props.auth.spotifyUserData);
+      this.props.loginSpotify(userData);
     }
   }
 
@@ -92,13 +99,14 @@ onSuccess = (data) => {
 
 
   onSubmit = e => {
+      console.log("this is the landing token in normal log in", this.props.auth.landingToken);
     e.preventDefault();
 
     const userData = {
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
     };
-
+    userData.secret = this.props.auth.landingToken;
     this.props.loginUser(userData);
   };
 
@@ -206,4 +214,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps,{ loginUser, loginSpotify, getSpotifyUser, setSpotifyAccessToken })(Login);
+export default connect(mapStateToProps,{setLandingToken, loginUser, loginSpotify, getSpotifyUser, setSpotifyAccessToken })(Login);

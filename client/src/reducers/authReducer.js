@@ -3,7 +3,8 @@ import {
   USER_LOADING,
   GET_SPOTIFY_USER_DATA,
   GET_SPOTIFY_RECENTLY_PLAYED,
-  SET_SPOTIFY_ACCESS_TOKEN
+  SET_SPOTIFY_ACCESS_TOKEN,
+  SET_LANDING_TOKEN
 } from "../actions/types";
 
 const isEmpty = require("is-empty");
@@ -14,7 +15,8 @@ const initialState = {
   spotifyUserData: {},
   spofifyRecentlyPlayed: {},
   spotifyAccessToken: "",
-  loading: false
+  loading: false,
+  landingToken: {}
 };
 
 export default function(state = initialState, action) {
@@ -46,6 +48,11 @@ export default function(state = initialState, action) {
         ...state,
         loading: true
       };
+      case SET_LANDING_TOKEN:
+        return {
+          ...state,
+          landingToken: action.payload
+        };
     default:
       return state;
   }

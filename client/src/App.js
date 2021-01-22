@@ -36,6 +36,7 @@ if (localStorage.jwtToken) {
   }
 }
 class App extends Component {
+
   render() {
     return (
       <Provider store={store}>
@@ -54,4 +55,10 @@ class App extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
 export default App;
