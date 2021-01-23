@@ -79,7 +79,10 @@ router.post("/login/spotify", (req, res) => {
             });
           }
         );
-      });
+      }).catch(function(err) {
+    // print the error details
+    console.log("spotify user find or create error ", err);
+    });
 });
 
 
@@ -190,7 +193,10 @@ router.post("/login", (req, res) => {
           .json({ passwordincorrect: "Password incorrect" });
       }
     });
-  });
+  }).catch(function(err) {
+// print the error details
+    console.log("regular user findOne error ", err);
+    });
 });
 
 module.exports = router;
