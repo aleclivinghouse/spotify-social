@@ -55,6 +55,8 @@ User.belongsToMany(User, { as: 'Being_Requested', through: 'friendRequests', for
 User.belongsToMany(User, { as: 'Requesting', through: 'friendRequests', foreignKey: 'requesteeId', onDelete: 'CASCADE'});
 User.belongsToMany(User, { as: 'Being_Followed', through: 'follows', foreignKey: 'beingFollowedId', onDelete: 'CASCADE'});
 User.belongsToMany(User, { as: 'Following', through: 'follows', foreignKey: 'followingId', onDelete: 'CASCADE'});
+User.belongsToMany(User, { as: 'Invited_To_Thread', through: 'pmInvitation', foreignKey: 'requesterId', onDelete: 'CASCADE'});
+User.belongsToMany(User, { as: 'Inviting_Another_To_Thread', through: 'pmInvitation', foreignKey: 'requesteeId', onDelete: 'CASCADE'});
 User.hasMany(Post));
 User.hasMany(Post_Comment));
 User.hasMany(Post_Like));
