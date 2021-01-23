@@ -60,6 +60,7 @@ User.hasMany(Post_Comment));
 User.hasMany(Post_Like));
 User.hasMany(Comment));
 User.hasMany(Comment_like));
+User.belongsToMany(PM_Thread { through: 'PM_Thread_User' });
 
 
 User.sync({alter: true}).then(() => {

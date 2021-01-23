@@ -2,8 +2,12 @@ const Sequelize = require('sequelize');
 const db = require('../config/database');
 
 // Create Schema
-const PM_Thread = db.define('PM_Thread', {
+const Message = db.define('Message', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+  text: {
+    type: Sequelize.STRING,
+    defaultValue: Sequelize.NOW
+  },
   date: {
     type: Sequelize.DATE,
     defaultValue: Sequelize.NOW
@@ -11,10 +15,10 @@ const PM_Thread = db.define('PM_Thread', {
 });
 
 //validate in the route
-PM_Thread.hasOne(User { as: 'Moderator' });
-PM_Thread.belongsToMany(User { through: 'PM_Thread_User' });
-PM_Thread.hasMany(Message);
-PM_Thread.sync({alter: true}).then(() => {
-  console.log('PM_Thread table created');
+Message.hasOne(PM_Thread);
+Message.hasOne(User);
+
+Message.sync({alter: true}).then(() => {
+  console.log('Message table created');
 });
-module.exports = PM_Thread;
+module.exports = Message;
