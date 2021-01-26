@@ -1,9 +1,10 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
+const User = require('./User');
 
 // Create Schema
 const Profile = db.define('Profile', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+  id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
   bio: {
     type: Sequelize.STRING,
     allowNull: true

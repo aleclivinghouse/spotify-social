@@ -1,9 +1,15 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
+const Artist = require('./Artist');
+const User = require('./User');
+const Album = require('./Album');
+const Genre = require('./Genre');
+const Post = require('./Post');
+const Image = require('./Image');
 
 // Create Schema
 const Track = db.define('Track', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+  id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
   title: {
     type: Sequelize.STRING,
     allowNull: false

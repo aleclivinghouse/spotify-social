@@ -1,9 +1,12 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
+const Comment = require('./Comment');
+const User = require('./User');
+
 
 // Create Schema
 const Comment_Like = db.define('Comment_Like', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+  id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
   date: {
     type: Sequelize.DATE,
     defaultValue: Sequelize.NOW

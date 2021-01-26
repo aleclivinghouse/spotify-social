@@ -1,9 +1,21 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
+const Notification = require('./Notification');
+const Artist = require('./Artist');
+const User = require('./User');
+const Track = require('./Track');
+const Genre = require('./Genre');
+const PM_Thread = require('./PM_Thread');
+const Post = require('./Post');
+const Post_Comment = require('./Post_Comment');
+const Post_Like = require('./Post_Like');
+const Comment = require('./Comment');
+const Comment_Like = require('./Comment_Like');
+const Image = require('./Image');
 
 // Create Schema
 const Album = db.define('Album', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+  id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
   title: {
     type: Sequelize.STRING,
     allowNull: false

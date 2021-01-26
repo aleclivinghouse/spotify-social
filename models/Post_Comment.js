@@ -1,9 +1,11 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
+const User = require('./User');
+const Comment_Likes = require('./Comment_Likes');
 
 // Create Schema
 const Post_Comment = db.define('Post_Comment', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+  id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
   text: {
     type: Sequelize.STRING,
     allowNull: false

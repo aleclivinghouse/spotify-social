@@ -1,9 +1,11 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
+const User = require('./User');
+const Message = require('./Message');
 
 // Create Schema
 const PM_Thread = db.define('PM_Thread', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+  id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
   date: {
     type: Sequelize.DATE,
     defaultValue: Sequelize.NOW
