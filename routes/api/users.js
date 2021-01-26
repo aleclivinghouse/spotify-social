@@ -3,8 +3,8 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const passport = require('../../config/passport')
-const db = require('../../config/database');
-const User = require("../../models/User");
+// const db = require('../../config/database');
+const  db  = require('../../db/models/index');
 const Sequelize = require('sequelize');
 const dotenv = require('dotenv');
 const Op = Sequelize.Op;
@@ -46,7 +46,7 @@ router.post("/login/spotify", (req, res) => {
   if(followers === null){
     followers = 0;
   }
-    User.findOrCreate({
+    db.User.findOrCreate({
       where: {spotify_id: req.body.id},
       defaults: {
         display_name: req.body.display_name,
@@ -102,7 +102,7 @@ router.post("/register", (req, res) => {
   }
     console.log('this is req.body: ', req.body);
 
-  User.findOne({ where: {email: req.body.email} }).then(user => {
+  db.User.findOne({ where: {email: req.body.email} }).then(user => {
     if (user) {
       console.log("email already exists is firing")
       return res.status(400).json({ email: "Email already exists" });
@@ -113,7 +113,7 @@ router.post("/register", (req, res) => {
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(req.body.password, salt, (err, hash) => {
           if (err) throw err;
-          User.create({
+          db.User.create({
               display_name: req.body.name,
               email: req.body.email,
               password: hash,
@@ -157,7 +157,7 @@ router.post("/login", (req, res) => {
   const password = req.body.password;
 
   // Find user by email
-  User.findOne({ where: {email: req.body.email} }).then(user => {
+  db.User.findOne({ where: {email: req.body.email} }).then(user => {
     // Check if user exists
     if (!user) {
       return res.status(404).json({ emailnotfound: "Email not found" });

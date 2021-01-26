@@ -4,7 +4,7 @@ const passport = require("./config/passport");
 const path = require('path');
 const dotenv = require('dotenv');
 const users = require("./routes/api/users");
-const db = require('./config/database');
+// const db = require('./config/database');
 dotenv.config();
 
 const app = express();
@@ -34,9 +34,9 @@ app.use(
 app.use(bodyParser.json());
 
 // Connect to PostPres
-db.authenticate()
-  .then(() => console.log('Database connected...'))
-  .catch(err => console.log('Error: ' + err))
+// db.authenticate()
+//   .then(() => console.log('Database connected...'))
+//   .catch(err => console.log('Error: ' + err))
 
 // Passport middleware
 app.use(passport.initialize());

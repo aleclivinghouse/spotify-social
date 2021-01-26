@@ -1,82 +1,82 @@
-const Sequelize = require('sequelize');
-const db = require('../config/database');
-const Notification = require('./Notification');
-const Artist = require('./Artist');
-const Album = require('./Album');
-const Track = require('./Track');
-const Profile = require('./Profile');
-const Genre = require('./Genre');
-const PM_Thread = require('./PM_Thread');
-const Post = require('./Post');
-const Post_Comment = require('./Post_Comment');
-const Post_Like = require('./Post_Like');
-const Comment = require('./Comment');
-const Comment_Like = require('./Comment_Like');
-// Create Schema
-const User = db.define('User', {
-  id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
-  display_name: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  email: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  password: {
-    type: Sequelize.STRING,
-    allowNull: true
-  },
-  country: {
-    type: Sequelize.STRING,
-    allowNull: true
-  },
-  external_url: {
-    type: Sequelize.STRING,
-    allowNull: true
-  },
-  spotify_id: {
-    type: Sequelize.STRING,
-    allowNull: true
-  },
-  spotify_uri: {
-    type: Sequelize.STRING,
-    allowNull: true
-  },
-  followersCount: {
-    type: Sequelize.INTEGER,
-    allowNull: true
-  },
-  date: {
-    type: Sequelize.DATE,
-    defaultValue: Sequelize.NOW
-  }
-});
+// const Sequelize = require('sequelize');
+// const db = require('../config/database');
+// const Notification = require('./Notification');
+// const Artist = require('./Artist');
+// const Album = require('./Album');
+// const Track = require('./Track');
+// const Profile = require('./Profile');
+// const Genre = require('./Genre');
+// const PM_Thread = require('./PM_Thread');
+// const Post = require('./Post');
+// const Post_Comment = require('./Post_Comment');
+// const Post_Like = require('./Post_Like');
+// const Comment = require('./Comment');
+// const Comment_Like = require('./Comment_Like');
+// // Create Schema
+// const User = db.define('User', {
+//   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+//   display_name: {
+//     type: Sequelize.STRING,
+//     allowNull: false
+//   },
+//   email: {
+//     type: Sequelize.STRING,
+//     allowNull: false
+//   },
+//   password: {
+//     type: Sequelize.STRING,
+//     allowNull: true
+//   },
+//   country: {
+//     type: Sequelize.STRING,
+//     allowNull: true
+//   },
+//   external_url: {
+//     type: Sequelize.STRING,
+//     allowNull: true
+//   },
+//   spotify_id: {
+//     type: Sequelize.STRING,
+//     allowNull: true
+//   },
+//   spotify_uri: {
+//     type: Sequelize.STRING,
+//     allowNull: true
+//   },
+//   followersCount: {
+//     type: Sequelize.INTEGER,
+//     allowNull: true
+//   },
+//   date: {
+//     type: Sequelize.DATE,
+//     defaultValue: Sequelize.NOW
+//   }
+// });
 
-User.hasOne(Profile);
-User.belongsTo(Notification, {as: "user_notified"});
-User.belongsTo(Notification, {as: "user_mentioned_in"});
-User.belongsToMany(Artist, { through: 'User_Favorite_Artists' });
-User.belongsToMany(Album, { through: 'User_Favorite_Albums' });
-User.belongsToMany(Track, { through: 'User_Favorite_Tracks' });
-User.belongsToMany(Genre, { through: 'User_Favorite_Genres' });
-User.belongsToMany(User, { as: 'Friends', through: 'friends' });
-User.belongsToMany(PM_Thread, {through: "PM_Thread_Members"})
+// User.hasOne(Profile);
+// User.belongsTo(Notification, {as: "user_notified"});
+// User.belongsTo(Notification, {as: "user_mentioned_in"});
+// User.belongsToMany(Artist, { through: 'User_Favorite_Artists' });
+// User.belongsToMany(Album, { through: 'User_Favorite_Albums' });
+// User.belongsToMany(Track, { through: 'User_Favorite_Tracks' });
+// User.belongsToMany(Genre, { through: 'User_Favorite_Genres' });
+// User.belongsToMany(User, { as: 'Friends', through: 'friends' });
+// User.belongsToMany(PM_Thread, {through: "PM_Thread_Members"})
 
-User.belongsToMany(User, { as: 'Being_Requested', through: 'friendRequests', foreignKey: 'requesterId', onDelete: 'CASCADE'});
-User.belongsToMany(User, { as: 'Requester', through: 'friendRequests', foreignKey: 'being_requestedId', onDelete: 'CASCADE'});
-User.belongsToMany(User, { as: 'Being_Followed', through: 'follows', foreignKey: 'followerId', onDelete: 'CASCADE'});
-User.belongsToMany(User, { as: 'Follower', through: 'follows', foreignKey: 'being_followedId', onDelete: 'CASCADE'});
-User.belongsToMany(User, { as: 'Inviter', through: 'pmInvitation', foreignKey: 'being_invitedId', onDelete: 'CASCADE'});
-User.belongsToMany(User, { as: 'Being_Invited', through: 'pmInvitation', foreignKey: 'inviterId', onDelete: 'CASCADE'});
-User.hasMany(Post);
-User.hasMany(Post_Comment);
-User.hasMany(Post_Like);
-User.hasMany(Comment);
-User.hasMany(Comment_like);
-User.hasMany(Message);
+// User.belongsToMany(User, { as: 'Being_Requested', through: 'friendRequests', foreignKey: 'requesterId', onDelete: 'CASCADE'});
+// User.belongsToMany(User, { as: 'Requester', through: 'friendRequests', foreignKey: 'being_requestedId', onDelete: 'CASCADE'});
+// User.belongsToMany(User, { as: 'Being_Followed', through: 'follows', foreignKey: 'followerId', onDelete: 'CASCADE'});
+// User.belongsToMany(User, { as: 'Follower', through: 'follows', foreignKey: 'being_followedId', onDelete: 'CASCADE'});
+// User.belongsToMany(User, { as: 'Inviter', through: 'pmInvitation', foreignKey: 'being_invitedId', onDelete: 'CASCADE'});
+// User.belongsToMany(User, { as: 'Being_Invited', through: 'pmInvitation', foreignKey: 'inviterId', onDelete: 'CASCADE'});
+// User.hasMany(Post);
+// User.hasMany(Post_Comment);
+// User.hasMany(Post_Like);
+// User.hasMany(Comment);
+// User.hasMany(Comment_like);
+// User.hasMany(Message);
 
-User.sync({alter: true}).then(() => {
-  console.log(' user table created');
-});
-module.exports = User;
+// User.sync({alter: true}).then(() => {
+//   console.log(' user table created');
+// });
+// module.exports = User;
