@@ -21,9 +21,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Genre.init({
-    id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
       title: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
       }
     }, {

@@ -19,9 +19,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Message.init({
-    id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
     text: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         defaultValue: Sequelize.NOW
       },
     date: {

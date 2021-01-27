@@ -34,13 +34,13 @@
 //     type: Sequelize.DECIMAL(10, 1),
 //     allowNull: true
 //   },
-//   date: {
-//     type: Sequelize.DATE,
-//     defaultValue: Sequelize.NOW
-//   }
-// });
+// //   date: {
+// //     type: Sequelize.DATE,
+// //     defaultValue: Sequelize.NOW
+// //   }
+// // });
 
-// //validate in the route
+// // //validate in the route
 // Post.hasOne(Artist);
 // Post.hasOne(User);
 // Post.hasOne(Album);
@@ -49,7 +49,7 @@
 // Post.hasMany(Post_Likes);
 
 
-// Post.sync({alter: true}).then(() => {
-//   console.log(' post table created');
-// });
-// module.exports = Post;
+// // Post.sync({alter: true}).then(() => {
+// //   console.log(' post table created');
+// // });
+// // module.exports = Post;

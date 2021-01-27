@@ -17,21 +17,21 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Profile.init({
-    id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
     bio: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: true
     },
     coverPhoto: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: true
     },
     Thumbnail: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: true
     },
     birthDate: {
-      type: Sequelize.DATE
+      type: DataTypes.DATE
     }
   });
   return Profile;

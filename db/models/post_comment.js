@@ -20,11 +20,11 @@ module.exports = (sequelize, DataTypes) => {
   Post_Comment.init({
     id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
     text: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     date: {
-      type: Sequelize.DATE,
+      type: DataTypes.DATE,
       get() {
         return moment(this.getDataValue('createdAt')).format('DD/MM/YYYY h:mm:ss');
        }

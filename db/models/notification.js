@@ -18,17 +18,17 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Notification.init({
-        id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+        id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
         text: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
         },
         href: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: true
         },
         date: {
-        type: Sequelize.DATE,
+        type: DataTypes.DATE,
         get() {
             return moment(this.getDataValue('createdAt')).format('DD/MM/YYYY h:mm:ss');
            }

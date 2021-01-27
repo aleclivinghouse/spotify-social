@@ -22,33 +22,33 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Post.init({
-    id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
     title: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
       },
       type: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: true
       },
       text: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
       },
       lyric_annotation: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: true
       },
       would_recommend: {
-        type: Sequelize.BOOLEAN,
+        type: DataTypes.BOOLEAN,
         allowNull: true
       },
       rating: {
-        type: Sequelize.DECIMAL(10, 1),
+        type: DataTypes.DECIMAL(10, 1),
         allowNull: true
       },
     date: {
-      type: Sequelize.DATE,
+      type: DataTypes.DATE,
       get() {
         return moment(this.getDataValue('createdAt')).format('DD/MM/YYYY h:mm:ss');
        }

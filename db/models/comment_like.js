@@ -18,9 +18,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Comment_Like.init({
-    id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
     date: {
-      type: Sequelize.DATE,
+      type: DataTypes.DATE,
       get() {
         return moment(this.getDataValue('createdAt')).format('DD/MM/YYYY h:mm:ss');
        }

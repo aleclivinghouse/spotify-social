@@ -28,23 +28,23 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     track_number: {
-      href: Sequelize.INTEGER,
+      href: DataTypes.INTEGER,
       allowNull: false
     },
     href: {
-      href: Sequelize.STRING,
+      href: DataTypes.STRING,
       allowNull: false
     },
     external_url: {
-      href: Sequelize.STRING,
+      href: DataTypes.STRING,
       allowNull: false
     },
     releaseDate: {
-      type: Sequelize.Date,
+      type: DataTypes.Date,
       allowNull: true
     },
     Popularity: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: true
     }
   });

@@ -1,4 +1,5 @@
 'use strict';
+const moment = require('moment');
 const {
   Model, 
   DataTypes
@@ -20,11 +21,11 @@ module.exports = (sequelize, DataTypes) => {
   PM_Thread.init({
     id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
     date: {
-      type: Sequelize.DATE,
+      type: DataTypes.DATE,
       defaultValue: Sequelize.NOW
      },
      title: {
-        type: Sequelize.String
+        type: DataTypes.String
        }
     }, {
     sequelize,
