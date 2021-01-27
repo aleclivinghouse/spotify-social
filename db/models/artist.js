@@ -12,10 +12,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Artist.belongsToMany(models.User, { through: 'User_Favorite_Artists' });
-      Artist.belongsToMany(models.Album, { through: 'Album_Artist' });
-      Artist.belongsToMany(models.Track, { through: 'Artist_Track' });
-      Artist.belongsToMany(models.Genre,{ through: 'Artist_Genre' });
+      Artist.belongsToMany(models.User, { through: 'User_Favorite_Artists', foreignKey: "userId" });
+      Artist.belongsToMany(models.Album, { through: 'Album_Artist', foreignKey: "albumId" });
+      Artist.belongsToMany(models.Track, { through: 'Artist_Track', foreignKey: "trackId" });
+      Artist.belongsToMany(models.Genre, { through: 'Artist_Genre', foreignKey: "genreId"});
       Artist.hasMany(models.Post);
       Artist.hasMany(models.Image);
     }

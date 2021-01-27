@@ -12,16 +12,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.hasOne(models.Profile);
+      User.hasOne(models.Profile, { foreignKey: 'profileId' });
       User.hasMany(models.Notification, {as: "user_notified"});
-      User.hasMany(models.Notification, {as: "user_mentioned_in"});
-      User.belongsToMany(models.Artist, { through: 'User_Favorite_Artists' });
-      User.belongsToMany(models.Album, { through: 'User_Favorite_Albums' });
-      User.belongsToMany(models.Track, { through: 'User_Favorite_Tracks' });
-      User.belongsToMany(models.Genre, { through: 'User_Favorite_Genres' });
-      User.belongsToMany(models.User, { as: 'Friends', through: 'friends' });
-      User.belongsToMany(models.PM_Thread, {through: "PM_Thread_Members"})
-
+      User.hasMany(models.Notification, {as: "user_mentioned"});
+      User.belongsToMany(models.Artist, { through: 'User_Favorite_Artists', foreignKey: "artistId" });
+      User.belongsToMany(models.Album, { through: 'User_Favorite_Albums', foreignKey: "albumId" });
+      User.belongsToMany(models.Track, { through: 'User_Favorite_Tracks', foreignKey: "trackId" });
+      User.belongsToMany(models.Genre, { through: 'User_Favorite_Genres', foreignKey: "genreId" });
+      User.belongsToMany(models.User, { as: 'FriendOne', through: 'friends', foreignKey: 'requesterId' });
+      User.belongsToMany(models.User, { as: 'FriendTwo', through: 'friends', foreignKey: 'being_requestedId' });
+      User.belongsToMany(models.PM_Thread, {through: "PM_Thread_Members", foreignKey: "pmThreadId" });
+      User.hasMany(models.PM_Thread, {as: "PM_Moderator"});
       User.belongsToMany(models.User, { as: 'Being_Requested', through: 'friendRequests', foreignKey: 'requesterId', onDelete: 'CASCADE'});
       User.belongsToMany(models.User, { as: 'Requester', through: 'friendRequests', foreignKey: 'being_requestedId', onDelete: 'CASCADE'});
       User.belongsToMany(models.User, { as: 'Being_Followed', through: 'follows', foreignKey: 'followerId', onDelete: 'CASCADE'});

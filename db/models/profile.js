@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Profile.belongsTo(models.User);
+      Profile.belongsTo(models.User, { foreignKey: 'userId' });
       Profile.hasMany(models.Image);
     }
   };

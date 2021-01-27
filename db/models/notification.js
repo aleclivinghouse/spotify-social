@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Notification.belongsTo(models.User, {as: "user_notified"});
-      Notification.belongsTo(models.User, {as: "user_mentioned_in"});
+      Notification.belongsTo(models.User, {foreignKey: "userNotifiedId"});
+      Notification.belongsTo(models.User, {foreignKey: "userMentionedId"});
     }
   };
   Notification.init({
@@ -23,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false
         },
+        read: {
+          type: DataTypes.BOOLEAN,
+          allowNull: true
+          },
         href: {
         type: DataTypes.STRING,
         allowNull: true

@@ -12,10 +12,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Image.belongsTo(models.Artist);
-      Image.belongsTo(models.Album);
-      Image.belongsTo(models.Track);
-      Image.belongsTo(models.Profile);
+      Image.belongsTo(models.Artist, {foreignKey: "artistId"});
+      Image.belongsTo(models.Album, {foreignKey: "albumId"});
+      Image.belongsTo(models.Track, {foreignKey: "trackId"});
+      Image.belongsTo(models.Profile, {foreignKey: "profileId"});
     }
   };
   Image.init({

@@ -13,10 +13,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-        Post.belongsTo(models.Artist);
-        Post.belongsTo(models.User);
-        Post.belongsTo(models.Album);
-        Post.belongsToMany(models.Track, { through: 'Favorite_Tracks_By_An_Artist_Post' });
+        Post.belongsTo(models.Artist, { foreignKey: 'artistId' });
+        Post.belongsTo(models.User, { foreignKey: 'userId' });
+        Post.belongsTo(models.Album, { foreignKey: 'albumId' });
+        Post.belongsToMany(models.Track, { through: 'Favorite_Tracks_By_An_Artist_Post', foreignKey: 'trackId' });
         Post.hasMany(models.Post_Comment);
         Post.hasMany(models.Post_Like);
     }

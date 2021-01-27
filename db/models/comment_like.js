@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Comment_Like.belongsTo(models.Post_Comment);
-      Comment_Like.belongsTo(models.User);
+      Comment_Like.belongsTo(models.Post_Comment, {foreignKey: "postCommentId"});
+      Comment_Like.belongsTo(models.User), {foreignKey: "userId"};
     }
   };
   Comment_Like.init({
