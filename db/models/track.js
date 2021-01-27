@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Track.belongsToMany(models.User, { through: 'User_Favorite_Tracks' });
       Track.belongsToMany(models.Artist, { through: 'Artist_Track' });
-      Track.hasOne(Album);
+      Track.belongsTo(Album);
       Album.belongsToMany(models.Genre, { through: 'Track_Genre' });
       Track.belongsToMany(models.Post, { through: 'Favorite_Tracks_By_An_Artist_Post' });
       Track.hasMany(models.Image);

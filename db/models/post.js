@@ -13,9 +13,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-        Post.hasOne(models.Artist);
-        Post.hasOne(models.User);
-        Post.hasOne(models.Album);
+        Post.belongsTo(models.Artist);
+        Post.belongsTo(models.User);
+        Post.belongsTo(models.Album);
         Post.belongsToMany(models.Track, { through: 'Favorite_Tracks_By_An_Artist_Post' });
         Post.hasMany(models.Post_Comment);
         Post.hasMany(models.Post_Likes);

@@ -3,10 +3,8 @@ const {
   Model, 
   DataTypes
 } = require('sequelize');
-const moment = require('moment');
-
 module.exports = (sequelize, DataTypes) => {
-  class Message extends Model {
+  class Image extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -14,25 +12,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Message.belongsTo(models.PM_Thread);
-      Message.belongsTo(models.User);
+      Image.belongsTo(models.Artist);
+      Image.belongsTo(models.Album);
+      Image.belongsTo(models.Track);
+      Image.belongsTo(models.Profile);
     }
   };
-  Message.init({
+  Image.init({
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
-    text: {
+      title: {
         type: DataTypes.STRING,
-        defaultValue: Sequelize.NOW
+        allowNull: false
       },
-    date: {
-      type: Sequelize.DATE,
-      get() {
-        return moment(this.getDataValue('createdAt')).format('DD/MM/YYYY h:mm:ss');
-       }
+      href: {
+        type: DataTypes.STRING,
+        allowNull: false
       }
     }, {
     sequelize,
-    modelName: 'Message',
+    modelName: 'Image',
   });
-  return Message;
+  return Image;
 };

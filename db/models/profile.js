@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Profile.hasOne(models.User);
+      Profile.hasMany(models.Image);
     }
   };
   Profile.init({

@@ -12,12 +12,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Genre.belongsToMany(User, { through: 'User_Favorite_Genres' });
-      Genre.belongsToMany(Artist, { through: 'Artist_Genre' });
-      Genre.belongsToMany(Track,{ through: 'Track_Genre' });
-      Genre.belongsToMany(Album, { through: 'Album_Genre' });
-      Genre.hasMany(Post);
-      Genre.hasMany(Image);
+      Genre.belongsToMany(models.User, { through: 'User_Favorite_Genres' });
+      Genre.belongsToMany(models.Artist, { through: 'Artist_Genre' });
+      Genre.belongsToMany(models.Track,{ through: 'Track_Genre' });
+      Genre.belongsToMany(models.Album, { through: 'Album_Genre' });
+      Genre.hasMany(models.Post);
+      Genre.hasMany(models.Image);
     }
   };
   Genre.init({
@@ -30,5 +30,5 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Genre',
   });
-  return User;
+  return Genre;
 };

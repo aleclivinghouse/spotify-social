@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      PM_Thread.hasOne(modes.User, { as: 'Moderator' });
+      PM_Thread.belongsTo(modes.User, { as: 'Moderator' });
       PM_Thread.belongsToMany(models.User, { through: 'PM_Thread_User' });
       PM_Thread.hasMany(models.Message);
     }

@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Post_Like.hasOne(models.Post);
-      Post_Like.hasOne(models.User); 
+      Post_Like.belongsTo(models.Post);
+      Post_Like.belongsTo(models.User); 
     }
   };
   Post_Like.init({
