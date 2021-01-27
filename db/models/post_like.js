@@ -21,7 +21,8 @@ module.exports = (sequelize, DataTypes) => {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
   }, {
     sequelize,
-    modelName: 'Post_Like',
+    tableName: "post_likes",
+    modelName: "Post_Like",
   });
   return Post_Like;
 };

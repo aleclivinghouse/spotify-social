@@ -20,15 +20,13 @@ module.exports = (sequelize, DataTypes) => {
   };
   PM_Thread.init({
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
-    date: {
-        type: DataTypes.DATE,
-    },
      title: {
         type: DataTypes.STRING
        }
     }, {
     sequelize,
-    modelName: 'PM_Thread',
+    tableName: "pm_threads",
+    modelName: "PM_Thread",
   });
   return PM_Thread;
 };

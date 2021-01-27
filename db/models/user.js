@@ -55,7 +55,8 @@ module.exports = (sequelize, DataTypes) => {
     date: DataTypes.DATE
   }, {
     sequelize,
-    modelName: 'User',
+    tableName: "users",
+    modelName: "User",
   });
   return User;
 };

@@ -18,16 +18,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Comment_Like.init({
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
-    date: {
-      type: DataTypes.DATE,
-      get() {
-        return moment(this.getDataValue('createdAt')).format('DD/MM/YYYY h:mm:ss');
-       }
-      }
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false }
     }, {
     sequelize,
-    modelName: 'Comment_Like',
+    tableName: "comment_likes",
+    modelName: "Comment_Like",
   });
   return Comment_Like;
 };

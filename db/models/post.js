@@ -46,16 +46,11 @@ module.exports = (sequelize, DataTypes) => {
       rating: {
         type: DataTypes.DECIMAL(10, 1),
         allowNull: true
-      },
-    date: {
-      type: DataTypes.DATE,
-      get() {
-        return moment(this.getDataValue('createdAt')).format('DD/MM/YYYY h:mm:ss');
-       }
-    },
+      }
   }, {
     sequelize,
-    modelName: 'Post',
+    tableName: "posts",
+    modelName: "Post",
   });
   return Post;
 };

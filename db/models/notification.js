@@ -30,13 +30,11 @@ module.exports = (sequelize, DataTypes) => {
         href: {
         type: DataTypes.STRING,
         allowNull: true
-        },
-        date: {
-        type: DataTypes.DATE
         }
     }, {
     sequelize,
-    modelName: 'Notification',
+    tableName: "notifications",
+    modelName: "Notification",
   });
   return Notification;
 };

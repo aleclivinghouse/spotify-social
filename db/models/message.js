@@ -22,12 +22,10 @@ module.exports = (sequelize, DataTypes) => {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
     text: {
         type: DataTypes.STRING
-      },
-    date: {
-      type: DataTypes.DATE
       }
     }, {
     sequelize,
+    tableName: "messages",
     modelName: 'Message',
   });
   return Message;

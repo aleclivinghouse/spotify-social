@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Post_Comment.hasMany(models.Comment_Like);
       Post_Comment.belongsTo(models.User, {foreignKey: "userId"});
+      Post_Comment.belongsTo(models.Post, {foreignKey: "postId"});
     }
   };
   Post_Comment.init({
@@ -22,13 +23,11 @@ module.exports = (sequelize, DataTypes) => {
     text: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    date: {
-      type: DataTypes.DATE
     }
   }, {
     sequelize,
-    modelName: 'Post_Comment', 
+    tableName: "post_comments",
+    modelName: "Post_Comment", 
   });
   return Post_Comment;
 };

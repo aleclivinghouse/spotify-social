@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('User', {
+    return queryInterface.createTable('users', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -43,7 +43,8 @@ module.exports = {
         type: Sequelize.DATE
       },
       profileId: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER,
+        foreignKey: true
       }
     });
   },

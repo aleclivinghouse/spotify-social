@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Track.belongsToMany(models.User, { through: 'User_Favorite_Tracks', foreignKey: "userId" });
       Track.belongsToMany(models.Artist, { through: 'Artist_Track', foreignKey: "artistId" });
-      Track.belongsTo(models.Album);
+      Track.belongsTo(models.Album, {foreignKey: "albumId"});
       Track.belongsToMany(models.Genre, { through: 'Track_Genre', foreignKey: "genreId" });
       Track.belongsToMany(models.Post, { through: 'Favorite_Tracks_By_An_Artist_Post', foreignKey: "postId" });
       Track.hasMany(models.Image);
@@ -49,6 +49,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
+    tableName: "tracks",
     modeName: "Track"
   });
   return Track;
