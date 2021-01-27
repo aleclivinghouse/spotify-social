@@ -4,7 +4,7 @@ const {
   DataTypes
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Artist extends Model {
+  class Album extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -27,19 +27,19 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     album_type: {
-      href: DataTypes.STRING,
-      allowNull: false
+      type:DataTypes.STRING,
+      allowNull: false 
     },
     href: {
-      href: DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     external_url: {
-      href: DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     releaseDate: {
-      type: DataTypes.Date,
+      type: DataTypes.DATE,
       allowNull: true
     },
     Popularity: {

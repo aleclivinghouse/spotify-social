@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         Post.belongsTo(models.Album);
         Post.belongsToMany(models.Track, { through: 'Favorite_Tracks_By_An_Artist_Post' });
         Post.hasMany(models.Post_Comment);
-        Post.hasMany(models.Post_Likes);
+        Post.hasMany(models.Post_Like);
     }
   };
   Post.init({
@@ -52,7 +52,10 @@ module.exports = (sequelize, DataTypes) => {
       get() {
         return moment(this.getDataValue('createdAt')).format('DD/MM/YYYY h:mm:ss');
        }
-    }
+    },
+  }, {
+    sequelize,
+    modelName: 'Post',
   });
   return Post;
 };

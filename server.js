@@ -4,6 +4,7 @@ const passport = require("./config/passport");
 const path = require('path');
 const dotenv = require('dotenv');
 const users = require("./routes/api/users");
+const  db  = require('./db/models/index');
 // const db = require('./config/database');
 dotenv.config();
 
@@ -51,7 +52,10 @@ app.use(passport.session());
 //     maxAge: parseInt(process.ENV.SESSION_MAX_AGE)
 //   }
 // }))
-
+   db.User.findAll()
+  .then((theUsers) => {
+    console.log(theUsers);
+  });
 // Passport config
 // Routes
 app.use(resolveCrossDomain);

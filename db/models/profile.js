@@ -5,7 +5,7 @@ const {
 } = require('sequelize');
 const moment = require('moment');
 module.exports = (sequelize, DataTypes) => {
-  class Post_Comment extends Model {
+  class Profile extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Profile.hasOne(models.User);
+      Profile.belongsTo(models.User);
       Profile.hasMany(models.Image);
     }
   };
@@ -34,6 +34,9 @@ module.exports = (sequelize, DataTypes) => {
     birthDate: {
       type: DataTypes.DATE
     }
+  }, {
+    sequelize,
+    modelName: "Profile"
   });
   return Profile;
 };

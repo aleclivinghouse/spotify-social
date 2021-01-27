@@ -21,11 +21,10 @@ module.exports = (sequelize, DataTypes) => {
   Message.init({
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
     text: {
-        type: DataTypes.STRING,
-        defaultValue: Sequelize.NOW
+        type: DataTypes.STRING
       },
     date: {
-      type: Sequelize.DATE,
+      type: DataTypes.DATE,
       get() {
         return moment(this.getDataValue('createdAt')).format('DD/MM/YYYY h:mm:ss');
        }

@@ -25,6 +25,9 @@ module.exports = (sequelize, DataTypes) => {
         return moment(this.getDataValue('createdAt')).format('DD/MM/YYYY h:mm:ss');
        }
     }
+  }, {
+    sequelize,
+    modelName: 'Post_Like',
   });
   return Post_Like;
 };

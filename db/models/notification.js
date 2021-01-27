@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Notification.belongsTo(User, {as: "user_notified"});
-      Notification.belongsTo(User, {as: "user_mentioned_in"});
+      Notification.belongsTo(models.User, {as: "user_notified"});
+      Notification.belongsTo(models.User, {as: "user_mentioned_in"});
     }
   };
   Notification.init({

@@ -13,19 +13,21 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      PM_Thread.belongsTo(modes.User, { as: 'Moderator' });
+      PM_Thread.belongsTo(models.User, { as: 'Moderator' });
       PM_Thread.belongsToMany(models.User, { through: 'PM_Thread_User' });
       PM_Thread.hasMany(models.Message);
     }
   };
   PM_Thread.init({
-    id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
     date: {
-      type: DataTypes.DATE,
-      defaultValue: Sequelize.NOW
-     },
+        type: DataTypes.DATE,
+        get() {
+          return moment(this.getDataValue('createdAt')).format('DD/MM/YYYY h:mm:ss');
+         }
+    },
      title: {
-        type: DataTypes.String
+        type: DataTypes.STRING
        }
     }, {
     sequelize,
