@@ -40,14 +40,14 @@
 //     type: Sequelize.INTEGER,
 //     allowNull: true
 //   }
-// });
+// // });
 
-// //artists can be mentioned in many posts
-// //a post has one artist
-// Album.belongsToMany(User { through: 'User_Favorite_Albums' });
-// Album.belongsToMany(Artist { through: 'Album_Artist' });
+// // //artists can be mentioned in many posts
+// // //a post has one artist
+// Album.belongsToMany(User, { through: 'User_Favorite_Albums' });
+// Album.belongsToMany(Artist, { through: 'Album_Artist' });
 // Album.hasMany(Track);
-// Album.belongsToMany(Genre { through: 'Album_Genre' });
+// Album.belongsToMany(Genre, { through: 'Album_Genre' });
 // Artist.hasMany(Post);
 // Artist.hasMany(Image);
 

@@ -15,10 +15,10 @@
 
 // // Create Schema
 // const Artist = db.define('Artist', {
-//     id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
-//     name: {
-//     type: Sequelize.STRING,
-//     allowNull: false
+//   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+//   name: {
+//   type: Sequelize.STRING,
+//   allowNull: false
 //   },
 //   followersCount: {
 //     type: Sequelize.INTEGER,
@@ -28,12 +28,12 @@
 
 // //artists can be mentioned in many posts
 // //a post has one artist
-// Artist.belongsToMany(User { through: 'User_Favorite_Artists' });
-// Artist.belongsToMany(Album { through: 'Album_Artist' });
-// Artist.belongsToMany(Track { through: 'Artist_Track' });
-// Artist.belongsToMany(Genres{ through: 'Artist_Genre' });
-// Artist.hasMany(Post);
-// Artist.hasMany(Image);
+// Artist.belongsToMany(model.User, { through: 'User_Favorite_Artists' });
+// Artist.belongsToMany(model.Album, { through: 'Album_Artist' });
+// Artist.belongsToMany(model.Track, { through: 'Artist_Track' });
+// Artist.belongsToMany(model.Genre,{ through: 'Artist_Genre' });
+// Artist.hasMany(model.Post);
+// Artist.hasMany(model.Image);
 
 
 // Artist.sync({alter: true}).then(() => {

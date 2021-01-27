@@ -4,23 +4,23 @@
 
 // // Create Schema
 // const Profile = db.define('Profile', {
-//   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
-//   bio: {
-//     type: Sequelize.STRING,
-//     allowNull: true
-//   },
-//   coverPhoto: {
-//     type: Sequelize.STRING,
-//     allowNull: true
-//   },
-//   Thumbnail: {
-//     type: Sequelize.STRING,
-//     allowNull: true
-//   },
-//   birthDate: {
-//     type: Sequelize.DATE,
-//     defaultValue: Sequelize.NOW
-//   }
+  // id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+  // bio: {
+  //   type: Sequelize.STRING,
+  //   allowNull: true
+  // },
+  // coverPhoto: {
+  //   type: Sequelize.STRING,
+  //   allowNull: true
+  // },
+  // Thumbnail: {
+  //   type: Sequelize.STRING,
+  //   allowNull: true
+  // },
+  // birthDate: {
+  //   type: Sequelize.DATE,
+  //   defaultValue: Sequelize.NOW
+  // }
 // });
 
 // Profile.hasOne(User);

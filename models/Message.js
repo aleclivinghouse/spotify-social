@@ -6,10 +6,10 @@
 // // Create Schema
 // const Message = db.define('Message', {
 //   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
-//   text: {
-//     type: Sequelize.STRING,
-//     defaultValue: Sequelize.NOW
-//   },
+// text: {
+//   type: Sequelize.STRING,
+//   defaultValue: Sequelize.NOW
+// },
 //   date: {
 //     type: Sequelize.DATE,
 //     defaultValue: Sequelize.NOW

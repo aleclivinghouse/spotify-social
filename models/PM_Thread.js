@@ -5,11 +5,11 @@
 
 // // Create Schema
 // const PM_Thread = db.define('PM_Thread', {
-//   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
-//   date: {
-//     type: Sequelize.DATE,
-//     defaultValue: Sequelize.NOW
-//   }
+  // id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+  // date: {
+  //   type: Sequelize.DATE,
+  //   defaultValue: Sequelize.NOW
+  // }
 // });
 
 // //validate in the route

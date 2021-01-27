@@ -6,11 +6,11 @@
 
 // // Create Schema
 // const Comment_Like = db.define('Comment_Like', {
-//   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
-//   date: {
-//     type: Sequelize.DATE,
-//     defaultValue: Sequelize.NOW
-//   }
+  // id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+  // date: {
+  //   type: Sequelize.DATE,
+  //   defaultValue: Sequelize.NOW
+  // }
 // });
 
 // //validate in the route

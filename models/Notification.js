@@ -17,9 +17,9 @@
 //     type: Sequelize.DATE,
 //     defaultValue: Sequelize.NOW
 //   }
-// });
+// // });
 
-// //validate in the route
+// // //validate in the route
 // Notification.hasOne(User, {as: "user_notified"});
 // Notification.hasOne(User, {as: "user_mentioned_in"});
 
