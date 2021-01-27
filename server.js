@@ -52,10 +52,10 @@ app.use(passport.session());
 //     maxAge: parseInt(process.ENV.SESSION_MAX_AGE)
 //   }
 // }))
-   db.User.findAll()
-  .then((theUsers) => {
-    console.log(theUsers);
-  });
+  //  db.User.findOne({where: {id:1}})
+  // .then((theUser) => {
+  //   console.log(theUser);
+  // });
 // Passport config
 // Routes
 app.use(resolveCrossDomain);

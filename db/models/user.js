@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.hasOne(models.Profile);
-      User.belongsTo(models.Notification, {as: "user_notified"});
-      User.belongsTo(models.Notification, {as: "user_mentioned_in"});
+      User.hasMany(models.Notification, {as: "user_notified"});
+      User.hasMany(models.Notification, {as: "user_mentioned_in"});
       User.belongsToMany(models.Artist, { through: 'User_Favorite_Artists' });
       User.belongsToMany(models.Album, { through: 'User_Favorite_Albums' });
       User.belongsToMany(models.Track, { through: 'User_Favorite_Tracks' });

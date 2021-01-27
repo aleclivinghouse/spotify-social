@@ -20,10 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   Post_Like.init({
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
     date: {
-      type: DataTypes.DATE,
-      get() {
-        return moment(this.getDataValue('createdAt')).format('DD/MM/YYYY h:mm:ss');
-       }
+      type: DataTypes.DATE
     }
   }, {
     sequelize,

@@ -22,9 +22,6 @@ module.exports = (sequelize, DataTypes) => {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
     date: {
         type: DataTypes.DATE,
-        get() {
-          return moment(this.getDataValue('createdAt')).format('DD/MM/YYYY h:mm:ss');
-         }
     },
      title: {
         type: DataTypes.STRING
