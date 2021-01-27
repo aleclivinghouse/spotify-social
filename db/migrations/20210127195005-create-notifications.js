@@ -9,15 +9,15 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       text: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false
         },
         read: {
-          type: DataTypes.BOOLEAN,
+          type: Sequelize.BOOLEAN,
           allowNull: true
           },
         href: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: true
         },
       createdAt: {

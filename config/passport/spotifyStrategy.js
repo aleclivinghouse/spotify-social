@@ -1,8 +1,7 @@
 const SpotifyStrategy = require("passport-spotify").Strategy;
 const fs = require("fs");
 const passport = require("passport");
-const db = require('.././database');
-const User = require("../../models/User");
+const  db  = require('../../db/models/index');
 const chalk = require("chalk");
 
 const dotenv = require('dotenv');
@@ -18,7 +17,7 @@ const strategy = new SpotifyStrategy({
         callbackURL: "http://localhost:3000/register/"
     },
     (accessToken, refreshToken, profile, done) => {
-        User.findOne({ where: {spotify_id: profile.id} })
+        db.User.findOne({ where: {spotify_id: profile.id} })
           .then(user => {
             if (user) {
               return done(null, user);

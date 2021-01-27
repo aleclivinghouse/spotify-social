@@ -9,11 +9,11 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       userId: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         foreignKey: true
         },
         postCommentId: {
-          type: DataTypes.STRING,
+          type: Sequelize.STRING,
           foreignKey: true
           },
       createdAt: {

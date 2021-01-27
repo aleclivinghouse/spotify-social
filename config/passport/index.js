@@ -1,14 +1,14 @@
 const passport = require('passport');
 const LocalStrategy = require('./localStrategy');
 const SpotifyStrategy = require('./spotifyStrategy');
-const User = require('../../models/user');
+const  db  = require('../../db/models/index');
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-  User.findByPk(id).then(function(user) {
+  db.User.findByPk(id).then(function(user) {
        if (user) {
            done(null, user.get());
        } else {

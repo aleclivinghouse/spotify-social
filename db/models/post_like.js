@@ -27,7 +27,3 @@ module.exports = (sequelize, DataTypes) => {
   return Post_Like;
 };
 
-
-/*
-
-*/

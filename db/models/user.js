@@ -51,8 +51,7 @@ module.exports = (sequelize, DataTypes) => {
     external_url: DataTypes.STRING,
     spotify_id: DataTypes.STRING,
     spotify_uri: DataTypes.STRING,
-    followersCount: DataTypes.INTEGER,
-    date: DataTypes.DATE
+    followersCount: DataTypes.INTEGER
   }, {
     sequelize,
     tableName: "users",

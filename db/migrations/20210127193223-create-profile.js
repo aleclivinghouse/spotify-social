@@ -10,19 +10,19 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       bio: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: true
       },
       coverPhoto: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: true
       },
       Thumbnail: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: true
       },
       birthDate: {
-        type: DataTypes.DATE
+        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,

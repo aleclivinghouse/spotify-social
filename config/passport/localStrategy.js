@@ -1,8 +1,7 @@
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const passport = require("passport");
-const db = require('.././database');
-const User = require("../../models/User");
+const  db  = require('../../db/models/index');
 
 
 const dotenv = require('dotenv');
@@ -14,7 +13,7 @@ opts.secretOrKey = process.env.SECRET_OR_KEY;
 
 
 const strategy =  new JwtStrategy(opts, (jwt_payload, done) => {
-      User.findByPk(jwt_payload.id)
+      db.User.findByPk(jwt_payload.id)
         .then(user => {
           if (user) {
             return done(null, user);
