@@ -19,8 +19,8 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsToMany(models.Album, { through: 'User_Favorite_Albums', foreignKey: "albumId" });
       User.belongsToMany(models.Track, { through: 'User_Favorite_Tracks', foreignKey: "trackId" });
       User.belongsToMany(models.Genre, { through: 'User_Favorite_Genres', foreignKey: "genreId" });
-      User.belongsToMany(models.User, { as: 'FriendOne', through: 'Friends', foreignKey: 'friendOneId' });
-      User.belongsToMany(models.User, { as: 'FriendTwo', through: 'Friends', foreignKey: 'friendTwoId' });
+      User.belongsToMany(models.User, { as: 'FriendOne', through: 'friends', foreignKey: 'friendOneId' });
+      User.belongsToMany(models.User, { as: 'FriendTwo', through: 'friends', foreignKey: 'friendTwoId' });
       User.belongsToMany(models.PM_Thread, {through: "PM_Thread_Members", foreignKey: "pmThreadId" });
       User.hasMany(models.PM_Thread, {as: "PM_Moderator"});
       User.belongsToMany(models.User, { as: 'Being_Requested', through: 'Friend_Requests', foreignKey: 'requesterId', onDelete: 'CASCADE'});

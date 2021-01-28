@@ -5,6 +5,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 const users = require("./routes/api/users");
 const  db  = require('./db/models/index');
+const Sequelize = require('sequelize');
 // const db = require('./config/database');
 dotenv.config();
 
@@ -34,30 +35,35 @@ app.use(
 );
 app.use(bodyParser.json());
 
-// Connect to PostPres
-// db.authenticate()
-//   .then(() => console.log('Database connected...'))
-//   .catch(err => console.log('Error: ' + err))
 
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
-// app.use(session({
-//   process.env.SESSION_SECRET,
-//   saveUnitialized: true,
-//   resave: false,
-//   cookie: {
-//     httpOnly: true,
-//     maxAge: parseInt(process.ENV.SESSION_MAX_AGE)
-//   }
-// }))
-  //  db.User.findOne({where: {id:1}})
-  // .then((theUser) => {
-  //   console.log(theUser);
-  // });
-// Passport config
-// Routes
+//get all of a users friends
+const Op = Sequelize.Op;
+db.User.findAll({
+  include: [
+    {
+      model: db.User, 
+      as: 'FriendTwo'
+    },
+    {
+      model: db.User, 
+      as: 'FriendOne'
+    }
+  ]
+
+}).then((users) => {
+  console.log("these are the users with friends ", users);
+});
+
+db.User.findAll().then((users) => {
+  console.log("these are the just users ", users);
+});
+
+
+
 app.use(resolveCrossDomain);
 app.use("/api/users", users);
 
