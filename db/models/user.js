@@ -19,12 +19,10 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsToMany(models.Album, { through: 'User_Favorite_Albums', foreignKey: "albumId" });
       User.belongsToMany(models.Track, { through: 'User_Favorite_Tracks', foreignKey: "trackId" });
       User.belongsToMany(models.Genre, { through: 'User_Favorite_Genres', foreignKey: "genreId" });
-      User.belongsToMany(models.User, { as: 'FriendOne', through: 'friends', foreignKey: 'friendOneId' });
-      User.belongsToMany(models.User, { as: 'FriendTwo', through: 'friends', foreignKey: 'friendTwoId' });
       User.belongsToMany(models.PM_Thread, {through: "PM_Thread_Members", foreignKey: "pmThreadId" });
       User.hasMany(models.PM_Thread, {as: "PM_Moderator"});
-      User.belongsToMany(models.User, { as: 'Being_Requested', through: 'Friend_Requests', foreignKey: 'requesterId', onDelete: 'CASCADE'});
-      User.belongsToMany(models.User, { as: 'Requester', through: 'Friend_Requests', foreignKey: 'being_requestedId', onDelete: 'CASCADE'});
+      User.belongsToMany(models.User, { as: 'Being_Blocked', through: 'Blocks', foreignKey: 'blockerId', onDelete: 'CASCADE'});
+      User.belongsToMany(models.User, { as: 'Blocker', through: 'Blocks', foreignKey: 'being_blockedId', onDelete: 'CASCADE'});
       User.belongsToMany(models.User, { as: 'Being_Followed', through: 'Follows', foreignKey: 'followerId', onDelete: 'CASCADE'});
       User.belongsToMany(models.User, { as: 'Follower', through: 'Follows', foreignKey: 'being_followedId', onDelete: 'CASCADE'});
       User.belongsToMany(models.User, { as: 'Inviter', through: 'PM_Invitations', foreignKey: 'being_invitedId', onDelete: 'CASCADE'});

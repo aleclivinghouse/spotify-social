@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('friends', {
+    return queryInterface.createTable('Blocks', {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -10,17 +10,17 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      friendOneId: {
+      blockerId: {
         type: Sequelize.INTEGER,
         primaryKey: true
       },
-      friendTwoId: {
+      being_blockedId: {
         type: Sequelize.INTEGER,
         primaryKey: true
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('friends');
+    return queryInterface.dropTable('Blocks');
   }
 };

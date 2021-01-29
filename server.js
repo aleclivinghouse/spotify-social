@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 const users = require("./routes/api/users");
 const  db  = require('./db/models/index');
 const Sequelize = require('sequelize');
+const util = require('util')
 // const db = require('./config/database');
 dotenv.config();
 
@@ -42,25 +43,14 @@ app.use(passport.session());
 
 //get all of a users friends
 const Op = Sequelize.Op;
-db.User.findAll({
-  include: [
-    {
-      model: db.User, 
-      as: 'FriendTwo'
-    },
-    {
-      model: db.User, 
-      as: 'FriendOne'
-    }
-  ]
-
-}).then((users) => {
-  console.log("these are the users with friends ", users);
-});
 
 db.User.findAll().then((users) => {
-  console.log("these are the just users ", users);
+  console.log("these are the just users ");
+  console.log(users);
 });
+
+
+
 
 
 

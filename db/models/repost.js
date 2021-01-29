@@ -5,7 +5,7 @@ const {
   DataTypes
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Post extends Model {
+  class Repost extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,16 +13,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-        Post.belongsTo(models.Artist, { foreignKey: 'artistId' });
-        Post.belongsTo(models.User, { foreignKey: 'userId' });
-        Post.belongsTo(models.Album, { foreignKey: 'albumId' });
-        Post.belongsToMany(models.Track, { through: 'Favorite_Tracks_By_An_Artist_Post', foreignKey: 'trackId' });
-        Post.hasMany(models.Post_Comment);
-        Post.hasMany(models.Post_Like);
-        Post.belongsToMany(models.Tag, { through: 'Post_Tags', foreignKey: 'tagId' });
+        Repost.belongsTo(models.Post);
+        Repost.belongsTo(models.User)
     }
   };
-  Post.init({
+  Repost.init({
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
     title: {
         type: DataTypes.STRING,
@@ -50,8 +45,8 @@ module.exports = (sequelize, DataTypes) => {
       }
   }, {
     sequelize,
-    tableName: "posts",
-    modelName: "Post",
+    tableName: "reposts",
+    modelName: "Repost",
   });
-  return Post;
+  return Repost;
 };

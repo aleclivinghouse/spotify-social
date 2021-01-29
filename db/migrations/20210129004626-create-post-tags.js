@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Friend_Requests', {
+    return queryInterface.createTable('Post_Tags', {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -10,17 +10,17 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      requesterId: {
+      postId: {
         type: Sequelize.INTEGER,
         primaryKey: true
       },
-      being_requestedId: {
+      tagId: {
         type: Sequelize.INTEGER,
         primaryKey: true
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Friend_Requests');
+    return queryInterface.dropTable('Post_Tags');
   }
 };
