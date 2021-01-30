@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Album.init({
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+    id: { type: DataTypes.STRING, primaryKey: true, allowNull: false },
     title: {
       type: DataTypes.STRING,
       allowNull: false

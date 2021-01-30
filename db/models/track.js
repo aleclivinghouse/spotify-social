@@ -16,14 +16,14 @@ module.exports = (sequelize, DataTypes) => {
       Track.belongsToMany(models.User, { through: 'User_Favorite_Tracks', foreignKey: "userId" });
       Track.belongsToMany(models.Artist, { through: 'Artist_Tracks', foreignKey: "artistId" });
       Track.belongsTo(models.Album, {foreignKey: "albumId"});
-      Track.belongsTo(models.Post, {foreignKey: "postId"});
+      Track.belongsTo(models.Post, {foreignKey: "postId", as: "By_Track"});
       Track.belongsToMany(models.Genre, { through: 'Track_Genres', foreignKey: "genreId" });
-      Track.belongsToMany(models.Post, { through: 'Favorite_Tracks_By_An_Artist_Post', foreignKey: "postId" });
+      Track.belongsToMany(models.Post, { as: "By_Artist_track", through: 'Favorite_Tracks_By_An_Artist_Post', foreignKey: "postId" });
       Track.hasMany(models.Image);
     }
   };
   Track.init({
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+    id: { type: DataTypes.STRING, primaryKey: true, allowNull: false },
     title: {
       type: DataTypes.STRING,
       allowNull: false
@@ -41,10 +41,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     releaseDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: true
     },
-    Popularity: {
+    popularity: {
       type: DataTypes.INTEGER,
       allowNull: true
     }

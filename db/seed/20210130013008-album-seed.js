@@ -6,6 +6,7 @@ module.exports = {
     let date = new Date();
     for(let i = 1; i <albumList.length; i++){
       data.push({
+        id: albumList[i].id,
         title: albumList[i].name,
         album_type: albumList[i].album_type,
         external_url: albumList[i].external_urls.spotify,

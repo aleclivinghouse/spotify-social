@@ -6,6 +6,7 @@ module.exports = {
     let date = new Date();
     for(let i = 1; i <artistList.length; i++){
       data.push({
+        id: artistList[i].id,
         name: artistList[i].name,
         followersCount: artistList[i].followers.total,
         href: artistList[i].href,

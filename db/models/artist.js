@@ -21,12 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Artist.init({
-    id: {
-			allowNull: false,
-			autoIncrement: true,
-			primaryKey: true,
-			type: DataTypes.INTEGER
-        },
+    id: { type: DataTypes.STRING, primaryKey: true, allowNull: false },
     name: {
         type: DataTypes.STRING,
         allowNull: true

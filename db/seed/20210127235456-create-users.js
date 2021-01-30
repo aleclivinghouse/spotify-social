@@ -5,7 +5,7 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
       let data = [];
       let date = new Date();
-      for(let i = 1; i <= 50; i++){
+      for(let i = 1; i <= 250; i++){
         data.push({
           display_name: `testuser${i+1}`,
           email: `testuser${i+1}@test.com`,
