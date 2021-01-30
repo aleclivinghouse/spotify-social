@@ -44,6 +44,10 @@ module.exports = {
       albumId: {
         type: Sequelize.STRING,
         foreignKey: true
+      },
+      postId: {
+        type: Sequelize.STRING,
+        foreignKey: true
       }
     });
   },

@@ -31,6 +31,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true
         },
+    href: {
+          type: DataTypes.STRING,
+          allowNull: true
+     },
+     external_url: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
         followersCount: {
             type: DataTypes.INTEGER,
             allowNull: true

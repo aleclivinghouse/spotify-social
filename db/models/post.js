@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         Post.belongsTo(models.Artist, { foreignKey: 'artistId' });
         Post.belongsTo(models.User, { foreignKey: 'userId' });
         Post.belongsTo(models.Album, { foreignKey: 'albumId' });
+        Post.belongsTo(models.Track, { foreignKey: 'trackId' });
         Post.belongsToMany(models.Track, { through: 'Favorite_Tracks_By_An_Artist_Post', foreignKey: 'trackId' });
         Post.hasMany(models.Post_Comment);
         Post.hasMany(models.Post_Like);

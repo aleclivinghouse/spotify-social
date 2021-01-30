@@ -7,6 +7,7 @@ import classnames from "classnames";
 import PopupWindow from '../misc/PopupWindow';
 import { toQuery } from '../../utils/utils';
 import dotenv from 'dotenv';
+import axios from "axios";
 dotenv.config();
 
 class Login extends Component {
@@ -42,6 +43,7 @@ class Login extends Component {
       this.props.loginSpotify(userData);
     }
   }
+
 
   onChange = e => {
     this.setState({ [e.target.id]: e.target.value });
@@ -83,15 +85,38 @@ const popup = this.popup = PopupWindow.open(
  }
 
 
-onSuccess = (data) => {
+onSuccess = async(data) => {
      console.log('this is the data token on success', data.access_token);
      if (!data.access_token) {
        return this.onFailure(new Error('\'access_token\' not found'));
      }
+     var returnObj = {};
     this.props.onSuccess(data);
     this.props.getSpotifyUser(data.access_token);
     this.props.setSpotifyAccessToken(data.access_token);
-}
+    const artists = ["kendrick lamar", "nirvana", "bob dylan", "pheobe bridgers", "bruce springsteen", "eminem","pearl jam", "a tribe called quest", "bon jovi", "jay-z","vince staples", "joni mitchell", "the beatles", "the+rolling+stones", "lou reed","david bowie","michael jackson"];
+        let artistPromises = [];
+        let albumPromises = [];
+        let obj = {};
+        for(let i = 0; i < artists.length; i++){
+          artistPromises.push(axios.get(`https://api.spotify.com/v1/search?q=${artists[i]}&type=artist&limit=1`, {
+            headers:{
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "Authorization": "Bearer " + data.access_token,
+            }
+           }));
+          // });
+        } //original for end
+         axios.all(artistPromises)
+          .then((responses) => {
+            obj.artistList = responses;
+          })
+          .catch((err) => {
+            console.log("this is the error ", err);
+          })
+
+  }
 
  onFailure = (error) => {
    console.log('this is the data on failure', error);

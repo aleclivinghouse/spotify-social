@@ -45,14 +45,19 @@ app.use(passport.session());
 const Op = Sequelize.Op;
 
 db.User.findAll().then((users) => {
-  console.log("these are the just users ");
+  console.log("alert these are the users ");
   console.log(users);
 });
 
+db.Artist.findAll().then((users) => {
+  console.log("alert these are the artists ");
+  console.log(users);
+});
 
-
-
-
+db.Album.findAll().then((users) => {
+  console.log("alert these are the albums ");
+  console.log(users);
+});
 
 app.use(resolveCrossDomain);
 app.use("/api/users", users);

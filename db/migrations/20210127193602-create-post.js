@@ -44,6 +44,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         foreignKey: true
       },
+      trackId: {
+        type: Sequelize.INTEGER,
+        foreignKey: true
+      },
       albumId: {
         type: Sequelize.INTEGER,
         foreignKey: true

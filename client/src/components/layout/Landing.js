@@ -6,8 +6,12 @@ import {setLandingToken} from "../../actions/authActions";
 //get the initial jwt
 class Landing extends Component {
   componentDidMount(){
-    this.props.setLandingToken();
-  }
+    this.props.setLandingToken(); 
+    var returnObj = {};
+
+    const token = "BQArndpWMUyMcDUGdHgQHrbk2vgJt8qh-W317gEQ8lG_cGvJEyaQJEKh6YQkMiqv4KagpIa-ACC-bv1NFWm04FfZT65bbwsOk6HJjh3dTDZkjnUURJ_A2gP_wUHb9-RnbvKWdlPv39HCZYTaR49P8nD2IeA24k60IHm0yGW__7njLK6_v6HvzWznaVdZP0Smn2dJ_xELhEXPqi_id-NcnBcv4r_CpnEVG56OqmT6YjHQT0PXiq8S6FCYN82xWeOqU5cZ6FqU-TDeRQDch21q81fMib5qONpkr5Z-b1A";
+    const artists = ["kendrick+lamar", "nirvana", "bob+dylan", "pheobe+bridgers", "bruce+springsteen", "eminem","pearl+jam", "a+tribe+called+quest", "bon+jovi", "jay-z","vince+staples", "joni+mitchell", "the+beatles", "the+rolling+stones", "lou+reed","david+bowie","michael+jackson"];
+  } //componentDidMount end
   render() {
     return (
       <div style={{ height: "75vh" }} className="container valign-wrapper">

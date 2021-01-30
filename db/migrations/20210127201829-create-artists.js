@@ -12,6 +12,18 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
         },
+    href: {
+         type: Sequelize.STRING,
+         allowNull: false
+      },
+    external_url: {
+        type: Sequelize.STRING,
+        allowNull: false
+     },
+      followersCount: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
