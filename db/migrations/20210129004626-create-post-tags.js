@@ -10,11 +10,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      postId: {
+      post_id: {
         type: Sequelize.INTEGER,
         primaryKey: true
       },
-      tagId: {
+      tag_id: {
         type: Sequelize.INTEGER,
         primaryKey: true
       }

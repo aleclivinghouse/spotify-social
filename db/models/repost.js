@@ -1,23 +1,5 @@
-'use strict';
-const moment = require('moment');
-const {
-  Model, 
-  DataTypes
-} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Repost extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-        Repost.belongsTo(models.Post);
-        Repost.belongsTo(models.User)
-    }
-  };
-  Repost.init({
+  const Repost = sequelize.define('Repost', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
     title: {
         type: DataTypes.STRING,
@@ -43,10 +25,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DECIMAL(10, 1),
         allowNull: true
       }
-  }, {
-    sequelize,
-    tableName: "reposts",
-    modelName: "Repost",
-  });
+  }, {});
+
+  Repost.associate = function(models){
+    Repost.belongsTo(models.Post);
+    Repost.belongsTo(models.User)
+  }
   return Repost;
 };

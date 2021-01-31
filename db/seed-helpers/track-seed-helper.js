@@ -2,7 +2,7 @@
 
 
 //artists T. Rexdone, Kendrick Lamar, JAY-Z, Michael Jackson, Bon Jovi, Bruce Springsteen, nirvana
-module.exports = [
+const trackList = [
   {
     "album": {
       "album_type": "album",
@@ -5462,3 +5462,5 @@ module.exports = [
     "uri": "spotify:track:0LrwgdLsFaWh9VXIjBRe8t"
   }
 ];
+
+module.exports = {trackList};

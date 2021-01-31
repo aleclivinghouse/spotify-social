@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('tracks', {
+    return queryInterface.createTable('Tracks', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -13,8 +13,7 @@ module.exports = {
         allowNull: false
       },
       track_number: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+        type: Sequelize.INTEGER
       },
       href: {
         type: Sequelize.STRING,
@@ -24,7 +23,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      releaseDate: {
+      release_date: {
         type: Sequelize.STRING,
         allowNull: true
       },
@@ -40,17 +39,17 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      albumId: {
+      album_id: {
         type: Sequelize.STRING,
         foreignKey: true
       },
-      postId: {
+      post_id: {
         type: Sequelize.STRING,
         foreignKey: true
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('tracks');
+    return queryInterface.dropTable('Tracks');
   }
 };

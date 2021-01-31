@@ -1,43 +1,27 @@
-'use strict';
-const {
-  Model, 
-  DataTypes
-} = require('sequelize');
-const moment = require('moment');
 module.exports = (sequelize, DataTypes) => {
-  class Profile extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-      Profile.belongsTo(models.User, { foreignKey: 'userId' });
-      Profile.hasMany(models.Image);
-    }
-  };
-  Profile.init({
+  const Profile = sequelize.define('Profile', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
     bio: {
       type: DataTypes.STRING,
       allowNull: true
     },
-    coverPhoto: {
+    cover_photo: {
       type: DataTypes.STRING,
       allowNull: true
     },
-    Thumbnail: {
+    thumb_nail: {
       type: DataTypes.STRING,
       allowNull: true
     },
-    birthDate: {
+    birth_date: {
       type: DataTypes.DATE
     }
-  }, {
-    sequelize,
-    tableName:  "profiles",
-    modelName: "Profile"
-  });
+
+  }, {});
+
+  Profile.associate = function(models){
+    Profile.belongsTo(models.User, { foreignKey: 'user_id' });
+    Profile.hasMany(models.Image);
+  }
   return Profile;
 };

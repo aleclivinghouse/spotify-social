@@ -1,64 +1,3 @@
-// 'use strict';
-// const {
-//   Model, 
-//   DataTypes
-// } = require('sequelize');
-// module.exports = (sequelize, DataTypes) => {
-//   class User extends Model {
-//     /**
-//      * Helper method for defining associations.
-//      * This method is not a part of Sequelize lifecycle.
-//      * The `models/index` file will call this method automatically.
-//      */
-//     static associate(models) {
-//       // define association here
-//       User.hasOne(models.Profile, { foreignKey: 'profileId' });
-//       User.hasMany(models.Notification, {as: "user_notified"});
-//       User.hasMany(models.Notification, {as: "user_mentioned"});
-//       User.belongsToMany(models.Artist, { through: 'User_Favorite_Artists', foreignKey: "artistId" });
-//       User.belongsToMany(models.Album, { through: 'User_Favorite_Albums', foreignKey: "albumId" });
-//       User.belongsToMany(models.Track, { through: 'User_Favorite_Tracks', foreignKey: "trackId" });
-//       User.belongsToMany(models.Genre, { through: 'User_Favorite_Genres', foreignKey: "genreId" });
-//       User.belongsToMany(models.PM_Thread, {through: "PM_Thread_Members", foreignKey: "pmThreadId" });
-//       User.hasMany(models.PM_Thread, {as: "PM_Moderator"});
-//       User.belongsToMany(models.User, { as: 'Being_Blocked', through: 'Blocks', foreignKey: 'blockerId', onDelete: 'CASCADE'});
-//       User.belongsToMany(models.User, { as: 'Blocker', through: 'Blocks', foreignKey: 'being_blockedId', onDelete: 'CASCADE'});
-//       User.belongsToMany(models.User, { as: 'Being_Followed', through: 'Follows', foreignKey: 'followerId', onDelete: 'CASCADE'});
-//       User.belongsToMany(models.User, { as: 'Follower', through: 'Follows', foreignKey: 'being_followedId', onDelete: 'CASCADE'});
-//       User.belongsToMany(models.User, { as: 'Inviter', through: 'PM_Invitations', foreignKey: 'being_invitedId', onDelete: 'CASCADE'});
-//       User.belongsToMany(models.User, { as: 'Being_Invited', through: 'PM_Invitations', foreignKey: 'inviterId', onDelete: 'CASCADE'});
-//       User.hasMany(models.Post);
-//       User.hasMany(models.Post_Comment);
-//       User.hasMany(models.Post_Like);
-//       User.hasMany(models.Post_Comment);
-//       User.hasMany(models.Comment_Like);
-//       User.hasMany(models.Message);
-//     }
-//   };
-//   User.init({
-//     id: {
-// 			allowNull: false,
-// 			autoIncrement: true,
-// 			primaryKey: true,
-// 			type: DataTypes.INTEGER
-// 		},
-//     display_name: {type: DataTypes.STRING, allow_null: false},
-//     email: DataTypes.STRING,
-//     password: DataTypes.STRING,
-//     country: DataTypes.STRING,
-//     external_url: DataTypes.STRING,
-//     spotify_id: DataTypes.STRING,
-//     spotify_uri: DataTypes.STRING,
-//     followersCount: DataTypes.INTEGER
-//   }, {
-//     sequelize,
-//     tableName: "users",
-//     modelName: "User",
-//   });
-//   return User;
-// };
-
-
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     id: {
@@ -78,21 +17,21 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
 
   User.associate = function(models){
-    User.hasOne(models.Profile, { foreignKey: 'profileId' });
+    User.hasOne(models.Profile, { foreignKey: 'profile_id' });
     User.hasMany(models.Notification, {as: "user_notified"});
     User.hasMany(models.Notification, {as: "user_mentioned"});
-    User.belongsToMany(models.Artist, { through: 'User_Favorite_Artists', foreignKey: "artistId" });
-    User.belongsToMany(models.Album, { through: 'User_Favorite_Albums', foreignKey: "albumId" });
-    User.belongsToMany(models.Track, { through: 'User_Favorite_Tracks', foreignKey: "trackId" });
-    User.belongsToMany(models.Genre, { through: 'User_Favorite_Genres', foreignKey: "genreId" });
-    User.belongsToMany(models.PM_Thread, {through: "PM_Thread_Members", foreignKey: "pmThreadId" });
+    User.belongsToMany(models.Artist, { through: 'User_Favorite_Artists', foreignKey: "artist_id" });
+    User.belongsToMany(models.Album, { through: 'User_Favorite_Albums', foreignKey: "album_id" });
+    User.belongsToMany(models.Track, { through: 'User_Favorite_Tracks', foreignKey: "track_id" });
+    User.belongsToMany(models.Genre, { through: 'User_Favorite_Genres', foreignKey: "genre_id" });
+    User.belongsToMany(models.PM_Thread, {through: "PM_Thread_Members", foreignKey: "pm_thread_id" });
     User.hasMany(models.PM_Thread, {as: "PM_Moderator"});
-    User.belongsToMany(models.User, { as: 'Being_Blocked', through: 'Blocks', foreignKey: 'blockerId', onDelete: 'CASCADE'});
-    User.belongsToMany(models.User, { as: 'Blocker', through: 'Blocks', foreignKey: 'being_blockedId', onDelete: 'CASCADE'});
-    User.belongsToMany(models.User, { as: 'Being_Followed', through: 'Follows', foreignKey: 'followerId', onDelete: 'CASCADE'});
-    User.belongsToMany(models.User, { as: 'Follower', through: 'Follows', foreignKey: 'being_followedId', onDelete: 'CASCADE'});
-    User.belongsToMany(models.User, { as: 'Inviter', through: 'PM_Invitations', foreignKey: 'being_invitedId', onDelete: 'CASCADE'});
-    User.belongsToMany(models.User, { as: 'Being_Invited', through: 'PM_Invitations', foreignKey: 'inviterId', onDelete: 'CASCADE'});
+    User.belongsToMany(models.User, { as: 'Being_Blocked', through: 'Blocks', foreignKey: 'blocker_id', onDelete: 'CASCADE'});
+    User.belongsToMany(models.User, { as: 'Blocker', through: 'Blocks', foreignKey: 'being_blocked_id', onDelete: 'CASCADE'});
+    User.belongsToMany(models.User, { as: 'Being_Followed', through: 'Follows', foreignKey: 'follower_id', onDelete: 'CASCADE'});
+    User.belongsToMany(models.User, { as: 'Follower', through: 'Follows', foreignKey: 'being_followed_id', onDelete: 'CASCADE'});
+    User.belongsToMany(models.User, { as: 'Inviter', through: 'PM_Invitations', foreignKey: 'being_invited_id', onDelete: 'CASCADE'});
+    User.belongsToMany(models.User, { as: 'Being_Invited', through: 'PM_Invitations', foreignKey: 'inviter_id', onDelete: 'CASCADE'});
     User.hasMany(models.Post);
     User.hasMany(models.Post_Comment);
     User.hasMany(models.Post_Like);

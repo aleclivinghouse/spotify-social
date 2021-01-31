@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('images', {
+    return queryInterface.createTable('Images', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -20,25 +20,25 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      artistId: {
+      artist_id: {
         type: Sequelize.INTEGER,
         foreignKey: true
       },
-      albumId: {
+      album_id: {
         type: Sequelize.INTEGER,
         foreignKey: true
       },
-      trackId: {
+      track_id: {
         type: Sequelize.INTEGER,
         foreignKey: true
       },
-      profileId: {
+      profile_id: {
         type: Sequelize.INTEGER,
         foreignKey: true
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('images');
+    return queryInterface.dropTable('Images');
   }
 };

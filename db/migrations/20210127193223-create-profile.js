@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('profiles', {
+    return queryInterface.createTable('Profiles', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -13,15 +13,15 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
-      coverPhoto: {
+      cover_photo: {
         type: Sequelize.STRING,
         allowNull: true
       },
-      Thumbnail: {
+      thumb_nail: {
         type: Sequelize.STRING,
         allowNull: true
       },
-      birthDate: {
+      birth_date: {
         type: Sequelize.DATE
       },
       createdAt: {
@@ -32,13 +32,13 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      userId: {
+      user_id: {
         type: Sequelize.INTEGER,
         foreignKey: true
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('profiles');
+    return queryInterface.dropTable('Profiles');
   }
 };

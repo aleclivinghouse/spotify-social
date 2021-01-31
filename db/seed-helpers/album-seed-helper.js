@@ -1,5 +1,5 @@
 
-module.exports =  [
+const albumList =  [
     {
         "album_type": "album",
         "artists": [
@@ -239,3 +239,5 @@ module.exports =  [
         "uri": "spotify:album:7ycBtnsMtyVbbwTfJwRjSP"
       }
   ]
+
+module.exports = {albumList};

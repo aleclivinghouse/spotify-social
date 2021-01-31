@@ -31,7 +31,7 @@ module.exports = {
       spotify_uri: {
         type: Sequelize.STRING
       },
-      followersCount: {
+      followers_count: {
         type: Sequelize.INTEGER
       },
       createdAt: {
@@ -42,7 +42,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      profileId: {
+      profile_id: {
         type: Sequelize.INTEGER,
         foreignKey: true
       }

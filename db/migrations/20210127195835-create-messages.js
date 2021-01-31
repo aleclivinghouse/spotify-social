@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('messages', {
+    return queryInterface.createTable('Messages', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -20,17 +20,17 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      pmThreadId: {
+      pm_thread_id: {
         type: Sequelize.INTEGER,
         foreignKey: true
       },
-      userId: {
+      user_id: {
         type: Sequelize.INTEGER,
         foreignKey: true
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('messages');
+    return queryInterface.dropTable('Messages');
   }
 };

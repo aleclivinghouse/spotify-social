@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('notifications', {
+    return queryInterface.createTable('Notifications', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -28,17 +28,17 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      userNotifiedId: {
+      user_notified_id: {
         type: Sequelize.INTEGER,
         foreignKey: true
       },
-      userMentionedId: {
+      user_mentioned_id: {
         type: Sequelize.INTEGER,
         foreignKey: true
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('notifications');
+    return queryInterface.dropTable('Notifications');
   }
 };

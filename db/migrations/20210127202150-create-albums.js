@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('albums', {
+    return queryInterface.createTable('Albums', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -23,11 +23,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      releaseDate: {
+      release_date: {
         type: Sequelize.STRING,
         allowNull: true
       },
-      Popularity: {
+      popularity: {
         type: Sequelize.INTEGER,
         allowNull: true
       },
@@ -42,6 +42,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('albums');
+    return queryInterface.dropTable('Albums');
   }
 };

@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('artists', {
+    return queryInterface.createTable('Artists', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -19,7 +19,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
      },
-      followersCount: {
+      followers_count: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
@@ -34,6 +34,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('artists');
+    return queryInterface.dropTable('Artists');
   }
 };

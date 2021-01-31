@@ -1,5 +1,5 @@
 
-module.exports =  [
+const artistList =  [
     {
       "external_urls": {
         "spotify": "https://open.spotify.com/artist/0oSGxfWSnnOXhD2fKuz2Gy"
@@ -313,8 +313,8 @@ module.exports =  [
             "type": "artist",
             "uri": "spotify:artist:6olE6TJLqED3rqDCT0FyPh"
           }
-  ]
+  ];
 
-
+module.exports = {artistList};
 
 
