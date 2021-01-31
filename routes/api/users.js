@@ -2,11 +2,12 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const path = require('path');
 const passport = require('../../config/passport')
 // const db = require('../../config/database');
-const  db  = require('../../db/models/index');
-const Sequelize = require('sequelize');
 const dotenv = require('dotenv');
+const Sequelize = require('sequelize');
+const  db  = require('../../db/models');
 const Op = Sequelize.Op;
 const jwt_decode = require("jwt-decode");
 dotenv.config();

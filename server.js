@@ -4,9 +4,10 @@ const passport = require("./config/passport");
 const path = require('path');
 const dotenv = require('dotenv');
 const users = require("./routes/api/users");
-const  db  = require('./db/models/index');
+const tracks = require("./routes/api/tracks");
 const Sequelize = require('sequelize');
-const util = require('util')
+const  db  = require('./db/models/index');
+const util = require('util');
 // const db = require('./config/database');
 dotenv.config();
 
@@ -61,6 +62,7 @@ db.Album.findAll().then((users) => {
 
 app.use(resolveCrossDomain);
 app.use("/api/users", users);
+app.use("/api/tracks", tracks);
 
 const port = process.env.PORT || 5000;
 

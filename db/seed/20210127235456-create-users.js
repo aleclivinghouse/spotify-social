@@ -15,10 +15,10 @@ module.exports = {
           updatedAt: date
         })
       }
-      return  queryInterface.bulkInsert({tableName: "users"}, data, {});
+      return  queryInterface.bulkInsert({tableName: "Users"}, data, {});
   },
 
   down:  (queryInterface, Sequelize) => {
-    return  queryInterface.bulkDelete({tableName: "users"}, null, {});
+    return  queryInterface.bulkDelete({tableName: "Users"}, null, {});
   }
 };
