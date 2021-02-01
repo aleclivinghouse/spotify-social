@@ -10,11 +10,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      track_id: {
+      trackId: {
         type: Sequelize.INTEGER,
         primaryKey: true
       },
-      genre_id: {
+      genreId: {
         type: Sequelize.INTEGER,
         primaryKey: true
       }

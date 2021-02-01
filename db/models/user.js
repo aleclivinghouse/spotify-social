@@ -24,8 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsToMany(models.Album, { through: 'User_Favorite_Albums', foreignKey: "album_id" });
     User.belongsToMany(models.Track, { through: 'User_Favorite_Tracks', foreignKey: "track_id" });
     User.belongsToMany(models.Genre, { through: 'User_Favorite_Genres', foreignKey: "genre_id" });
-    User.belongsToMany(models.PM_Thread, {through: "PM_Thread_Members", foreignKey: "pm_thread_id" });
-    User.hasMany(models.PM_Thread, {as: "PM_Moderator"});
+    User.belongsToMany(models.Pmthread, {through: "PM_Thread_Members", foreignKey: "pm_thread_id" });
+    User.hasMany(models.Pmthread, {as: "PM_Moderator"});
     User.belongsToMany(models.User, { as: 'Being_Blocked', through: 'Blocks', foreignKey: 'blocker_id', onDelete: 'CASCADE'});
     User.belongsToMany(models.User, { as: 'Blocker', through: 'Blocks', foreignKey: 'being_blocked_id', onDelete: 'CASCADE'});
     User.belongsToMany(models.User, { as: 'Being_Followed', through: 'Follows', foreignKey: 'follower_id', onDelete: 'CASCADE'});
@@ -33,10 +33,9 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsToMany(models.User, { as: 'Inviter', through: 'PM_Invitations', foreignKey: 'being_invited_id', onDelete: 'CASCADE'});
     User.belongsToMany(models.User, { as: 'Being_Invited', through: 'PM_Invitations', foreignKey: 'inviter_id', onDelete: 'CASCADE'});
     User.hasMany(models.Post);
-    User.hasMany(models.Post_Comment);
-    User.hasMany(models.Post_Like);
-    User.hasMany(models.Post_Comment);
-    User.hasMany(models.Comment_Like);
+    User.hasMany(models.Postcomment);
+    User.hasMany(models.Postlike);
+    User.hasMany(models.Commentlike);
     User.hasMany(models.Message);
   }
   return User;

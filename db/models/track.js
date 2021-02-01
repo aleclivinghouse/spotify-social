@@ -1,6 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   const Track = sequelize.define('Track', {
-    id: { type: DataTypes.STRING, primaryKey: true, allowNull: false },
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER,
+    },
     title: {
       type: DataTypes.STRING,
       allowNull: false
@@ -26,14 +31,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
 
-  Track.associate = function(models){
-      Track.belongsToMany(models.User, { through: 'User_Favorite_Tracks', foreignKey: "user_id" });
-      Track.belongsToMany(models.Artist, { through: 'Artist_Tracks', foreignKey: "artist_id" });
-      Track.belongsTo(models.Album, {foreignKey: "album_id"});
-      Track.belongsTo(models.Post, {foreignKey: "postId", as: "By_Track"});
-      Track.belongsToMany(models.Genre, { through: 'Track_Genres', foreignKey: "genre_id" });
-      Track.belongsToMany(models.Post, { as: "By_Artist_track", through: 'Favorite_Tracks_By_An_Artist_Post', foreignKey: "post_id" });
-      Track.hasMany(models.Image);
+  Track.associate = function (models) {
+    Track.belongsToMany(models.User, { through: 'User_Favorite_Tracks'});
+    Track.belongsToMany(models.Artist, { through: 'Artist_Tracks'});
+    Track.belongsTo(models.Album);
+    Track.belongsToMany(models.Genre, { through: 'Track_Genres'});
+    Track.belongsToMany(models.Post, { as: "posts", through: 'Favorite_Tracks_By_An_Artist_Post'});
+    Track.hasMany(models.Image);
   }
   return Track;
 };

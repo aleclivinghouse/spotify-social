@@ -10,11 +10,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      follower_id: {
+      followerId: {
         type: Sequelize.INTEGER,
         primaryKey: true
       },
-      being_followed_id: {
+      beingfollowedId: {
         type: Sequelize.INTEGER,
         primaryKey: true
       }

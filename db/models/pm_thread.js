@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const PM_Thread = sequelize.define('PM_Thread', {
+  const Pmthread = sequelize.define('Pmthread', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
     title: {
       type: DataTypes.STRING,
@@ -7,10 +7,10 @@ module.exports = (sequelize, DataTypes) => {
     }   
   }, {});
 
-  PM_Thread.associate = function(models){
-    PM_Thread.belongsTo(models.User, {foreignKey: "moderator_id"});
-    PM_Thread.belongsToMany(models.User, { through: 'PM_Thread_User' });
-    PM_Thread.hasMany(models.Message);
+  Pmthread.associate = function(models){
+    Pmthread.belongsTo(models.User, {as: "moderator", foreignKey: "moderator_id"});
+    Pmthread.belongsToMany(models.User, { through: 'PM_Thread_Members' });
+    Pmthread.hasMany(models.Message);
   }
-  return PM_Thread;
+  return Pmthread;
 };

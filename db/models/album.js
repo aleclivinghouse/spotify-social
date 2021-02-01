@@ -1,6 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   const Album = sequelize.define('Album', {
-    id: { type: DataTypes.STRING, primaryKey: true, allowNull: false },
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER,
+    },
     title: {
       type: DataTypes.STRING,
       allowNull: false
@@ -28,10 +33,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
 
     Album.associate = function(models){
-      Album.belongsToMany(models.User, { through: 'User_Favorite_Albums', foreignKey:"user_id" });
-      Album.belongsToMany(models.Artist, { through: 'Album_Artists', foreignKey: "artist_id" });
+      Album.belongsToMany(models.User, { through: 'User_Favorite_Albums'});
+      Album.belongsToMany(models.Artist, { through: 'Album_Artists'});
       Album.hasMany(models.Track);
-      Album.belongsToMany(models.Genre, { through: 'Album_Genres', foreignKey: "genre_id" });
+      Album.belongsToMany(models.Genre, { through: 'Album_Genres'});
       Album.hasMany(models.Post);
       Album.hasMany(models.Image);
   }

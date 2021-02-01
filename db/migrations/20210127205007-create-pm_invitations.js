@@ -10,11 +10,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      inviter_id: {
+      inviterId: {
         type: Sequelize.INTEGER,
         primaryKey: true
       },
-      being_invited_id: {
+      being_invitedId: {
         type: Sequelize.INTEGER,
         primaryKey: true
       }

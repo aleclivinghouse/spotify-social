@@ -4,8 +4,9 @@ module.exports = {
     return queryInterface.createTable('Albums', {
       id: {
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER,
       },
       title: {
         type: Sequelize.STRING,

@@ -27,14 +27,6 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      user_notified_id: {
-        type: Sequelize.INTEGER,
-        foreignKey: true
-      },
-      user_mentioned_id: {
-        type: Sequelize.INTEGER,
-        foreignKey: true
       }
     });
   },

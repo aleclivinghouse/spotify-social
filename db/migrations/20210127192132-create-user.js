@@ -41,10 +41,6 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      profile_id: {
-        type: Sequelize.INTEGER,
-        foreignKey: true
       }
     });
   },

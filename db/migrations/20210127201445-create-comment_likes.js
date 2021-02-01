@@ -1,21 +1,13 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Comments_Likes', {
+    return queryInterface.createTable('Commentlikes', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
-        type: Sequelize.INTEGER,
-        foreignKey: true
-        },
-      post_comment_id: {
-          type: Sequelize.INTEGER,
-          foreignKey: true
-        },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -27,6 +19,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Comment_Likes');
+    return queryInterface.dropTable('Commentlikes');
   }
 };

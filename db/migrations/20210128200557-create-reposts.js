@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('reposts', {
+    return queryInterface.createTable('Reposts', {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -10,17 +10,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      post_id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true
-      },
-      user_id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true
-      }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('reposts');
+    return queryInterface.dropTable('Reposts');
   }
 };

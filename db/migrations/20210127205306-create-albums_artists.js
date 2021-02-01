@@ -10,11 +10,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      album_id: {
+      albumId: {
         type: Sequelize.INTEGER,
         primaryKey: true
       },
-      artist_id: {
+      artistId: {
         type: Sequelize.INTEGER,
         primaryKey: true
       }

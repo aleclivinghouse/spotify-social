@@ -19,14 +19,6 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      pm_thread_id: {
-        type: Sequelize.INTEGER,
-        foreignKey: true
-      },
-      user_id: {
-        type: Sequelize.INTEGER,
-        foreignKey: true
       }
     });
   },

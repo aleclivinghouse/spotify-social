@@ -39,22 +39,6 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      artist_id: {
-        type: Sequelize.INTEGER,
-        foreignKey: true
-      },
-      track_id: {
-        type: Sequelize.INTEGER,
-        foreignKey: true
-      },
-      album_id: {
-        type: Sequelize.INTEGER,
-        foreignKey: true
-      },
-      user_id: {
-        type: Sequelize.INTEGER,
-        foreignKey: true
       }
     });
   },

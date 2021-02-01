@@ -5,8 +5,9 @@ module.exports = {
     return queryInterface.createTable('Tracks', {
       id: {
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER,
       },
       title: {
         type: Sequelize.STRING,
@@ -38,14 +39,6 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      album_id: {
-        type: Sequelize.STRING,
-        foreignKey: true
-      },
-      post_id: {
-        type: Sequelize.STRING,
-        foreignKey: true
       }
     });
   },

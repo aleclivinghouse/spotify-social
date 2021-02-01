@@ -10,11 +10,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      pm_thread_id: {
+      pmthreadId: {
         type: Sequelize.INTEGER,
         primaryKey: true
       },
-      user_id: {
+      userId: {
         type: Sequelize.INTEGER,
         primaryKey: true
       }

@@ -8,12 +8,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
 
   Genre.associate = function(models){
-    Genre.belongsToMany(models.User, { through: 'User_Favorite_Genres', foreignKey: "user_id"});
-    Genre.belongsToMany(models.Artist, { through: 'Artist_Genres', foreignKey: "artist_id"});
-    Genre.belongsToMany(models.Track,{ through: 'Track_Genres', foreignKey: "track_id" });
-    Genre.belongsToMany(models.Album, { through: 'Album_Genres', foreignKey: "album_id" });
+    Genre.belongsToMany(models.User, { through: 'User_Favorite_Genres'});
+    Genre.belongsToMany(models.Artist, { through: 'Artist_Genres'});
+    Genre.belongsToMany(models.Track,{ through: 'Track_Genres' });
+    Genre.belongsToMany(models.Album, { through: 'Album_Genres'});
     Genre.hasMany(models.Post);
-    Genre.hasMany(models.Image);
   }
   return Genre;
 };

@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
-  const Post_Like = sequelize.define('Post_Like', {
+  const Postlike = sequelize.define('Postlike', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false }    
   }, {});
 
-  Post_Like.associate = function(models){
-    Post_Like.belongsTo(models.Post, {foreignKey: "post_id"});
-    Post_Like.belongsTo(models.User, {foreignKey: "user_id"}); 
+  Postlike.associate = function(models){
+    Postlike.belongsTo(models.Post, {foreignKey: "post_id"});
+    Postlike.belongsTo(models.User, {foreignKey: "user_id"}); 
   }
-  return Post_Like;
+  return Postlike;
 };

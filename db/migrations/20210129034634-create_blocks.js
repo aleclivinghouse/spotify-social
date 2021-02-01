@@ -10,11 +10,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      blocker_id: {
+      blockerId: {
         type: Sequelize.INTEGER,
         primaryKey: true
       },
-      being_blocked_id: {
+      being_blockedId: {
         type: Sequelize.INTEGER,
         primaryKey: true
       }
