@@ -1,23 +1,12 @@
+'use strict';
+
+//this needs to stay completely blank
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.addColumn(
-      'Pmthreads',
-      'moderatorId',
-      {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: {
-          model: "Users",
-          key: "id",
-        }
-      }
-    )
+  up: function(queryInterface, Sequelize) {
+    return Promise.resolve()
   },
 
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.removeColumn(
-      'Pmthreads',
-      'moderatorId',
-      )
+  down: function(queryInterface) {
+    return Promise.resolve()
   }
 };

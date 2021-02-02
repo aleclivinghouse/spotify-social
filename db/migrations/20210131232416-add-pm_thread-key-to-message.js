@@ -2,13 +2,13 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.addColumn(
       'Messages',
-      'pm_threadId',
+      'PmthreadId',
       {
         type: Sequelize.INTEGER,
         allowNull: true,
         references: {
-          model: "Pmthreads",
-          key: "id",
+          model: 'Pmthreads',
+          key: 'id',
         }
       }
     )
@@ -17,7 +17,7 @@ module.exports = {
   down: (queryInterface, Sequelize) => {
     return queryInterface.removeColumn(
       'Messages',
-      'pm_threadId',
+      'PmthreadId',
       )
     }
   };

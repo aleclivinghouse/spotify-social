@@ -2,7 +2,7 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.addColumn(
       'Commentlikes',
-      'postcommentId',
+      'PostcommentId',
       {
         type: Sequelize.INTEGER,
         allowNull: true,
@@ -17,7 +17,7 @@ module.exports = {
   down: (queryInterface, Sequelize) => {
     return queryInterface.removeColumn(
       'Commentlikes',
-      'postcommentId',
+      'PostcommentId',
       )
     }
   };

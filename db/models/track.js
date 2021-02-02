@@ -6,6 +6,11 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
+    spotify_id: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
     title: {
       type: DataTypes.STRING,
       allowNull: false
@@ -33,11 +38,12 @@ module.exports = (sequelize, DataTypes) => {
 
   Track.associate = function (models) {
     Track.belongsToMany(models.User, { through: 'User_Favorite_Tracks'});
-    Track.belongsToMany(models.Artist, { through: 'Artist_Tracks'});
+    Track.belongsTo(models.Artist);
     Track.belongsTo(models.Album);
     Track.belongsToMany(models.Genre, { through: 'Track_Genres'});
-    Track.belongsToMany(models.Post, { as: "posts", through: 'Favorite_Tracks_By_An_Artist_Post'});
+    Track.belongsToMany(models.FavPost, { as: "posts", through: 'Favorite_Tracks_By_An_Artist_Post'});
     Track.hasMany(models.Image);
+    Track.hasMany(models.Post);
   }
   return Track;
 };

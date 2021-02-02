@@ -14,7 +14,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         primaryKey: true
       },
-      being_blockedId: {
+      being_blockedIId: {
         type: Sequelize.INTEGER,
         primaryKey: true
       }

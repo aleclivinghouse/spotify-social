@@ -6,6 +6,11 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
+    spotify_id: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+      },
     name: {
         type: DataTypes.STRING,
         allowNull: true
@@ -26,8 +31,8 @@ module.exports = (sequelize, DataTypes) => {
 
     Artist.associate = function(models){
       Artist.belongsToMany(models.User, { through: 'User_Favorite_Artists'});
-      Artist.belongsToMany(models.Album, { through: 'Album_Artists'});
-      Artist.belongsToMany(models.Track, { through: 'Artist_Tracks'});
+      Artist.hasMany(models.Album);
+      Artist.hasMany(models.Track);
       Artist.belongsToMany(models.Genre, { through: 'Artist_Genres'});
       Artist.hasMany(models.Post);
       Artist.hasMany(models.Image);

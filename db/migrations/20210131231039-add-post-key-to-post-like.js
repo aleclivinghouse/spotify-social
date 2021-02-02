@@ -2,13 +2,13 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.addColumn(
       'Postlikes',
-      'postId',
+      'PostId',
       {
         type: Sequelize.INTEGER,
         allowNull: true,
         references: {
-          model: "Posts",
-          key: "id"
+          model: 'Posts',
+          key: 'id'
         }
       }
     )
@@ -17,7 +17,7 @@ module.exports = {
   down: (queryInterface, Sequelize) => {
     return queryInterface.removeColumn(
       'Postlikes',
-      'postId',
+      'PostId',
       )
   }
 };

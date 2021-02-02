@@ -4,8 +4,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
 
   Postlike.associate = function(models){
-    Postlike.belongsTo(models.Post, {foreignKey: "post_id"});
-    Postlike.belongsTo(models.User, {foreignKey: "user_id"}); 
+    Postlike.belongsTo(models.Post);
+    Postlike.belongsTo(models.User); 
   }
   return Postlike;
 };

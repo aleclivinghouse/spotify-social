@@ -14,7 +14,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         primaryKey: true
       },
-      beingfollowedId: {
+      being_followedId: {
         type: Sequelize.INTEGER,
         primaryKey: true
       }

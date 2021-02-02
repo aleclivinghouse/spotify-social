@@ -12,10 +12,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
 
   Image.associate = function(models){
-    Image.belongsTo(models.Artist, {foreignKey: "artist_id"});
-    Image.belongsTo(models.Album, {foreignKey: "album_id"});
-    Image.belongsTo(models.Track, {foreignKey: "track_id"});
-    Image.belongsTo(models.Profile, {foreignKey: "profile_id"});
+    Image.belongsTo(models.Artist);
+    Image.belongsTo(models.Album);
+    Image.belongsTo(models.Track);
+    Image.belongsTo(models.Profile);
   }
   return Image;
 };

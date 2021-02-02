@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Pmthreads', {
+    return queryInterface.createTable('Favorite_Tracks_By_An_Artist_Posts', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,21 +12,13 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      moderator: {
+      text: {
         type: Sequelize.STRING,
         allowNull: false
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Pmthreads');
+    return queryInterface.dropTable('Favorite_Tracks_By_An_Artist_Posts');
   }
 };

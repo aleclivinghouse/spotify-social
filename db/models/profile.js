@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
 
   Profile.associate = function(models){
-    Profile.belongsTo(models.User, { foreignKey: 'user_id' });
+    Profile.belongsTo(models.User);
     Profile.hasMany(models.Image);
   }
   return Profile;

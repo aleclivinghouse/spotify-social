@@ -28,14 +28,13 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
 
   Post.associate = function(models){
-    Post.belongsTo(models.Artist, { foreignKey: 'artist_id' });
-    Post.belongsTo(models.User, { foreignKey: 'user_id' });
-    Post.belongsTo(models.Album, { as: "Recommend_Album", foreignKey: 'album_id' });
-    Post.belongsTo(models.Track, { as: "Recommend_Track", foreignKey: 'track_id' });
-    Post.belongsToMany(models.Track, { as: "By_Artist", through: 'Favorite_Tracks_By_An_Artist_Post', foreignKey: 'track_id' });
+    Post.belongsTo(models.Artist);
+    Post.belongsTo(models.User);
+    Post.belongsTo(models.Album);
+    Post.belongsTo(models.Track);
     Post.hasMany(models.Postcomment);
     Post.hasMany(models.Postlike);
-    Post.belongsToMany(models.Tag, { through: 'Post_Tags', foreignKey: 'tag_id' });
+    Post.belongsToMany(models.Tag, { through: 'Post_Tags'});
   }
   return Post;
 };

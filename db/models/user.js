@@ -13,25 +13,23 @@ module.exports = (sequelize, DataTypes) => {
     external_url: DataTypes.STRING,
     spotify_id: DataTypes.STRING,
     spotify_uri: DataTypes.STRING,
-    followersCount: DataTypes.INTEGER
+    followers_count: DataTypes.INTEGER
   }, {});
 
   User.associate = function(models){
-    User.hasOne(models.Profile, { foreignKey: 'profile_id' });
-    User.hasMany(models.Notification, {as: "user_notified"});
-    User.hasMany(models.Notification, {as: "user_mentioned"});
-    User.belongsToMany(models.Artist, { through: 'User_Favorite_Artists', foreignKey: "artist_id" });
-    User.belongsToMany(models.Album, { through: 'User_Favorite_Albums', foreignKey: "album_id" });
-    User.belongsToMany(models.Track, { through: 'User_Favorite_Tracks', foreignKey: "track_id" });
-    User.belongsToMany(models.Genre, { through: 'User_Favorite_Genres', foreignKey: "genre_id" });
-    User.belongsToMany(models.Pmthread, {through: "PM_Thread_Members", foreignKey: "pm_thread_id" });
-    User.hasMany(models.Pmthread, {as: "PM_Moderator"});
-    User.belongsToMany(models.User, { as: 'Being_Blocked', through: 'Blocks', foreignKey: 'blocker_id', onDelete: 'CASCADE'});
-    User.belongsToMany(models.User, { as: 'Blocker', through: 'Blocks', foreignKey: 'being_blocked_id', onDelete: 'CASCADE'});
-    User.belongsToMany(models.User, { as: 'Being_Followed', through: 'Follows', foreignKey: 'follower_id', onDelete: 'CASCADE'});
-    User.belongsToMany(models.User, { as: 'Follower', through: 'Follows', foreignKey: 'being_followed_id', onDelete: 'CASCADE'});
-    User.belongsToMany(models.User, { as: 'Inviter', through: 'PM_Invitations', foreignKey: 'being_invited_id', onDelete: 'CASCADE'});
-    User.belongsToMany(models.User, { as: 'Being_Invited', through: 'PM_Invitations', foreignKey: 'inviter_id', onDelete: 'CASCADE'});
+    User.hasOne(models.Profile);
+    User.hasMany(models.Notification);
+    User.belongsToMany(models.Artist, { through: 'User_Favorite_Artists'});
+    User.belongsToMany(models.Album, { through: 'User_Favorite_Albums' });
+    User.belongsToMany(models.Track, { through: 'User_Favorite_Tracks' });
+    User.belongsToMany(models.Genre, { through: 'User_Favorite_Genres'});
+    User.belongsToMany(models.Pmthread, {through: "PM_Thread_Members",});
+    User.belongsToMany(models.User, { as: 'Being_Blocked', through: 'Blocks', foreignKey: 'blockerId', onDelete: 'CASCADE'});
+    User.belongsToMany(models.User, { as: 'Blocker', through: 'Blocks', foreignKey: 'being_blockedId', onDelete: 'CASCADE'});
+    User.belongsToMany(models.User, { as: 'Being_Followed', through: 'Follows', foreignKey: 'followerId', onDelete: 'CASCADE'});
+    User.belongsToMany(models.User, { as: 'Follower', through: 'Follows', foreignKey: 'being_followedId', onDelete: 'CASCADE'});
+    User.belongsToMany(models.User, { as: 'Inviter', through: 'PM_Invitations', foreignKey: 'being_invitedId', onDelete: 'CASCADE'});
+    User.belongsToMany(models.User, { as: 'Being_Invited', through: 'PM_Invitations', foreignKey: 'inviterId', onDelete: 'CASCADE'});
     User.hasMany(models.Post);
     User.hasMany(models.Postcomment);
     User.hasMany(models.Postlike);

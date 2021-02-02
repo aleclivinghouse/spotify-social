@@ -8,6 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      spotify_id: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+      },
     name: {
         type: Sequelize.STRING,
         allowNull: false

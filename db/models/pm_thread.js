@@ -4,11 +4,13 @@ module.exports = (sequelize, DataTypes) => {
     title: {
       type: DataTypes.STRING,
       allowNull: false
-    }   
+    },
+    moderator: {
+      type: DataTypes.STRING,
+    },
   }, {});
 
   Pmthread.associate = function(models){
-    Pmthread.belongsTo(models.User, {as: "moderator", foreignKey: "moderator_id"});
     Pmthread.belongsToMany(models.User, { through: 'PM_Thread_Members' });
     Pmthread.hasMany(models.Message);
   }

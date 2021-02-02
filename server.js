@@ -5,6 +5,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 const users = require("./routes/api/users");
 const tracks = require("./routes/api/tracks");
+const albums = require("./routes/api/albums");
 const Sequelize = require('sequelize');
 const  db  = require('./db/models/index');
 const util = require('util');
@@ -63,6 +64,7 @@ db.Album.findAll().then((users) => {
 app.use(resolveCrossDomain);
 app.use("/api/users", users);
 app.use("/api/tracks", tracks);
+app.use("/api/albums", albums);
 
 const port = process.env.PORT || 5000;
 

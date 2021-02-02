@@ -1,23 +1,23 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.addColumn(
-      'Postcomments',
-      'PostId',
+      'Favorite_Tracks_By_An_Artist_Posts',
+      'ArtistId',
       {
         type: Sequelize.INTEGER,
         allowNull: true,
         references: {
-          model: 'Posts',
-          key: 'id'
+          model: 'Artists',
+          key: 'id',
         }
       }
     )
   },
-
+  
   down: (queryInterface, Sequelize) => {
     return queryInterface.removeColumn(
-      'Postcomments',
-      'PostId',
+      'Favorite_Tracks_By_An_Artist_Posts',
+      'ArtistId',
       )
-  }
+    }
 };

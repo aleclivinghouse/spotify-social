@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
 
   Message.associate = function(models){
-    Message.belongsTo(models.Pmthread, {foreignKey:"pm_thread_id"});
-    Message.belongsTo(models.User, {foreignKey: "user_id"});
+    Message.belongsTo(models.Pmthread);
+    Message.belongsTo(models.User);
   }
   return Message;
 };
