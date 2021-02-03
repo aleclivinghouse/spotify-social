@@ -91,25 +91,33 @@ const createTracks = (albumObj) => {
 }
 
 
-const createPosts = (userIds, artistIds, albumIds, trackIds) => {
+const createPosts = (tracks, userIds) => {
+  console.log("this is the tracks in create posts ", tracks);
   const types = ["fire_lyric", "recommend_a_track",  "rate_an_album", "recommend_an_artist"];
+  const posts = [];
   for(let i = 0; i < 250; i++){
+    let date = new Date();
     const randomTypeIndex = Math.floor(Math.random() * types.length) + 1;
-    const type = types[randomTypeIndex];
     const randomUserIndex = Math.floor(Math.random() * userIds.length) + 1;
-    const randomTrackIndex = Math.floor(Math.random() * trackIds.length) + 1;
-    const track = trackIds[rendomTrackIndex];
+    const randomTrackIndex = Math.floor(Math.random() * tracks.length) + 1;
+    const type = types[randomTypeIndex-1];
+    const track = tracks[randomTrackIndex-1];
+    console.log("this is the track with the random index ", track);
+    const user = userIds[randomUserIndex-1].id;
      //once we get the track we need to get the artist and album associated with that track
-
-    const randomAlbumIndex = Math.floor(Math.random() * albumIds.length) + 1;
-
+    let thePost = postSwitch(type, track, user);
+    thePost.createdAt = date;
+    thePost.updatedAt = date;
+    console.log("this is the post before it gets pushed ", thePost);
+    posts.push(thePost);
   }
+  return posts;
 }
 
 const createUsers = () => {
   let data = [];
-  let date = new Date();
   for(let i = 1; i <= 50; i++){
+    let date = new Date();
     data.push({
       display_name: `testuser${i}`,
       email: `testuser${i}@test.com`,
@@ -138,7 +146,9 @@ exports.up = async ( queryInterface, Sequelize ) => {
   const trackDump = await createTracks(albums);
   const tracks = await queryInterface.bulkInsert({tableName: 'Tracks'}, trackDump, {returning: ['id', 'title', 'ArtistId', 'AlbumId', 'spotify_id']});
   console.log("these are the tracks ", tracks);
-
+  const postDump = await createPosts(tracks, userIds);
+  const posts = await queryInterface.bulkInsert({tableName: 'Posts'}, postDump, {returning: true});
+  console.log("these are the posts ", posts);
 
   // //add the albums, return their id and name
   // const albumIds = await queryInterface.bulkInsert({tableName: 'Albums'}, spotifyObj.albums, {returning: ['id', 'name']});
@@ -149,6 +159,7 @@ exports.up = async ( queryInterface, Sequelize ) => {
 
 exports.down = async ( queryInterface ) => {
    await queryInterface.bulkDelete( 'Users', null, {} );
+   await queryInterface.bulkDelete( 'Posts', null, {} );
    await queryInterface.bulkDelete( 'Tracks', null, {} );
    await queryInterface.bulkDelete( 'Albums', null, {} );
    await queryInterface.bulkDelete( 'Artists', null, {} );
