@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   Postlike.associate = function(models){
     Postlike.belongsTo(models.Post);
     Postlike.belongsTo(models.User); 
+    Postlike.belongsTo(models.Repost); 
   }
   return Postlike;
 };

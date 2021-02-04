@@ -114,35 +114,82 @@ const createPosts = (tracks, userIds) => {
   return posts;
 }
 
-const createComments = (posts, userIds) => {
-  const comments = [];
-  for(let i = 0; i < posts.length * 4; i++){
-    const randomPostIndex =  Math.floor(Math.random() * posts.length) + 1;
-    const randomUserIndex = Math.floor(Math.random() * userIds.length) + 1;
+const createReposts = (posts, userIds) => {
+  console.log("this is the posts in reposts ", posts);
+  const theLength = Math.floor(posts.length/3);
+  const reposts = [];
+  for(let i = 0; i < theLength; i++){
     let date = new Date();
-    comments.push({
-      text: faker.lorem.sentence(),
-      UserId: userIds[randomUserIndex-1].id,
+    const randomPostIndex = Math.floor(Math.random() * posts.length) + 1;
+    const post = posts[randomPostIndex-1];
+    console.log("this is randomPost with randomPostIndex ", post);
+    const otherUserIds = userIds.filter(item => item.id !== posts[randomPostIndex-1].UserId);
+    const randomUserIndex = Math.floor(Math.random() * otherUserIds.length) + 1;
+    reposts.push({
+      title:  faker.lorem.sentence(),
+      text:  faker.lorem.sentence(),
+      UserId: otherUserIds[randomUserIndex-1].id,
       PostId: posts[randomPostIndex-1].id,
       createdAt: date,
       updatedAt: date
-    })
+    });
   }
-  return comments;
+  return reposts;
 }
 
-const createPostLikes = (posts, userIds) => {
-  const postLikes = [];
-  for(let i = 0; i < posts.length * 4; i++){
-    const randomPostIndex =  Math.floor(Math.random() * posts.length) + 1;
-    const randomUserIndex = Math.floor(Math.random() * userIds.length) + 1;
+const createComments = (posts, reposts, userIds) => {
+  const theLength  = posts.length * reposts.length;
+  const comments = [];
+  for(let i = 0; i < theLength * 2; i++){
     let date = new Date();
-    postLikes.push({
-      UserId: userIds[randomUserIndex-1].id,
-      PostId: posts[ randomPostIndex-1].id,
-      createdAt: date,
-      updatedAt: date
-    })
+    const randomType =  Math.floor(Math.random() * 3) + 1;
+    const randomPostIndex =  Math.floor(Math.random() * posts.length) + 1;
+    const randomRepostIndex =  Math.floor(Math.random() * reposts.length) + 1;
+    const randomUserIndex = Math.floor(Math.random() * userIds.length) + 1;
+    if(randomType !== 3){
+      comments.push({
+        text: faker.lorem.sentence(),
+        UserId: userIds[randomUserIndex-1].id,
+        PostId: posts[randomPostIndex-1].id,
+        createdAt: date,
+        updatedAt: date
+      })
+    } else {
+      comments.push({
+        text: faker.lorem.sentence(),
+        UserId: userIds[randomUserIndex-1].id,
+        RepostId: posts[randomRepostIndex-1].id,
+        createdAt: date,
+        updatedAt: date
+      })
+    }
+  }
+}
+
+const createPostLikes = (posts, resposts, userIds) => {
+  const theLength  = posts.length * reposts.length;
+  const postLikes = [];
+  for(let i = 0; i < theLength * 4; i++){
+    let date = new Date();
+    const randomPostIndex =  Math.floor(Math.random() * posts.length) + 1;
+    const randomRepostIndex =  Math.floor(Math.random() * reposts.length) + 1;
+    const randomUserIndex = Math.floor(Math.random() * userIds.length) + 1;
+    const randomType =  Math.floor(Math.random() * 3) + 1;
+    if(randomType !== 3){
+      postLikes.push({
+        UserId: userIds[randomUserIndex-1].id,
+        PostId: posts[ randomPostIndex-1].id,
+        createdAt: date,
+        updatedAt: date
+      })
+    } else {
+      postLikes.push({
+        UserId: userIds[randomUserIndex-1].id,
+        RepostId: posts[ randomRepostIndex-1].id,
+        createdAt: date,
+        updatedAt: date
+      })
+    }
   }
   return postLikes;
 }
@@ -165,7 +212,7 @@ const createCommentLikes = (comments, userIds) => {
 
 const createUsers = () => {
   let data = [];
-  for(let i = 1; i <= 50; i++){
+  for(let i = 1; i <= 25; i++){
     let date = new Date();
     data.push({
       display_name: `testuser${i}`,
@@ -179,11 +226,32 @@ const createUsers = () => {
   return data;
 }
 
+const createProfiles = (userIds) => {
+   const profiles = [];
+    userIds.forEach((item, index) => {
+      let date = new Date();
+      profiles.push({
+        bio: faker.lorem.sentence(),
+        cover_photo: "https://picsum.photos/500/800?random=1",
+        thumb_nail: "https://picsum.photos/200/200?random=1",
+        birth_date: date,
+        createdAt: date,
+        updatedAt: date,
+        UserId: item.id
+      })
+    });
+    return profiles;
+}
+
 exports.up = async ( queryInterface, Sequelize ) => {
   
   const theUsers = await createUsers();
   const userIds = await queryInterface.bulkInsert({tableName: 'Users'}, theUsers, {returning: ['id']});
   console.log("these are the user ids: ", userIds);
+
+  const profileDump = await createProfiles(userIds);
+  const profiles = await queryInterface.bulkInsert({tableName: 'Profiles'}, profileDump, {returning: true});
+  console.log("these are the profiles ", profiles);
 
   //add the the artists, return their id and name
   const artistDump = await createArtists();
@@ -197,21 +265,23 @@ exports.up = async ( queryInterface, Sequelize ) => {
  
   const postDump = await createPosts(tracks, userIds);
   const posts = await queryInterface.bulkInsert({tableName: 'Posts'}, postDump, {returning: ['id', 'UserId']});
+
+  const repostDump = await createReposts(posts, userIds);
+  const reposts = await queryInterface.bulkInsert({tableName: 'Reposts'}, repostDump, {returning: ['id', 'UserId']});
+  console.log("these are the reposts ", reposts);
  
   const commentDump = await createComments(posts, userIds);
   const comments = await queryInterface.bulkInsert({tableName: 'Postcomments'}, commentDump, {returning: ['id', 'UserId', 'PostId', 'text']});
   console.log("these are the comments:  ", comments);
-  console.log("its breaking after post comments ")
 
   const postLikesDump = await createPostLikes(posts, userIds);
   const postLikes = await queryInterface.bulkInsert({tableName: 'Postlikes'}, postLikesDump, {returning: ['id', 'UserId', 'PostId']});
   console.log("these are the post likes: ", postLikes);
-  console.log("its breaking after post comments ")
-
 
   const commentLikesDump = await createCommentLikes(comments, userIds);
   const commentLikes = await queryInterface.bulkInsert({tableName: 'Commentlikes'}, commentLikesDump, {returning: ['id', 'UserId', 'PostcommentId']});
-  console.log("these are the comment likes ", commentLikes);
+
+
   // //add the albums, return their id and name
   // const albumIds = await queryInterface.bulkInsert({tableName: 'Albums'}, spotifyObj.albums, {returning: ['id', 'name']});
   // console.log("these are the tracks")
@@ -220,7 +290,9 @@ exports.up = async ( queryInterface, Sequelize ) => {
 };
 
 exports.down = async ( queryInterface ) => {
-  await queryInterface.bulkDelete( 'Commentlikes', null, {} );
+   await queryInterface.bulkDelete( 'Reposts', null, {} );
+   await queryInterface.bulkDelete( 'Profiles', null, {} );
+   await queryInterface.bulkDelete( 'Commentlikes', null, {} );
    await queryInterface.bulkDelete( 'Postlikes', null, {} );
    await queryInterface.bulkDelete( 'Postcomments', null, {} );
    await queryInterface.bulkDelete( 'Posts', null, {} );

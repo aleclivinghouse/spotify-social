@@ -1,5 +1,8 @@
 //dark side, in utero, nevermind, stick fingers, beggars banquet, rubber soul, damn,
 //dookie
+
+//track doesnt naturally have the album_id, we 
+//have to add it to the object with req.query
 const trackList = [
   {
     "artists": [

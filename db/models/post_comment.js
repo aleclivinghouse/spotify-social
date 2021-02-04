@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     Postcomment.hasMany(models.Commentlike);
     Postcomment.belongsTo(models.User);
     Postcomment.belongsTo(models.Post);
+    Postcomment.belongsTo(models.Repost);
   }
   return Postcomment;
 };

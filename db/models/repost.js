@@ -3,27 +3,9 @@ module.exports = (sequelize, DataTypes) => {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
     title: {
         type: DataTypes.STRING,
-        allowNull: false
-      },
-      type: {
-        type: DataTypes.STRING,
-        allowNull: true
       },
       text: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      lyric_annotation: {
-        type: DataTypes.STRING,
-        allowNull: true
-      },
-      would_recommend: {
-        type: DataTypes.BOOLEAN,
-        allowNull: true
-      },
-      rating: {
-        type: DataTypes.DECIMAL(10, 1),
-        allowNull: true
+        type: DataTypes.STRING
       }
   }, {});
 
