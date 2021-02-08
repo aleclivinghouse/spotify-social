@@ -138,6 +138,9 @@ const createReposts = (posts, userIds) => {
 }
 
 const createComments = (posts, reposts, userIds) => {
+  console.log("first post in createComments ", posts[0]);
+  console.log("first repost in createComments ", reposts[0]);
+  console.log("first user in createComments ", userIds[0]);
   const theLength  = posts.length * reposts.length;
   const comments = [];
   for(let i = 0; i < theLength * 2; i++){
@@ -158,15 +161,16 @@ const createComments = (posts, reposts, userIds) => {
       comments.push({
         text: faker.lorem.sentence(),
         UserId: userIds[randomUserIndex-1].id,
-        RepostId: posts[randomRepostIndex-1].id,
+        RepostId: reposts[randomRepostIndex-1].id,
         createdAt: date,
         updatedAt: date
       })
     }
   }
+  return comments;
 }
 
-const createPostLikes = (posts, resposts, userIds) => {
+const createPostLikes = (posts, reposts, userIds) => {
   const theLength  = posts.length * reposts.length;
   const postLikes = [];
   for(let i = 0; i < theLength * 4; i++){
@@ -229,6 +233,7 @@ const createUsers = () => {
 const createProfiles = (userIds) => {
    const profiles = [];
     userIds.forEach((item, index) => {
+      console.log("this is the item in profile forEach ", item);
       let date = new Date();
       profiles.push({
         bio: faker.lorem.sentence(),
@@ -250,7 +255,7 @@ exports.up = async ( queryInterface, Sequelize ) => {
   console.log("these are the user ids: ", userIds);
 
   const profileDump = await createProfiles(userIds);
-  const profiles = await queryInterface.bulkInsert({tableName: 'Profiles'}, profileDump, {returning: true});
+  const profiles = await queryInterface.bulkInsert({tableName: 'Profiles'}, profileDump, {returning: ['id', 'bio', 'birth_date']});
   console.log("these are the profiles ", profiles);
 
   //add the the artists, return their id and name
@@ -265,16 +270,17 @@ exports.up = async ( queryInterface, Sequelize ) => {
  
   const postDump = await createPosts(tracks, userIds);
   const posts = await queryInterface.bulkInsert({tableName: 'Posts'}, postDump, {returning: ['id', 'UserId']});
+  console.log(" these are the posts length ", posts.length);
 
   const repostDump = await createReposts(posts, userIds);
   const reposts = await queryInterface.bulkInsert({tableName: 'Reposts'}, repostDump, {returning: ['id', 'UserId']});
   console.log("these are the reposts ", reposts);
  
-  const commentDump = await createComments(posts, userIds);
+  const commentDump = await createComments(posts, reposts, userIds);
   const comments = await queryInterface.bulkInsert({tableName: 'Postcomments'}, commentDump, {returning: ['id', 'UserId', 'PostId', 'text']});
   console.log("these are the comments:  ", comments);
 
-  const postLikesDump = await createPostLikes(posts, userIds);
+  const postLikesDump = await createPostLikes(posts, reposts, userIds);
   const postLikes = await queryInterface.bulkInsert({tableName: 'Postlikes'}, postLikesDump, {returning: ['id', 'UserId', 'PostId']});
   console.log("these are the post likes: ", postLikes);
 
