@@ -377,10 +377,71 @@ const createPmThreads = (userIds) => {
   return pmThreads;
 }
 
-const createPmThreadMembers = (pmThreads, following, followers) => {
+const findMutualFollows = (follows) => {
+  const mutualFollows = [];
+  follows.forEach((item) => {
+    const otherFollows = follows.filter(follow => item.being_followedId !== follow.being_followedId &&  item.followerId !== follow.followerId);
+    otherFollows.forEach((itemTwo) => {
+      console.log("other follows fired ");
+      const innerArray = [];
+      if(item.being_followedId === itemTwo.followerId || item.followerId === itemTwo.being_followed){
+          innerArray.push(item.being_followedId); 
+          innerArray.push(item.followerId);
+          const alreadyExists = checkIfAlreadyExists(mutualFollows, innerArray);
+          if(alreadyExists === "false"){
+            mutualFollows.push(innerArray);
+          } else {
+            console.log("already entered fired");
+          }
+        }
+    })
+  })
+  console.log("this is mutual Follows at the end ", mutualFollows);
+  return mutualFollows;
+}
+
+const checkIfAlreadyExists = (array, subArray) => {
+  let map = new Map();
+  let flag = "false";
+  map.set(subArray[0], 1);
+  map.set(subArray[1], 1);
+  array.forEach((item) => {
+    if(map.has(item[0])){
+      flag = "true";
+    }
+    if(map.has(item[1])){
+      flag = "true";
+    }
+  });
+  return flag;
+}
+
+const createPmThreadMembers = (pmThreads, follows) => {
+  console.log("PmThreadMembers firing ");
   const pmThreadMembers = [];
-  for(let i = 0; i < pmThreads.length; i++){
-    const randomNumOfUsers = Math.floor(Math.random() * 6) + 1;
+  const mutualFollowsArray = findMutualFollows(follows);
+  let theLength;
+  if(mutualFollowsArray.length < pmThreads.length){
+    theLength = mutualFollowsArray.length;
+  } else {
+    theLength = pmThreads.length;
+  }
+  for(let i = 0; i < theLength; i++){
+    console.log("this is user id in first pmThread members ", mutualFollowsArray[i][0]);
+    console.log("this is user id in second pmThread members ", mutualFollowsArray[i][1]);
+    let date = new Date();
+    pmThreadMembers.push({
+      createdAt: date,
+      updatedAt: date,
+      PmthreadId: pmThreads[i].id,
+      UserId: mutualFollowsArray[i][0]
+    })
+    pmThreadMembers.push({
+      createdAt: date,
+      updatedAt: date,
+      PmthreadId: pmThreads[i].id,
+      UserId: mutualFollowsArray[i][1]
+    })
   }
   return pmThreadMembers;
 }
@@ -447,11 +508,17 @@ exports.up = async ( queryInterface, Sequelize ) => {
   const follows = await queryInterface.bulkInsert({tableName: 'Follows'}, followsDump, {returning: ['followerId', 'being_followedId']});
   console.log("these are the follows ", follows);
   // //we will do this once following and followers is seedeed
-  // const pmThreadMembersDump = await createPmThreadMembers(pmThreads, following, followers);
-  // const pmThreadMembers = await queryInterface.bulkInsert({tableName: 'PM_Thread_Members'}, pmThreadMembersDump, {returning: ['id']});
+  const pmThreadMembersDump = await createPmThreadMembers(pmThreads, follows);
+  const pmThreadMembers = await queryInterface.bulkInsert({tableName: 'PM_Thread_Members'}, pmThreadMembersDump, {returning: ['PmthreadId', 'UserId']});
+  console.log("these are the pm thread members ", pmThreadMembers);
+  
 };
 
 exports.down = async ( queryInterface ) => {
+   await queryInterface.bulkDelete( 'Pmthreads', null, {} );
+   await queryInterface.bulkDelete( 'Follows', null, {} );
+   await queryInterface.bulkDelete( 'PM_Thread_Members', null, {} );
+   await queryInterface.bulkDelete( 'Tags', null, {} );
    await queryInterface.bulkDelete( 'Post_Tags', null, {} );
    await queryInterface.bulkDelete( 'Tags', null, {} );
    await queryInterface.bulkDelete( 'Profiles', null, {} );
