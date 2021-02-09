@@ -95,7 +95,7 @@ const createPosts = (tracks, userIds) => {
   console.log("this is the tracks in create posts ", tracks);
   const types = ["fire_lyric", "recommend_a_track",  "rate_an_album", "recommend_an_artist"];
   const posts = [];
-  for(let i = 0; i < 250; i++){
+  for(let i = 0; i < 160; i++){
     let date = new Date();
     const randomTypeIndex = Math.floor(Math.random() * types.length) + 1;
     const randomUserIndex = Math.floor(Math.random() * userIds.length) + 1;
@@ -189,7 +189,7 @@ const createPostLikes = (posts, reposts, userIds) => {
     } else {
       postLikes.push({
         UserId: userIds[randomUserIndex-1].id,
-        RepostId: posts[ randomRepostIndex-1].id,
+        RepostId: reposts[randomRepostIndex-1].id,
         createdAt: date,
         updatedAt: date
       })
@@ -228,6 +228,37 @@ const createUsers = () => {
     });
   }
   return data;
+}
+
+const createPostTags = (posts, tags) => {
+  const postTags = [];
+  for(let i = 0; i < posts.length; i++){
+    let shuffledTags = tags.sort(() => 0.5 - Math.random());
+    let selected = shuffledTags.slice(0, 3);
+    let date = new Date();
+    for(let j = 0; j < selected.length-1; j++){
+      postTags.push({
+        TagId: selected[j].id,
+        PostId: posts[i].id,
+        createdAt: date,
+        updatedAt: date
+      })
+    }
+  }
+  return postTags;
+}
+
+const createTags = () => {
+  const tags = [];
+  for(let i = 0; i < 25; i++){
+    let date = new Date();
+    tags.push({
+      title: faker.hacker.adjective(),
+      createdAt: date,
+      updatedAt: date
+    })
+  }
+  return tags;
 }
 
 const createProfiles = (userIds) => {
@@ -269,7 +300,7 @@ exports.up = async ( queryInterface, Sequelize ) => {
   const tracks = await queryInterface.bulkInsert({tableName: 'Tracks'}, trackDump, {returning: ['id', 'title', 'ArtistId', 'AlbumId', 'spotify_id']});
  
   const postDump = await createPosts(tracks, userIds);
-  const posts = await queryInterface.bulkInsert({tableName: 'Posts'}, postDump, {returning: ['id', 'UserId']});
+  let posts = await queryInterface.bulkInsert({tableName: 'Posts'}, postDump, {returning: ['id', 'UserId']});
   console.log(" these are the posts length ", posts.length);
 
   const repostDump = await createReposts(posts, userIds);
@@ -281,26 +312,30 @@ exports.up = async ( queryInterface, Sequelize ) => {
   console.log("these are the comments:  ", comments);
 
   const postLikesDump = await createPostLikes(posts, reposts, userIds);
-  const postLikes = await queryInterface.bulkInsert({tableName: 'Postlikes'}, postLikesDump, {returning: ['id', 'UserId', 'PostId']});
+  const postLikes = await queryInterface.bulkInsert({tableName: 'Postlikes'}, postLikesDump, {returning: ['id', 'UserId']});
   console.log("these are the post likes: ", postLikes);
 
   const commentLikesDump = await createCommentLikes(comments, userIds);
   const commentLikes = await queryInterface.bulkInsert({tableName: 'Commentlikes'}, commentLikesDump, {returning: ['id', 'UserId', 'PostcommentId']});
 
+  const tagsDump = await createTags();
+  let tags = await queryInterface.bulkInsert({tableName: 'Tags'}, tagsDump, {returning: ['id', 'title']});
+  console.log("these are the tags ", tags);
+  
+  const postTagsDump = await createPostTags(posts, tags);
+  const postTags = await queryInterface.bulkInsert({tableName: 'Post_Tags'}, postTagsDump, {returning: ['PostId', 'TagId']});
+  console.log("these are the post tags ", postTags);
 
-  // //add the albums, return their id and name
-  // const albumIds = await queryInterface.bulkInsert({tableName: 'Albums'}, spotifyObj.albums, {returning: ['id', 'name']});
-  // console.log("these are the tracks")
-
-  // const trackIds = await queryInterface.bulkInsert({tableName: 'Tracks'}, spotifyObj.tracks, {returning: ['id', 'AlbumId', 'ArtistId']});
 };
 
 exports.down = async ( queryInterface ) => {
-   await queryInterface.bulkDelete( 'Reposts', null, {} );
+   await queryInterface.bulkDelete( 'Post_Tags', null, {} );
+   await queryInterface.bulkDelete( 'Tags', null, {} );
    await queryInterface.bulkDelete( 'Profiles', null, {} );
    await queryInterface.bulkDelete( 'Commentlikes', null, {} );
    await queryInterface.bulkDelete( 'Postlikes', null, {} );
    await queryInterface.bulkDelete( 'Postcomments', null, {} );
+   await queryInterface.bulkDelete( 'Reposts', null, {} );
    await queryInterface.bulkDelete( 'Posts', null, {} );
    await queryInterface.bulkDelete( 'Users', null, {} );
    await queryInterface.bulkDelete( 'Tracks', null, {} );
