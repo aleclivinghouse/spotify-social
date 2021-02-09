@@ -307,6 +307,29 @@ const createPostFavoriteTracks = (favoriteTracksByAnArtistPosts, tracks) => {
   return postFavoriteTracks;
 }
 
+const createFollows = (userIds) => {
+  const follows = [];
+  
+  userIds.forEach((item, index) => {
+    console.log("this is item ", item);
+    let date = new Date();
+    const randomNumOfFollowers = Math.floor(Math.random() * 6) + 2;
+    const otherUsers = userIds.filter(user => user.id !== item.id);
+    const shuffledOtherUsers = otherUsers.sort(() => 0.5 - Math.random());
+    const selected = shuffledOtherUsers.slice(0, randomNumOfFollowers);
+    selected.forEach((select, selectIndex) => {
+      console.log("this is select ", select);
+      follows.push({
+        followerId: select.id,
+        being_followedId: item.id,
+        createdAt: date,
+        updatedAt: date
+      });
+    });
+  });
+  return follows;
+}
+
 const createTags = () => {
   const tags = [];
   for(let i = 0; i < 25; i++){
@@ -352,6 +375,14 @@ const createPmThreads = (userIds) => {
     })
   }
   return pmThreads;
+}
+
+const createPmThreadMembers = (pmThreads, following, followers) => {
+  const pmThreadMembers = [];
+  for(let i = 0; i < pmThreads.length; i++){
+    const randomNumOfUsers = Math.floor(Math.random() * 6) + 1;
+  }
+  return pmThreadMembers;
 }
 
 exports.up = async ( queryInterface, Sequelize ) => {
@@ -412,6 +443,12 @@ exports.up = async ( queryInterface, Sequelize ) => {
   const pmThreads = await queryInterface.bulkInsert({tableName: 'Pmthreads'}, PmThreadDump, {returning: ['id']});
   console.log("these are the pm threads ", pmThreads);
 
+  const followsDump = await createFollows(userIds);
+  const follows = await queryInterface.bulkInsert({tableName: 'Follows'}, followsDump, {returning: ['followerId', 'being_followedId']});
+  console.log("these are the follows ", follows);
+  // //we will do this once following and followers is seedeed
+  // const pmThreadMembersDump = await createPmThreadMembers(pmThreads, following, followers);
+  // const pmThreadMembers = await queryInterface.bulkInsert({tableName: 'PM_Thread_Members'}, pmThreadMembersDump, {returning: ['id']});
 };
 
 exports.down = async ( queryInterface ) => {
