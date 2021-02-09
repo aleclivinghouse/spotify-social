@@ -114,6 +114,27 @@ const createPosts = (tracks, userIds) => {
   return posts;
 }
 
+const createFavoriteTracksByAnArtistPost = (tracks, userIds) => {
+  const posts = [];
+  for(let i = 0; i < 25; i++){
+    let date = new Date();
+    const randomUserIndex = Math.floor(Math.random() * userIds.length) + 1;
+    const randomTrackIndex = Math.floor(Math.random() * tracks.length) + 1;
+    const artist = tracks[randomTrackIndex-1].ArtistId;
+    const user = userIds[randomUserIndex-1].id;
+    posts.push({
+      title:  faker.lorem.words(),
+      text:  faker.lorem.sentence(),
+      UserId: user,
+      ArtistId: artist,
+      createdAt: date,
+      updatedAt: date
+    })
+  }
+  return posts;
+}
+
+
 const createReposts = (posts, userIds) => {
   console.log("this is the posts in reposts ", posts);
   const theLength = Math.floor(posts.length/3);
@@ -137,19 +158,20 @@ const createReposts = (posts, userIds) => {
   return reposts;
 }
 
-const createComments = (posts, reposts, userIds) => {
+const createComments = (posts, reposts, favoriteTracksByAnArtistPosts, userIds) => {
   console.log("first post in createComments ", posts[0]);
   console.log("first repost in createComments ", reposts[0]);
   console.log("first user in createComments ", userIds[0]);
-  const theLength  = posts.length * reposts.length;
+  const theLength  = posts.length + reposts.length;
   const comments = [];
   for(let i = 0; i < theLength * 2; i++){
     let date = new Date();
-    const randomType =  Math.floor(Math.random() * 3) + 1;
+    const randomType =  Math.floor(Math.random() * 5) + 1;
     const randomPostIndex =  Math.floor(Math.random() * posts.length) + 1;
+    const randomTracksByAnArtistPostIndex =  Math.floor(Math.random() * favoriteTracksByAnArtistPosts.length) + 1;
     const randomRepostIndex =  Math.floor(Math.random() * reposts.length) + 1;
     const randomUserIndex = Math.floor(Math.random() * userIds.length) + 1;
-    if(randomType !== 3){
+    if(randomType !== 3 && randomType !== 5){
       comments.push({
         text: faker.lorem.sentence(),
         UserId: userIds[randomUserIndex-1].id,
@@ -157,7 +179,15 @@ const createComments = (posts, reposts, userIds) => {
         createdAt: date,
         updatedAt: date
       })
-    } else {
+    }else if(randomType !== 5){
+      comments.push({
+        text: faker.lorem.sentence(),
+        UserId: userIds[randomUserIndex-1].id,
+        Favorite_Tracks_By_An_Artist_PostId: favoriteTracksByAnArtistPosts[randomTracksByAnArtistPostIndex-1].id,
+        createdAt: date,
+        updatedAt: date
+      })
+    }else {
       comments.push({
         text: faker.lorem.sentence(),
         UserId: userIds[randomUserIndex-1].id,
@@ -170,19 +200,27 @@ const createComments = (posts, reposts, userIds) => {
   return comments;
 }
 
-const createPostLikes = (posts, reposts, userIds) => {
-  const theLength  = posts.length * reposts.length;
+const createPostLikes = (posts, reposts, favoriteTracksByAnArtistPosts, userIds) => {
+  const theLength  = posts.length + reposts.length;
   const postLikes = [];
   for(let i = 0; i < theLength * 4; i++){
     let date = new Date();
     const randomPostIndex =  Math.floor(Math.random() * posts.length) + 1;
     const randomRepostIndex =  Math.floor(Math.random() * reposts.length) + 1;
     const randomUserIndex = Math.floor(Math.random() * userIds.length) + 1;
-    const randomType =  Math.floor(Math.random() * 3) + 1;
-    if(randomType !== 3){
+    const randomTracksByAnArtistPostIndex =  Math.floor(Math.random() * favoriteTracksByAnArtistPosts.length) + 1;
+    const randomType =  Math.floor(Math.random() * 5) + 1;
+    if(randomType !== 3 && randomType !== 5){
       postLikes.push({
         UserId: userIds[randomUserIndex-1].id,
         PostId: posts[ randomPostIndex-1].id,
+        createdAt: date,
+        updatedAt: date
+      })
+    } else if(randomType !==5){
+      postLikes.push({
+        UserId: userIds[randomUserIndex-1].id,
+        Favorite_Tracks_By_An_Artist_PostId: favoriteTracksByAnArtistPosts[randomTracksByAnArtistPostIndex-1].id,
         createdAt: date,
         updatedAt: date
       })
@@ -248,6 +286,25 @@ const createPostTags = (posts, tags) => {
   return postTags;
 }
 
+const createPostFavoriteTracks = (favoriteTracksByAnArtistPosts, tracks) => {
+  const postFavoriteTracks = [];
+  for(let i = 0; i < favoriteTracksByAnArtistPosts.length; i++){
+    tracks = tracks.filter(item => item.ArtistId === favoriteTracksByAnArtistPosts[i].ArtistId);
+    let shuffledTracks = tracks.sort(() => 0.5 - Math.random());
+    let selected = shuffledTracks.slice(0, 2);
+    for(let j = 0; j < selected.length-1; j++){
+      let date = new Date();
+      postFavoriteTracks.push({
+        TrackId: selected[j].id,
+        Favorite_Tracks_By_An_Artist_PostId: favoriteTracksByAnArtistPosts[i].id,
+        createdAt: date,
+        updatedAt: date
+      })
+    }
+  }
+  return postFavoriteTracks;
+}
+
 const createTags = () => {
   const tags = [];
   for(let i = 0; i < 25; i++){
@@ -279,6 +336,21 @@ const createProfiles = (userIds) => {
     return profiles;
 }
 
+const createPmThreads = (userIds) => {
+  const pmThreads = [];
+  for(let i = 0; i < userIds.length *3; i++){
+    const randomUserIndex = Math.floor(Math.random() * userIds.length) + 1;
+    let date = new Date();
+    pmThreads.push({
+      title: faker.lorem.words(),
+      moderator: userIds[randomUserIndex].id,
+      createdAt: date,
+      updatedAt: date
+    })
+  }
+  return pmThreads;
+}
+
 exports.up = async ( queryInterface, Sequelize ) => {
   
   const theUsers = await createUsers();
@@ -303,15 +375,22 @@ exports.up = async ( queryInterface, Sequelize ) => {
   let posts = await queryInterface.bulkInsert({tableName: 'Posts'}, postDump, {returning: ['id', 'UserId']});
   console.log(" these are the posts length ", posts.length);
 
+  const favoriteTracksByAnArtistPostDump = await createFavoriteTracksByAnArtistPost(tracks, userIds);
+  const favoriteTracksByAnArtistPosts = await queryInterface.bulkInsert({tableName: 'Favorite_Tracks_By_An_Artist_Posts'}, favoriteTracksByAnArtistPostDump, {returning: ['id', 'UserId', 'ArtistId']});
+
+  const postFavoriteTracksDump = await createPostFavoriteTracks(favoriteTracksByAnArtistPosts, tracks);
+  const postFavoriteTracks = await queryInterface.bulkInsert({tableName: 'Post_Favorite_Tracks'}, postFavoriteTracksDump, {returning: ['Favorite_Tracks_By_An_Artist_PostId', 'TrackId']});
+  console.log("this is post favorite tracks ", postFavoriteTracks);
+
   const repostDump = await createReposts(posts, userIds);
   const reposts = await queryInterface.bulkInsert({tableName: 'Reposts'}, repostDump, {returning: ['id', 'UserId']});
   console.log("these are the reposts ", reposts);
  
-  const commentDump = await createComments(posts, reposts, userIds);
+  const commentDump = await createComments(posts, reposts, favoriteTracksByAnArtistPosts, userIds);
   const comments = await queryInterface.bulkInsert({tableName: 'Postcomments'}, commentDump, {returning: ['id', 'UserId', 'PostId', 'text']});
   console.log("these are the comments:  ", comments);
 
-  const postLikesDump = await createPostLikes(posts, reposts, userIds);
+  const postLikesDump = await createPostLikes(posts, reposts, favoriteTracksByAnArtistPosts, userIds);
   const postLikes = await queryInterface.bulkInsert({tableName: 'Postlikes'}, postLikesDump, {returning: ['id', 'UserId']});
   console.log("these are the post likes: ", postLikes);
 
@@ -326,6 +405,10 @@ exports.up = async ( queryInterface, Sequelize ) => {
   const postTags = await queryInterface.bulkInsert({tableName: 'Post_Tags'}, postTagsDump, {returning: ['PostId', 'TagId']});
   console.log("these are the post tags ", postTags);
 
+  const PmThreadDump = await createPmThreads(userIds);
+  const pmThreads = await queryInterface.bulkInsert({tableName: 'Pmthreads'}, postTagsDump, {returning: ['id']});
+  console.log("these are the pm threads ", pmThreads);
+
 };
 
 exports.down = async ( queryInterface ) => {
@@ -337,6 +420,8 @@ exports.down = async ( queryInterface ) => {
    await queryInterface.bulkDelete( 'Postcomments', null, {} );
    await queryInterface.bulkDelete( 'Reposts', null, {} );
    await queryInterface.bulkDelete( 'Posts', null, {} );
+   await queryInterface.bulkDelete( 'Favorite_Tracks_By_An_Artist_Posts', null, {} );
+   await queryInterface.bulkDelete( 'Post_Favorite_Tracks', null, {} );
    await queryInterface.bulkDelete( 'Users', null, {} );
    await queryInterface.bulkDelete( 'Tracks', null, {} );
    await queryInterface.bulkDelete( 'Albums', null, {} );

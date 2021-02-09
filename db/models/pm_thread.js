@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     moderator: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
     },
   }, {});
 
