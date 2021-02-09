@@ -4,9 +4,25 @@ const albumList = require("../seed-helpers/album-seed-helper").albumList;
 const trackList = require("../seed-helpers/track-seed-helper").trackList;
 const postSwitch = require("../seed-helpers/post-seed-switch").postSwitch;
 
+function randomDate(){
+  function randomValueBetween(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+  var date1 = '01-01-2019'
+  var date2 = new Date();
+  date1 = new Date(date1).getTime()
+  date2 = new Date(date2).getTime()
+  if( date1>date2){
+      return new Date(randomValueBetween(date2,date1));
+  } else{
+      return new Date(randomValueBetween(date1, date2));
+
+  }
+}
+
 const createArtists = () => {
   let data = [];
-  let date = new Date();
+  let date = randomDate();
   const artists = [];
   for(let i=0; i < artistList.length; i++){
       artists.push({
@@ -46,7 +62,7 @@ const createAlbums = (artistObj) => {
   for(let i=0; i < albumList.length; i++){
     for(let j=0; j < artistList.length; j++){
       if(albumList[i].artists[0].name === artistList[j].name){
-        let date = new Date();
+        let date = randomDate();
         const artistId = findId(artistObj, artistList[j].name);
         albums.push({
           spotify_id: albumList[i].id,
@@ -96,7 +112,7 @@ const createPosts = (tracks, userIds) => {
   const types = ["fire_lyric", "recommend_a_track",  "rate_an_album", "recommend_an_artist"];
   const posts = [];
   for(let i = 0; i < 160; i++){
-    let date = new Date();
+    let date = randomDate();
     const randomTypeIndex = Math.floor(Math.random() * types.length) + 1;
     const randomUserIndex = Math.floor(Math.random() * userIds.length) + 1;
     const randomTrackIndex = Math.floor(Math.random() * tracks.length) + 1;
@@ -117,7 +133,7 @@ const createPosts = (tracks, userIds) => {
 const createFavoriteTracksByAnArtistPost = (tracks, userIds) => {
   const posts = [];
   for(let i = 0; i < 25; i++){
-    let date = new Date();
+    let date = randomDate();
     const randomUserIndex = Math.floor(Math.random() * userIds.length) + 1;
     const randomTrackIndex = Math.floor(Math.random() * tracks.length) + 1;
     const artist = tracks[randomTrackIndex-1].ArtistId;
@@ -140,7 +156,7 @@ const createReposts = (posts, userIds) => {
   const theLength = Math.floor(posts.length/3);
   const reposts = [];
   for(let i = 0; i < theLength; i++){
-    let date = new Date();
+    let date = randomDate();
     const randomPostIndex = Math.floor(Math.random() * posts.length) + 1;
     const post = posts[randomPostIndex-1];
     console.log("this is randomPost with randomPostIndex ", post);
@@ -165,7 +181,7 @@ const createComments = (posts, reposts, favoriteTracksByAnArtistPosts, userIds) 
   const theLength  = posts.length + reposts.length;
   const comments = [];
   for(let i = 0; i < theLength * 2; i++){
-    let date = new Date();
+    let date = randomDate();
     const randomType =  Math.floor(Math.random() * 5) + 1;
     const randomPostIndex =  Math.floor(Math.random() * posts.length) + 1;
     const randomTracksByAnArtistPostIndex =  Math.floor(Math.random() * favoriteTracksByAnArtistPosts.length) + 1;
@@ -204,7 +220,7 @@ const createPostLikes = (posts, reposts, favoriteTracksByAnArtistPosts, userIds)
   const theLength  = posts.length + reposts.length;
   const postLikes = [];
   for(let i = 0; i < theLength * 4; i++){
-    let date = new Date();
+    let date = randomDate();
     const randomPostIndex =  Math.floor(Math.random() * posts.length) + 1;
     const randomRepostIndex =  Math.floor(Math.random() * reposts.length) + 1;
     const randomUserIndex = Math.floor(Math.random() * userIds.length) + 1;
@@ -241,7 +257,7 @@ const createCommentLikes = (comments, userIds) => {
   for(let i = 0; i < comments.length * 2; i++){
     const randomCommentIndex =  Math.floor(Math.random() * comments.length) + 1;
     const randomUserIndex = Math.floor(Math.random() * userIds.length) + 1;
-    let date = new Date();
+    let date = randomDate();
     commentLikes.push({
       UserId: userIds[randomUserIndex-1].id,
       PostcommentId: comments[ randomCommentIndex-1].id,
@@ -255,7 +271,7 @@ const createCommentLikes = (comments, userIds) => {
 const createUsers = () => {
   let data = [];
   for(let i = 1; i <= 25; i++){
-    let date = new Date();
+    let date = randomDate();
     data.push({
       display_name: `testuser${i}`,
       email: `testuser${i}@test.com`,
@@ -273,7 +289,7 @@ const createPostTags = (posts, tags) => {
   for(let i = 0; i < posts.length; i++){
     let shuffledTags = tags.sort(() => 0.5 - Math.random());
     let selected = shuffledTags.slice(0, 3);
-    let date = new Date();
+    let date = randomDate();
     for(let j = 0; j < selected.length-1; j++){
       postTags.push({
         TagId: selected[j].id,
@@ -295,7 +311,7 @@ const createPostFavoriteTracks = (favoriteTracksByAnArtistPosts, tracks) => {
     let selected = shuffledTracks.slice(0, 2);
     for(let j = 0; j < selected.length-1; j++){
       console.log("iteration j", j);
-      let date = new Date();
+      let date = randomDate();
       postFavoriteTracks.push({
         TrackId: selected[j].id,
         Favorite_Tracks_By_An_Artist_PostId: favoriteTracksByAnArtistPosts[i].id,
@@ -312,7 +328,7 @@ const createFollows = (userIds) => {
   
   userIds.forEach((item, index) => {
     console.log("this is item ", item);
-    let date = new Date();
+    let date = randomDate();
     const randomNumOfFollowers = Math.floor(Math.random() * 6) + 2;
     const otherUsers = userIds.filter(user => user.id !== item.id);
     const shuffledOtherUsers = otherUsers.sort(() => 0.5 - Math.random());
@@ -333,7 +349,7 @@ const createFollows = (userIds) => {
 const createTags = () => {
   const tags = [];
   for(let i = 0; i < 25; i++){
-    let date = new Date();
+    let date = randomDate();
     tags.push({
       title: faker.hacker.adjective(),
       createdAt: date,
@@ -347,7 +363,7 @@ const createProfiles = (userIds) => {
    const profiles = [];
     userIds.forEach((item, index) => {
       console.log("this is the item in profile forEach ", item);
-      let date = new Date();
+      let date = randomDate();
       profiles.push({
         bio: faker.lorem.sentence(),
         cover_photo: "https://picsum.photos/500/800?random=1",
@@ -366,10 +382,9 @@ const createPmThreads = (userIds) => {
   const pmThreads = [];
   for(let i = 0; i < userIds.length *3; i++){
     const randomUserIndex = Math.floor(Math.random() * userIds.length) + 1;
-    let date = new Date();
+    let date = randomDate();
     pmThreads.push({
       title: faker.lorem.words(),
-      moderator: userIds[randomUserIndex-1].id,
       createdAt: date,
       updatedAt: date
     })
@@ -377,6 +392,24 @@ const createPmThreads = (userIds) => {
   return pmThreads;
 }
 
+const createMessages = (pmThreadMembers, pmThreads) => {
+  const messages = [];
+  //for each pm thread, create 5-8 messages from the pmThreads users
+  pmThreads.forEach((pmThread) => {
+   const theMembers = pmThreadMembers.filter(member => member.PmthreadId === pmThread.id);
+   theMembers.forEach((member) => {
+    let date = randomDate();
+     messages.push({
+      createdAt: date,
+      updatedAt: date,
+      text: faker.lorem.sentence(),
+      PmthreadId: pmThread.id,
+      UserId: member.UserId
+     });
+   });
+  });
+  return messages;
+}
 const findMutualFollows = (follows) => {
   const mutualFollows = [];
   follows.forEach((item) => {
@@ -429,7 +462,7 @@ const createPmThreadMembers = (pmThreads, follows) => {
   for(let i = 0; i < theLength; i++){
     console.log("this is user id in first pmThread members ", mutualFollowsArray[i][0]);
     console.log("this is user id in second pmThread members ", mutualFollowsArray[i][1]);
-    let date = new Date();
+    let date = randomDate();
     pmThreadMembers.push({
       createdAt: date,
       updatedAt: date,
@@ -445,6 +478,64 @@ const createPmThreadMembers = (pmThreads, follows) => {
   }
   return pmThreadMembers;
 }
+
+const createUserFavoriteArtists = (userIds, artists) => {
+  const userFavoriteArtists = [];
+  userIds.forEach((user) => {
+    const randomNumOfArtists = Math.floor(Math.random() * 3) + 2;
+    const shuffleArtists = artists.sort(() => 0.5 - Math.random());
+    const selected = shuffleArtists.slice(0, randomNumOfArtists);
+    selected.forEach((artist) => {
+      let date = randomDate();
+      userFavoriteArtists.push({
+        createdAt: date,
+        updatedAt: date,
+        ArtistId: artist.id,
+        UserId: user.id
+      });
+    });
+  });
+  return userFavoriteArtists;
+}
+
+const createUserFavoriteTracks = (userIds, tracks) => {
+  const userFavorite = [];
+  userIds.forEach((user) => {
+    const randomNumOfTracks = Math.floor(Math.random() * 3) + 2;
+    const shuffleTracks = tracks.sort(() => 0.5 - Math.random());
+    const selected = shuffleTracks.slice(0, randomNumOfTracks);
+    selected.forEach((track) => {
+      let date = randomDate();
+      userFavorite.push({
+        createdAt: date,
+        updatedAt: date,
+        TrackId: track.id,
+        UserId: user.id
+      });
+    });
+  });
+  return userFavorite;
+}
+
+const createUserFavoriteAlbums = (userIds, albums) => {
+  const userFavorite = [];
+  userIds.forEach((user) => {
+    const randomNumOfAlbums = Math.floor(Math.random() * 3) + 2;
+    const shuffleAlbums = albums.sort(() => 0.5 - Math.random());
+    const selected = shuffleAlbums.slice(0, randomNumOfAlbums);
+    selected.forEach((album) => {
+      let date = randomDate();
+      userFavorite.push({
+        createdAt: date,
+        updatedAt: date,
+        AlbumId: album.id,
+        UserId: user.id
+      });
+    });
+  });
+  return userFavorite;
+}
+
 
 exports.up = async ( queryInterface, Sequelize ) => {
   
@@ -511,10 +602,31 @@ exports.up = async ( queryInterface, Sequelize ) => {
   const pmThreadMembersDump = await createPmThreadMembers(pmThreads, follows);
   const pmThreadMembers = await queryInterface.bulkInsert({tableName: 'PM_Thread_Members'}, pmThreadMembersDump, {returning: ['PmthreadId', 'UserId']});
   console.log("these are the pm thread members ", pmThreadMembers);
+
+  const messagesDump = await createMessages(pmThreadMembers, pmThreads);
+  const messages = await queryInterface.bulkInsert({tableName: 'Messages'}, messagesDump, {returning: ['id', 'UserId', 'text']});
+  console.log("there are the messages ", messages);
+
+  const userFavoriteArtistsDump = await createUserFavoriteArtists(userIds, artists);
+  const userFavoriteArtists = await queryInterface.bulkInsert({tableName: 'User_Favorite_Artists'}, userFavoriteArtistsDump, {returning: ['UserId', 'ArtistId']});
+  console.log("user favorite artists ", userFavoriteArtists);
+
+  const userFavoriteTracksDump = await createUserFavoriteTracks(userIds, tracks);
+  const userFavoriteTracks = await queryInterface.bulkInsert({tableName: 'User_Favorite_Tracks'}, userFavoriteTracksDump, {returning: ['UserId', 'TrackId']});
+  console.log("user favorite tracks ", userFavoriteTracks);
+
+
+  const userFavoriteAlbumsDump = await createUserFavoriteAlbums(userIds, albums);
+  const userFavoriteAlbums = await queryInterface.bulkInsert({tableName: 'User_Favorite_Albums'}, userFavoriteAlbumsDump, {returning: ['UserId', 'AlbumId']});
+  console.log("user favorite albums ", userFavoriteAlbums);
   
 };
 
 exports.down = async ( queryInterface ) => {
+   await queryInterface.bulkDelete( 'User_Favorite_Artists', null, {} );
+   await queryInterface.bulkDelete( 'User_Favorite_Albums', null, {} );
+   await queryInterface.bulkDelete( 'User_Favorite_Tracks', null, {} );
+   await queryInterface.bulkDelete( 'Messages', null, {} );
    await queryInterface.bulkDelete( 'Pmthreads', null, {} );
    await queryInterface.bulkDelete( 'Follows', null, {} );
    await queryInterface.bulkDelete( 'PM_Thread_Members', null, {} );
