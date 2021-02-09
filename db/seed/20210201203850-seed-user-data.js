@@ -289,10 +289,12 @@ const createPostTags = (posts, tags) => {
 const createPostFavoriteTracks = (favoriteTracksByAnArtistPosts, tracks) => {
   const postFavoriteTracks = [];
   for(let i = 0; i < favoriteTracksByAnArtistPosts.length; i++){
-    tracks = tracks.filter(item => item.ArtistId === favoriteTracksByAnArtistPosts[i].ArtistId);
-    let shuffledTracks = tracks.sort(() => 0.5 - Math.random());
+    console.log("iteration i", i);
+    tracksFiltered = tracks.filter(item => item.ArtistId === favoriteTracksByAnArtistPosts[i].ArtistId);
+    let shuffledTracks = tracksFiltered.sort(() => 0.5 - Math.random());
     let selected = shuffledTracks.slice(0, 2);
     for(let j = 0; j < selected.length-1; j++){
+      console.log("iteration j", j);
       let date = new Date();
       postFavoriteTracks.push({
         TrackId: selected[j].id,
@@ -337,13 +339,14 @@ const createProfiles = (userIds) => {
 }
 
 const createPmThreads = (userIds) => {
+  console.log("userIds in pm threads", userIds[0]);
   const pmThreads = [];
   for(let i = 0; i < userIds.length *3; i++){
     const randomUserIndex = Math.floor(Math.random() * userIds.length) + 1;
     let date = new Date();
     pmThreads.push({
       title: faker.lorem.words(),
-      moderator: userIds[randomUserIndex].id,
+      moderator: userIds[randomUserIndex-1].id,
       createdAt: date,
       updatedAt: date
     })
@@ -406,7 +409,7 @@ exports.up = async ( queryInterface, Sequelize ) => {
   console.log("these are the post tags ", postTags);
 
   const PmThreadDump = await createPmThreads(userIds);
-  const pmThreads = await queryInterface.bulkInsert({tableName: 'Pmthreads'}, postTagsDump, {returning: ['id']});
+  const pmThreads = await queryInterface.bulkInsert({tableName: 'Pmthreads'}, PmThreadDump, {returning: ['id']});
   console.log("these are the pm threads ", pmThreads);
 
 };
