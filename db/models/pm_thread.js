@@ -4,10 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     title: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    moderator: {
-      type: DataTypes.INTEGER,
-    },
+    }
   }, {});
 
   Pmthread.associate = function(models){

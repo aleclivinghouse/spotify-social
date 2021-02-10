@@ -16,8 +16,58 @@ function randomDate(){
       return new Date(randomValueBetween(date2,date1));
   } else{
       return new Date(randomValueBetween(date1, date2));
-
   }
+}
+
+const createImages = (artists, albums, tracks) => {
+  const images = [];
+  artistList.forEach((a) => {
+    let date = randomDate();
+    const artistForId = artists.filter(artist => artist.spotify_id === a.id);
+    const artistId = artistForId.id;
+    console.log("this is the images ", a.images);
+    const imageArray = a.images;
+    if(imageArray){
+    imageArray.forEach((image) => {
+      console.log("this is the url ", image.url);
+    if(image.url !== null){
+      images.push({
+        href: image.url,
+        height: image.height,
+        width: image.width,
+        ArtistId: artistId,
+        createdAt: date,
+        updatedAt: date
+      });
+     }
+    });
+   }
+  });
+
+  albumList.forEach((a) => {
+    let date = randomDate();
+    const albumForId = albums.filter(album => album.spotify_id === a.id);
+    const albumId = albumForId.id;
+    const imageArray = a.images;
+    console.log("this is the image array ", imageArray);
+    if(imageArray){
+    imageArray.forEach((image) => {
+      console.log("this is the url ", image.url);
+      if(image.url !== null){
+      images.push({
+        href: image.url,
+        height: image.height,
+        width: image.width,
+        AlbumId: albumId,
+        createdAt: date,
+        updatedAt: date
+      });
+    }
+    });
+   }
+  });
+
+  return images;
 }
 
 const createArtists = () => {
@@ -83,7 +133,7 @@ const createAlbums = (artistObj) => {
 
 const createTracks = (albumObj) => {
   const tracks = [];
-  let date = new Date();
+  let date = randomDate();
   for(let i=0; i < trackList.length; i++){
     //if the track album_id matches the albumObj id
     //add the track with the id and the artist id
@@ -94,6 +144,7 @@ const createTracks = (albumObj) => {
         title: trackList[i].name,
         track_number: trackList[i].track_number,
         href: trackList[i].href,
+        preview_url: trackList[i].preview_url,
         popularity: popularity,
         external_url: trackList[i].external_urls.spotify,
         release_date: trackList[i].release_date,
@@ -585,44 +636,44 @@ exports.up = async ( queryInterface, Sequelize ) => {
 
   const tagsDump = await createTags();
   let tags = await queryInterface.bulkInsert({tableName: 'Tags'}, tagsDump, {returning: ['id', 'title']});
-  console.log("these are the tags ", tags);
   
   const postTagsDump = await createPostTags(posts, tags);
   const postTags = await queryInterface.bulkInsert({tableName: 'Post_Tags'}, postTagsDump, {returning: ['PostId', 'TagId']});
-  console.log("these are the post tags ", postTags);
 
   const PmThreadDump = await createPmThreads(userIds);
   const pmThreads = await queryInterface.bulkInsert({tableName: 'Pmthreads'}, PmThreadDump, {returning: ['id']});
-  console.log("these are the pm threads ", pmThreads);
 
   const followsDump = await createFollows(userIds);
   const follows = await queryInterface.bulkInsert({tableName: 'Follows'}, followsDump, {returning: ['followerId', 'being_followedId']});
-  console.log("these are the follows ", follows);
   // //we will do this once following and followers is seedeed
   const pmThreadMembersDump = await createPmThreadMembers(pmThreads, follows);
   const pmThreadMembers = await queryInterface.bulkInsert({tableName: 'PM_Thread_Members'}, pmThreadMembersDump, {returning: ['PmthreadId', 'UserId']});
-  console.log("these are the pm thread members ", pmThreadMembers);
 
   const messagesDump = await createMessages(pmThreadMembers, pmThreads);
   const messages = await queryInterface.bulkInsert({tableName: 'Messages'}, messagesDump, {returning: ['id', 'UserId', 'text']});
-  console.log("there are the messages ", messages);
 
   const userFavoriteArtistsDump = await createUserFavoriteArtists(userIds, artists);
   const userFavoriteArtists = await queryInterface.bulkInsert({tableName: 'User_Favorite_Artists'}, userFavoriteArtistsDump, {returning: ['UserId', 'ArtistId']});
-  console.log("user favorite artists ", userFavoriteArtists);
+
 
   const userFavoriteTracksDump = await createUserFavoriteTracks(userIds, tracks);
   const userFavoriteTracks = await queryInterface.bulkInsert({tableName: 'User_Favorite_Tracks'}, userFavoriteTracksDump, {returning: ['UserId', 'TrackId']});
-  console.log("user favorite tracks ", userFavoriteTracks);
+
 
 
   const userFavoriteAlbumsDump = await createUserFavoriteAlbums(userIds, albums);
   const userFavoriteAlbums = await queryInterface.bulkInsert({tableName: 'User_Favorite_Albums'}, userFavoriteAlbumsDump, {returning: ['UserId', 'AlbumId']});
   console.log("user favorite albums ", userFavoriteAlbums);
+
+  const imagesDump = await createImages(artists, albums, tracks);
+  const images = await queryInterface.bulkInsert({tableName: 'Images'}, imagesDump, {returning: ['href', 'id', 'height', 'width']});
+  console.log("these are the images ", images);
+
   
 };
 
 exports.down = async ( queryInterface ) => {
+   await queryInterface.bulkDelete( 'Images', null, {} );
    await queryInterface.bulkDelete( 'User_Favorite_Artists', null, {} );
    await queryInterface.bulkDelete( 'User_Favorite_Albums', null, {} );
    await queryInterface.bulkDelete( 'User_Favorite_Tracks', null, {} );

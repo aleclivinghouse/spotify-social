@@ -29,6 +29,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      preview_url: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       release_date: {
         type: Sequelize.STRING,
         allowNull: true

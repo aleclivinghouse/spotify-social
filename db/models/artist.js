@@ -33,6 +33,8 @@ module.exports = (sequelize, DataTypes) => {
       Artist.belongsToMany(models.User, { through: 'User_Favorite_Artists'});
       Artist.hasMany(models.Album);
       Artist.hasMany(models.Track);
+      Artist.belongsTo(User_Favorite_Artist);
+      Artist.belongsTo(Artist_Genre);
       Artist.belongsToMany(models.Genre, { through: 'Artist_Genres'});
       Artist.hasMany(models.Post);
       Artist.hasMany(models.Image);

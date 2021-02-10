@@ -19,6 +19,8 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function(models){
     User.hasOne(models.Profile);
     User.hasMany(models.Notification);
+    User.belongsTo(User_Favorite_Album);
+    User.belongsTo(User_Favorite_Artist);
     User.belongsToMany(models.Artist, { through: 'User_Favorite_Artists'});
     User.belongsToMany(models.Album, { through: 'User_Favorite_Albums' });
     User.belongsToMany(models.Track, { through: 'User_Favorite_Tracks' });

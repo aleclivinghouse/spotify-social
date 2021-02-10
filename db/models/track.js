@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    preview_url: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     external_url: {
       type: DataTypes.STRING,
       allowNull: false
@@ -41,9 +45,9 @@ module.exports = (sequelize, DataTypes) => {
     Track.belongsTo(models.Artist);
     Track.belongsTo(models.Album);
     Track.belongsToMany(models.Genre, { through: 'Track_Genres'});
-    Track.belongsToMany(models.FavPost, { as: "posts", through: 'Favorite_Tracks_By_An_Artist_Post'});
     Track.hasMany(models.Image);
     Track.hasMany(models.Post);
+    Track.belongsTo(models.Post_Favorite_Track);
   }
   return Track;
 };

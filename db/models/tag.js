@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
 
   Tag.associate = function(models){
+    Tag.belongsTo(models.Post_Tag);
     Tag.belongsToMany(models.Post,{ through: 'Post_Tags'});
     Tag.belongsToMany(models.Favorite_Tracks_By_An_Artist_Post,{ through: 'Post_Favorite_Tags'});
   }

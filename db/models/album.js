@@ -40,6 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     Album.associate = function(models){
       Album.belongsToMany(models.User, { through: 'User_Favorite_Albums'});
       Album.belongsTo(models.Artist);
+      Album.belongsTo(User_Favorite_Albums);
       Album.hasMany(models.Track);
       Album.belongsToMany(models.Genre, { through: 'Album_Genres'});
       Album.hasMany(models.Post);

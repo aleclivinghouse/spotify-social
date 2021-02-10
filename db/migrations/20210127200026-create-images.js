@@ -8,10 +8,16 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      text: {
+      href: {
         type: Sequelize.STRING,
-        allowNull: false
-        },
+        allowNull: true
+      },
+      height: {
+        type: Sequelize.INTEGER,
+      },
+     width: {
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
