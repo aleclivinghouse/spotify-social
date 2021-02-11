@@ -4,8 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     }, {});
   
     Follow.associate = function(models){
-    Follow.belongsTo(models.User, {as: 'follower'});
-    Follow.belongsTo(models.User, {as: 'being_followed'});
+    Follow.belongsTo(models.User, {as: 'follower', foreignKey: 'being_followedId'});
+    Follow.belongsTo(models.User, {as: 'being_followed', foreignKey: 'followerId'});
     }
     return Follow;
   };
