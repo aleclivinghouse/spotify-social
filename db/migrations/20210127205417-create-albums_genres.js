@@ -2,6 +2,12 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Album_Genres', {
+       id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -9,14 +15,6 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      AlbumId: {
-        type: Sequelize.INTEGER,
-        primaryKey: true
-      },
-      GenreId: {
-        type: Sequelize.INTEGER,
-        primaryKey: true
       }
     });
   },

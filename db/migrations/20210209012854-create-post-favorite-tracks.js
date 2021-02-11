@@ -10,14 +10,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      TrackId: {
-        type: Sequelize.INTEGER,
-        primaryKey: true
-      },
-      Favorite_Tracks_By_An_Artist_PostId: {
-        type: Sequelize.INTEGER,
-        primaryKey: true
-      }
+      // TrackId: {
+      //   type: Sequelize.INTEGER,
+      //   primaryKey: true
+      // },
+      // Favorite_Tracks_By_An_Artist_PostId: {
+      //   type: Sequelize.INTEGER,
+      //   primaryKey: true
+      // }
     });
   },
   down: (queryInterface, Sequelize) => {

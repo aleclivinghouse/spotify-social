@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const passport = require("./config/passport");
 const path = require('path');
 const dotenv = require('dotenv');
-const users = require("./routes/api/users");
+const auth = require("./routes/api/auth");
 const tracks = require("./routes/api/tracks");
 const albums = require("./routes/api/albums");
 const Sequelize = require('sequelize');
@@ -46,23 +46,21 @@ app.use(passport.session());
 //get all of a users friends
 const Op = Sequelize.Op;
 
-db.User.findAll().then((users) => {
+db.User.findAll({ 
+  include: [
+    {
+      //follower is all other users our user is following
+      model: db.Follow, as: "follower"
+    }
+  ]
+}).then((users) => {
   console.log("alert these are the users ");
   console.log(users);
 });
 
-db.Artist.findAll().then((users) => {
-  console.log("alert these are the artists ");
-  console.log(users);
-});
-
-db.Album.findAll().then((users) => {
-  console.log("alert these are the albums ");
-  console.log(users);
-});
 
 app.use(resolveCrossDomain);
-app.use("/api/users", users);
+app.use("/api/auth", auth);
 app.use("/api/tracks", tracks);
 app.use("/api/albums", albums);
 

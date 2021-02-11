@@ -1,18 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
     const Album_Genre = sequelize.define('Album_Genre', {
-      AlbumId: {
-        type: DataTypes.INTEGER,
-        primaryKey: true
-      },
-      GenreId: {
-        type: DataTypes.INTEGER,
-        primaryKey: true
-      }
+      id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false}
     }, {});
   
     Album_Genre.associate = function(models){
-      Album_Genre.hasMany(models.Album);
-      Album_Genre.hasMany(models.Genre);
+      Album_Genre.belongsTo(models.Album);
+      Album_Genre.belongsTo(models.Genre);
     }
     return Album_Genre;
   };

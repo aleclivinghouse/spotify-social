@@ -17,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
 
   Notification.associate = function(models){
     Notification.belongsTo(models.User);
-    Notification.belongsTo(models.User);
   }
   return Notification;
 };

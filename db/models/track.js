@@ -41,13 +41,15 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
 
   Track.associate = function (models) {
-    Track.belongsToMany(models.User, { through: 'User_Favorite_Tracks'});
+    // Track.belongsToMany(models.User, { through: 'User_Favorite_Tracks'});
     Track.belongsTo(models.Artist);
     Track.belongsTo(models.Album);
-    Track.belongsToMany(models.Genre, { through: 'Track_Genres'});
+    // Track.belongsToMany(models.Genre, { through: 'Track_Genres'});
     Track.hasMany(models.Image);
     Track.hasMany(models.Post);
-    Track.belongsTo(models.Post_Favorite_Track);
+    Track.hasMany(models.Post_Favorite_Track);
+    Track.hasMany(models.User_Favorite_Track);
+    Track.hasMany(models.Track_Genre);
   }
   return Track;
 };

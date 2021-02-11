@@ -647,7 +647,7 @@ exports.up = async ( queryInterface, Sequelize ) => {
   const follows = await queryInterface.bulkInsert({tableName: 'Follows'}, followsDump, {returning: ['followerId', 'being_followedId']});
   // //we will do this once following and followers is seedeed
   const pmThreadMembersDump = await createPmThreadMembers(pmThreads, follows);
-  const pmThreadMembers = await queryInterface.bulkInsert({tableName: 'PM_Thread_Members'}, pmThreadMembersDump, {returning: ['PmthreadId', 'UserId']});
+  const pmThreadMembers = await queryInterface.bulkInsert({tableName: 'Pm_Thread_Members'}, pmThreadMembersDump, {returning: ['PmthreadId', 'UserId']});
 
   const messagesDump = await createMessages(pmThreadMembers, pmThreads);
   const messages = await queryInterface.bulkInsert({tableName: 'Messages'}, messagesDump, {returning: ['id', 'UserId', 'text']});
@@ -680,7 +680,7 @@ exports.down = async ( queryInterface ) => {
    await queryInterface.bulkDelete( 'Messages', null, {} );
    await queryInterface.bulkDelete( 'Pmthreads', null, {} );
    await queryInterface.bulkDelete( 'Follows', null, {} );
-   await queryInterface.bulkDelete( 'PM_Thread_Members', null, {} );
+   await queryInterface.bulkDelete( 'Pm_Thread_Members', null, {} );
    await queryInterface.bulkDelete( 'Tags', null, {} );
    await queryInterface.bulkDelete( 'Post_Tags', null, {} );
    await queryInterface.bulkDelete( 'Tags', null, {} );

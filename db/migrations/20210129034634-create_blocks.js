@@ -2,6 +2,12 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Blocks', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -9,14 +15,6 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      blockerId: {
-        type: Sequelize.INTEGER,
-        primaryKey: true
-      },
-      being_blockedIId: {
-        type: Sequelize.INTEGER,
-        primaryKey: true
       }
     });
   },

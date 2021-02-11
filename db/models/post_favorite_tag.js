@@ -1,18 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
     const Post_Favorite_Tag = sequelize.define('Post_Favorite_Tag', {
-      TrackId: {
-        type: DataTypes.INTEGER,
-        primaryKey: true
-      },
-      Favorite_Tracks_By_An_Artist_PostId: {
-        type: DataTypes.INTEGER,
-        primaryKey: true
-      }
+      id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false}
     }, {});
   
     Post_Favorite_Tag.associate = function(models){
-      Post_Favorite_Tag.hasMany(models.Favorite_Tracks_By_An_Artist_Post);
-      Post_Favorite_Tag.hasMany(models.Tag);
+      Post_Favorite_Tag.belongsTo(models.Favorite_Tracks_By_An_Artist_Post);
+      Post_Favorite_Tag.belongsTo(models.Tag);
     }
     return Post_Favorite_Tag;
   };

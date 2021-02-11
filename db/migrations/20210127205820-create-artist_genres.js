@@ -2,6 +2,12 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Artist_Genres', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -10,14 +16,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      ArtistId: {
-        type: Sequelize.INTEGER,
-        primaryKey: true
-      },
-      GenreId: {
-        type: Sequelize.INTEGER,
-        primaryKey: true
-      }
     });
   },
   down: (queryInterface, Sequelize) => {

@@ -1,7 +1,13 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('PM_Thread_Members', {
+    return queryInterface.createTable('Pm_Thread_Members', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -9,18 +15,10 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      PmthreadId: {
-        type: Sequelize.INTEGER,
-        primaryKey: true
-      },
-      UserId: {
-        type: Sequelize.INTEGER,
-        primaryKey: true
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('PM_Thread_Members');
+    return queryInterface.dropTable('Pm_Thread_Members');
   }
 };

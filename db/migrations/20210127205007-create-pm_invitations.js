@@ -2,6 +2,12 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('PM_Invitations', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -9,18 +15,10 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      inviterId: {
-        type: Sequelize.INTEGER,
-        primaryKey: true
-      },
-      being_invitedId: {
-        type: Sequelize.INTEGER,
-        primaryKey: true
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('PM_Invitation');
+    return queryInterface.dropTable('PM_Invitations');
   }
 };

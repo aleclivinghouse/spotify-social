@@ -17,7 +17,7 @@ dotenv.config();
 // Register User
 export const registerUser = (userData, history) => dispatch => {
   axios
-    .post("/api/users/register", userData)
+    .post("/api/auth/register", userData)
     .then(res => history.push("/login"))
     .catch((err) => {
       console.log("this is an error on the client", err);
@@ -32,7 +32,7 @@ export const registerUser = (userData, history) => dispatch => {
 // Login - get user token
 export const loginUser = userData => dispatch => {
   axios
-    .post("/api/users/login", userData)
+    .post("/api/auth/login", userData)
     .then(res => {
       // Save to localStorage
 
@@ -56,7 +56,7 @@ export const loginUser = userData => dispatch => {
 
 
 export const loginSpotify = (userData) => dispatch => {
-  axios.post("/api/users/login/spotify", userData)
+  axios.post("/api/auth/login/spotify", userData)
     .then(res => {
       // Save to localStorage
       //Set token to localStorage
@@ -74,7 +74,7 @@ export const loginSpotify = (userData) => dispatch => {
 
 
 export const setLandingToken = landingToken => dispatch => {
-  axios.get("/api/users/landing")
+  axios.get("/api/auth/landing")
     .then((res) => {
       const { token } = res.data;
       localStorage.setItem("landingToken", token);

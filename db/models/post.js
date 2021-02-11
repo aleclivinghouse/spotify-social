@@ -32,10 +32,10 @@ module.exports = (sequelize, DataTypes) => {
     Post.belongsTo(models.User);
     Post.belongsTo(models.Album);
     Post.belongsTo(models.Track);
-    Post.belongsTo(models.Post_Tag);
+    Post.hasMany(models.Post_Tag);
     Post.hasMany(models.Postcomment);
     Post.hasMany(models.Postlike);
-    Post.belongsToMany(models.Tag, { through: 'Post_Tags'});
+    // Post.belongsToMany(models.Tag, { through: 'Post_Tags'});
   }
   return Post;
 };
