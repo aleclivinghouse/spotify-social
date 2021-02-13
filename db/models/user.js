@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     // User.belongsToMany(models.User, { as: 'Being_Invited', through: 'PM_Invitations', foreignKey: 'inviterId', onDelete: 'CASCADE'});
     User.hasMany(models.PM_Invitation);
     User.hasMany(models.Block);
-    User.hasMany(models.Post);
+    User.hasMany(models.Post, {as: 'user_post', foreignKey: 'posterId', onDelete: 'CASCADE'});
     User.hasMany(models.Postcomment);
     User.hasMany(models.Postlike);
     User.hasMany(models.Commentlike);

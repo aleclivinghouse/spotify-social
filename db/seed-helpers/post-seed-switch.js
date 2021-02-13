@@ -11,7 +11,7 @@ const postSwitch = function(type, track, user){
           post.would_recommend = null;
           post.rating = null;
           post.ArtistId = track.ArtistId;
-          post.UserId = user;
+          post.posterId = user;
           return post;
           break;
         case "recommend_a_track":
@@ -21,7 +21,7 @@ const postSwitch = function(type, track, user){
           post.TrackId = track.id;
           post.AlbumId = track.AlbumId;
           post.ArtistId = track.ArtistId;
-          post.UserId = user;
+          post.posterId = user;
           return post;
           break;
         case "rate_an_album":
@@ -32,15 +32,15 @@ const postSwitch = function(type, track, user){
           post.would_recommend = faker.random.boolean();
           post.AlbumId = track.AlbumId;
           post.ArtistId = track.ArtistId;
-          post.UserId = user;
-          return post;
+          post.posterId = user;
+          return  post;
           break;
         case "recommend_an_artist":
           post.title = faker.lorem.words();
           post.type = "recommend_an_artist"
           post.text = faker.lorem.sentence();
           post.ArtistId = track.ArtistId;
-          post.UserId = user;
+          post.posterId = user;
           return post;
           break;
       }

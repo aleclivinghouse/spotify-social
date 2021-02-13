@@ -609,7 +609,7 @@ exports.up = async ( queryInterface, Sequelize ) => {
   const tracks = await queryInterface.bulkInsert({tableName: 'Tracks'}, trackDump, {returning: ['id', 'title', 'ArtistId', 'AlbumId', 'spotify_id']});
  
   const postDump = await createPosts(tracks, userIds);
-  let posts = await queryInterface.bulkInsert({tableName: 'Posts'}, postDump, {returning: ['id', 'UserId']});
+  let posts = await queryInterface.bulkInsert({tableName: 'Posts'}, postDump, {returning: ['id', 'posterId']});
   console.log(" these are the posts length ", posts.length);
 
   const favoriteTracksByAnArtistPostDump = await createFavoriteTracksByAnArtistPost(tracks, userIds);
