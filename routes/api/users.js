@@ -19,24 +19,29 @@ router.get("/all/feed", (req,res) => {
         include: [{
             //follower is all other users our user is following
                 model: db.Follow, as: "follower",
+                separate: true,
             include: [{ 
                 model: db.User, as: "being_followed",
                     include: [{
                       model: db.Post,
-                      separate: true
+                      order: [['createdAt', 'DESC']],
+                      separate: true,
                     },
                     {
                       model: db.Postcomment,
-                      separate: true
+                      order: [['createdAt', 'DESC']],
+                      separate: true,
                     },
-                    // {
-                    //   model: db.Postlike,
-                    //   separate: true
-                    // },
-                    // {
-                    //   model: db.Commentlike,
-                    //   separate: true
-                    // }
+                    {
+                      model: db.Postlike,
+                      order: [['createdAt', 'DESC']],
+                      separate: true,
+                    },
+                    {
+                      model: db.Commentlike,
+                      order: [['createdAt', 'DESC']],
+                      separate: true,
+                    }
                   ]
                   }]
                 }]
@@ -49,5 +54,7 @@ router.get("/all/feed", (req,res) => {
         res.status(404).json(err)
      });  
 });
+
+
 
 module.exports = router;
