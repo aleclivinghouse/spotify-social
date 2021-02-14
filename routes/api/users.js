@@ -10,11 +10,13 @@ dotenv.config();
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
+const createFeeds = require('../routeHelpers').createFeeds;
+const createFeed = require('../routeHelpers').createFeed;
 
 // Spotify Strategy
 // passport.authenticate("spotify"),
 
-router.get("/all/feed", async (req,res) => {
+router.get("/feed/all", async (req,res) => {
   try{
         const query = await db.User.findAll({ 
             include: [{
@@ -55,26 +57,16 @@ router.get("/all/feed", async (req,res) => {
     return res.status(404).json({ feednotfound: "Feed not found" });
   }
 });
+// const feeds = await createFeeds(query);
 
-  const createFeeds = (query) => {
-    const userFeeds = [];
-    query.forEach((item) => {
-      item.follower.forEach((follow) => {
-        const userFeed = [];
-        userFeed.push(...follow.being_followed.Posts, ...follow.being_followed.Postcomments, ...follow.being_followed.Commentlikes, ...follow.being_followed.Postlikes);
-        userFeed.sort((a, b) => {
-          return a.createdAt - b.createdAt;
-        });
-        userFeeds.push(userFeed);
-      });
-    })
-    return userFeeds;
-  }
+  
 
-router.get("/:id/feed", async (req,res) => {
-  const userId = req.query.id;
+  //user ids to
+router.get("/feed/:id", async (req,res) => {
+  const userId = req.params.id;
+  console.log("this is the id", userId);
   db.User.findOne({ 
-      where: {id: req.query.id},
+      where: {id: userId},
       include: [{
           //follower is all other users our user is following
               model: db.Follow, as: "follower",
@@ -85,29 +77,49 @@ router.get("/:id/feed", async (req,res) => {
                     model: db.Post,
                     order: [['createdAt', 'DESC']],
                     separate: true,
+                    include:[{
+                      model: db.User
+                    }]
                   },
                   {
                     model: db.Postcomment,
                     order: [['createdAt', 'DESC']],
                     separate: true,
+                    include:[{
+                      model: db.User
+                    }]
                   },
                   {
                     model: db.Postlike,
                     order: [['createdAt', 'DESC']],
                     separate: true,
+                    include:[{
+                      model: db.User
+                    },{
+                      model: db.Post
+                    }]
                   },
                   {
                     model: db.Commentlike,
                     order: [['createdAt', 'DESC']],
                     separate: true,
+                    include:[{
+                      model: db.User
+                        },
+                        {
+                         model: db.Postcomment, 
+                         include:[{
+                          model: db.Post
+                         }]
+                        }
+                      ]
                   }
                 ]
                 }]
               },
             ]
     }).then((user) => {
-      let feed  = getFeed(users);
-      res.json(users);
+      res.json(user);
     }).catch((err) => {
       console.log("this is the error ", err);
       res.status(404).json(err)
