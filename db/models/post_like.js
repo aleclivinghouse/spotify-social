@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     Postlike.belongsTo(models.Post);
     Postlike.belongsTo(models.User); 
     Postlike.belongsTo(models.Repost); 
+    Postlike.hasMany(models.Favorite_Tracks_By_An_Artist_Post);
   }
   return Postlike;
 };

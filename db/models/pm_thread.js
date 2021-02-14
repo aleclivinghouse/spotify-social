@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Pmthread.associate = function(models){
     // Pmthread.belongsToMany(models.User, { through: 'PM_Thread_Members' });
-    Pmthread.hasMany(models.Pm_Thread_Member);
+    Pmthread.hasMany(models.PmThreadMember);
     Pmthread.hasMany(models.Message);
   }
   return Pmthread;

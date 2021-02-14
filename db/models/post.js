@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Post.associate = function(models){
     Post.belongsTo(models.Artist);
-    Post.belongsTo(models.User, {as: 'user_post', foreignKey: 'posterId', onDelete: 'CASCADE'});
+    Post.belongsTo(models.User);
     Post.belongsTo(models.Album);
     Post.belongsTo(models.Track);
     Post.hasMany(models.Post_Tag);

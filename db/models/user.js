@@ -19,11 +19,11 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function(models){
     User.hasOne(models.Profile);
     User.hasMany(models.Notification);
-    User.hasMany(models.User_Favorite_Album);
-    User.hasMany(models.User_Favorite_Artist);
-    User.hasMany(models.User_Favorite_Track);
-    User.hasMany(models.User_Favorite_Genre);
-    User.hasMany(models.Pm_Thread_Member);
+    User.hasMany(models.UserFavoriteAlbum);
+    User.hasMany(models.UserFavoriteArtist);
+    User.hasMany(models.UserFavoriteTrack);
+    User.hasMany(models.UserFavoriteGenre);
+    User.hasMany(models.PmThreadMember);
     User.hasMany(models.Follow, {as: 'follower', foreignKey: 'being_followedId', onDelete: 'CASCADE'});
     User.hasMany(models.Follow, {as: 'being_followed', foreignKey: 'followerId', onDelete: 'CASCADE'});
     User.hasMany(models.Block, {as: 'blocker', foreignKey: 'being_blockedId', onDelete: 'CASCADE'});
@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     // User.belongsToMany(models.User, { as: 'Being_Invited', through: 'PM_Invitations', foreignKey: 'inviterId', onDelete: 'CASCADE'});
     User.hasMany(models.PM_Invitation);
     User.hasMany(models.Block);
-    User.hasMany(models.Post, {as: 'user_post', foreignKey: 'posterId', onDelete: 'CASCADE'});
+    User.hasMany(models.Post);
     User.hasMany(models.Postcomment);
     User.hasMany(models.Postlike);
     User.hasMany(models.Commentlike);

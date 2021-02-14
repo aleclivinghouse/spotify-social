@@ -1,12 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
-    const Album_Genre = sequelize.define('Album_Genre', {
+    const AlbumGenre = sequelize.define('AlbumGenre', {
       id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false}
     }, {});
   
-    Album_Genre.associate = function(models){
-      Album_Genre.belongsTo(models.Album);
-      Album_Genre.belongsTo(models.Genre);
+    AlbumGenre.associate = function(models){
+      AlbumGenre.belongsTo(models.Album);
+      AlbumGenre.belongsTo(models.Genre);
     }
-    return Album_Genre;
+    return AlbumGenre;
   };
   

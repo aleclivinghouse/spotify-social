@@ -2,7 +2,7 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     // Order belongsTo Customer
     return queryInterface.addColumn(
-      'Album_Genres', // name of Source model
+      'AlbumGenres', // name of Source model
       'AlbumId', // name of the key we're adding 
       {
         type: Sequelize.INTEGER,
@@ -17,7 +17,7 @@ module.exports = {
       .then(() => {
         // Payment hasOne Order
         return queryInterface.addColumn(
-          'Album_Genres', // name of Source model
+          'AlbumGenres', // name of Source model
           'GenreId', // name of the key we're adding 
           {
             type: Sequelize.INTEGER,
@@ -35,13 +35,13 @@ module.exports = {
   down: (queryInterface, Sequelize) => {
     // remove Order belongsTo Customer
     return queryInterface.removeColumn(
-      'Album_Genres', // name of Source model
+      'AlbumGenres', // name of Source model
       'AlbumId', // name of the key we're adding 
     )
       .then(() => {
         // remove Payment hasOne Order
         return queryInterface.removeColumn(
-          'Album_Genres', // name of Source model
+          'AlbumGenres', // name of Source model
           'GenreId', // name of the key we're adding 
         );
       });

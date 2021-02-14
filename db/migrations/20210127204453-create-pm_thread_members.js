@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Pm_Thread_Members', {
+    return queryInterface.createTable('PmThreadMembers', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -19,6 +19,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Pm_Thread_Members');
+    return queryInterface.dropTable('PmThreadMembers');
   }
 };

@@ -12,10 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     // Genre.belongsToMany(models.Artist, { through: 'Artist_Genres'});
     // Genre.belongsToMany(models.Track,{ through: 'Track_Genres' });
     // Genre.belongsToMany(models.Album, { through: 'Album_Genres'});
-    Genre.hasMany(models.User_Favorite_Genre);
-    Genre.hasMany(models.Artist_Genre);
-    Genre.hasMany(models.Track_Genre);
-    Genre.hasMany(models.Album_Genre);
+    Genre.hasMany(models.UserFavoriteGenre);
+    Genre.hasMany(models.ArtistGenre);
+    Genre.hasMany(models.TrackGenre);
+    Genre.hasMany(models.AlbumGenre);
   }
   return Genre;
 };

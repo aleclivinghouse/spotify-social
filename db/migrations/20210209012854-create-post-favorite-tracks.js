@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Post_Favorite_Tracks', {
+    return queryInterface.createTable('PostFavoriteTracks', {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -21,6 +21,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Post_Favorite_Tracks');
+    return queryInterface.dropTable('PostFavoriteTracks');
   }
 };

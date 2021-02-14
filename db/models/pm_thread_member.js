@@ -1,12 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
-    const Pm_Thread_Member = sequelize.define('Pm_Thread_Member', {
+    const PmThreadMember = sequelize.define('PmThreadMember', {
       id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false}
     }, {});
   
-    Pm_Thread_Member.associate = function(models){
-      Pm_Thread_Member.belongsTo(models.Pmthread);
-      Pm_Thread_Member.belongsTo(models.User);
+    PmThreadMember.associate = function(models){
+      PmThreadMember.belongsTo(models.Pmthread);
+      PmThreadMember.belongsTo(models.User);
     }
-    return Pm_Thread_Member;
+    return PmThreadMember;
   };
   

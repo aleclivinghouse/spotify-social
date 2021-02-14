@@ -11,7 +11,10 @@ module.exports = (sequelize, DataTypes) => {
 
   Repost.associate = function(models){
     Repost.belongsTo(models.Post);
-    Repost.belongsTo(models.User)
+    Repost.belongsTo(models.User);
+    Repost.hasMany(models.Postcomment);
+    Repost.hasMany(models.Postlike);
+    Repost.belongsTo(models.FavoriteTracksByAnArtistPost);
   }
   return Repost;
 };

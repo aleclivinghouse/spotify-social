@@ -47,9 +47,9 @@ module.exports = (sequelize, DataTypes) => {
     // Track.belongsToMany(models.Genre, { through: 'Track_Genres'});
     Track.hasMany(models.Image);
     Track.hasMany(models.Post);
-    Track.hasMany(models.Post_Favorite_Track);
-    Track.hasMany(models.User_Favorite_Track);
-    Track.hasMany(models.Track_Genre);
+    Track.hasMany(models.PostFavoriteTrack);
+    Track.hasMany(models.UserFavoriteTrack);
+    Track.hasMany(models.TrackGenre);
   }
   return Track;
 };

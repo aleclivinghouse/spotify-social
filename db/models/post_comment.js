@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Postcomment.associate = function(models){
     Postcomment.hasMany(models.Commentlike);
+    Postcomment.belongsTo(models.Favorite_Tracks_By_An_Artist_Post);
     Postcomment.belongsTo(models.User);
     Postcomment.belongsTo(models.Post);
     Postcomment.belongsTo(models.Repost);

@@ -1,12 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
-    const Post_Tag = sequelize.define('Post_Tag', {
+    const PostTag = sequelize.define('PostTag', {
       id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false}
     }, {});
   
-    Post_Tag.associate = function(models){
-      Post_Tag.belongsTo(models.Post);
-      Post_Tag.belongsTo(models.Tag);
+    PostTag.associate = function(models){
+      PostTag.belongsTo(models.Post);
+      PostTag.belongsTo(models.Tag);
     }
-    return Post_Tag;
+    return PostTag;
   };
   
