@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     // User.belongsToMany(models.User, { as: 'Follower', through: 'Follows', foreignKey: 'being_followedId', onDelete: 'CASCADE'});
     // User.belongsToMany(models.User, { as: 'Inviter', through: 'PM_Invitations', foreignKey: 'being_invitedId', onDelete: 'CASCADE'});
     // User.belongsToMany(models.User, { as: 'Being_Invited', through: 'PM_Invitations', foreignKey: 'inviterId', onDelete: 'CASCADE'});
-    User.hasMany(models.PM_Invitation);
+    User.hasMany(models.PMInvitation);
     User.hasMany(models.Block);
     User.hasMany(models.Post);
     User.hasMany(models.Postcomment);

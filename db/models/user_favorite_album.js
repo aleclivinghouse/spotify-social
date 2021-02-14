@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
       id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false}
     }, {});
   
-    User_Favorite_Album.associate = function(models){
+    UserFavoriteAlbum.associate = function(models){
         UserFavoriteAlbum.belongsTo(models.User);
         UserFavoriteAlbum.belongsTo(models.Album);
     }

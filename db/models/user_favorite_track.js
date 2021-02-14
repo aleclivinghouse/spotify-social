@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
 
     }, {});
   
-    User_Favorite_Track.associate = function(models){
+    UserFavoriteTrack.associate = function(models){
         UserFavoriteTrack.belongsTo(models.User);
         UserFavoriteTrack.belongsTo(models.Track);
     }
