@@ -44,6 +44,8 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.PMInvitation);
     User.hasMany(models.Block);
     User.hasMany(models.Post);
+    User.hasMany(models.Repost);
+    User.hasMany(models.FavoriteTracksByAnArtistPost);
     User.hasMany(models.Postcomment);
     User.hasMany(models.Postlike);
     User.hasMany(models.Commentlike);
