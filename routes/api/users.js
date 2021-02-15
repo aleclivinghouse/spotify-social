@@ -116,6 +116,7 @@ router.get("/feed/:id", async (req,res) => {
     try {
     const query = await db.User.findOne({ 
       where: {id: userId},
+      attributes: ['id', 'display_name', 'followers_count'],
       include:[
         {
         model: db.Profile

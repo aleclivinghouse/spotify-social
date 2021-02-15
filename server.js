@@ -7,12 +7,12 @@ const auth = require("./routes/api/auth");
 const users = require("./routes/api/users");
 const tracks = require("./routes/api/tracks");
 const albums = require("./routes/api/albums");
+const posts = require("./routes/api/posts");
 const Sequelize = require('sequelize');
 const  db  = require('./db/models/index');
 const util = require('util');
 // const db = require('./config/database');
 dotenv.config();
-
 const app = express();
 
 const resolveCrossDomain = function(req, res,next) {
@@ -52,6 +52,7 @@ app.use("/api/auth", auth);
 app.use("/api/users", users);
 app.use("/api/tracks", tracks);
 app.use("/api/albums", albums);
+app.use("/api/posts", posts);
 
 const port = process.env.PORT || 5000;
 
