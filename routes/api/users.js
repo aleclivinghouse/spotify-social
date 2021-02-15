@@ -65,19 +65,24 @@ router.get("/feed/all", async (req,res) => {
 router.get("/feed/:id", async (req,res) => {
   const userId = req.params.id;
   console.log("this is the id", userId);
-  db.User.findOne({ 
+
+  try {
+  const query = await db.User.findOne({ 
       where: {id: userId},
+      attributes: ['display_name', 'followers_count'],
       include: [{
           //follower is all other users our user is following
               model: db.Follow, as: "follower",
               separate: true,
           include: [{ 
               model: db.User, as: "being_followed",
+              attributes: ['id', 'display_name', 'followers_count'],
                   include: [{
                     model: db.Post,
                     order: [['createdAt', 'DESC']],
                     separate: true,
                     include:[{
+                      attributes: ['id', 'display_name', 'followers_count'],
                       model: db.User
                     }]
                   },
@@ -86,7 +91,8 @@ router.get("/feed/:id", async (req,res) => {
                     order: [['createdAt', 'DESC']],
                     separate: true,
                     include:[{
-                      model: db.User
+                      model: db.User,
+                      attributes: ['id', 'display_name', 'followers_count'],
                     }]
                   },
                   {
@@ -94,7 +100,8 @@ router.get("/feed/:id", async (req,res) => {
                     order: [['createdAt', 'DESC']],
                     separate: true,
                     include:[{
-                      model: db.User
+                      model: db.User,
+                      attributes: ['id', 'display_name', 'followers_count'],
                     },{
                       model: db.Post
                     }]
@@ -104,7 +111,8 @@ router.get("/feed/:id", async (req,res) => {
                     order: [['createdAt', 'DESC']],
                     separate: true,
                     include:[{
-                      model: db.User
+                      model: db.User,
+                      attributes: ['id', 'display_name', 'followers_count']
                         },
                         {
                          model: db.Postcomment, 
@@ -118,13 +126,14 @@ router.get("/feed/:id", async (req,res) => {
                 }]
               },
             ]
-    }).then((user) => {
-      res.json(user);
-    }).catch((err) => {
-      console.log("this is the error ", err);
-      res.status(404).json(err)
-   });  
-});
+        });
+        const feed = await createFeed(query);
+        res.json(query);
+  } catch(error){
+    console.log("this is the error ", error);
+    return res.status(404).json({ feednotfound: "Feed not found" });
+    }
+  });
 
 
 

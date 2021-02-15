@@ -5,6 +5,7 @@ const postSwitch = function(type, track, user){
     switch (type) {
         case "fire_lyric":
           post.title = faker.lorem.words();
+          post.feed_item = "post_fire_lyric",
           post.type = "fire_lyric"
           post.text = faker.lorem.sentence();
           post.lyric_annotation = faker.lorem.sentence();
@@ -16,6 +17,7 @@ const postSwitch = function(type, track, user){
           break;
         case "recommend_a_track":
           post.title = faker.lorem.words();
+          post.feed_item = "post_recommend_a_track",
           post.type = "recommend_a_track"
           post.text = faker.lorem.sentence();
           post.TrackId = track.id;
@@ -26,6 +28,7 @@ const postSwitch = function(type, track, user){
           break;
         case "rate_an_album":
           post.title = faker.lorem.words();
+          post.feed_item = "post_rate_an_album",
           post.type = "rate_an_album"
           post.text = faker.lorem.sentence();
           post.rating = faker.random.number({min: 1, max: 10, precision: 0.1});
@@ -37,7 +40,8 @@ const postSwitch = function(type, track, user){
           break;
         case "recommend_an_artist":
           post.title = faker.lorem.words();
-          post.type = "recommend_an_artist"
+          post.feed_item = "recommend_an_artist",
+          post.type = "recommend_an_artist",
           post.text = faker.lorem.sentence();
           post.ArtistId = track.ArtistId;
           post.UserId = user;

@@ -1,6 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const  FavoriteTracksByAnArtistPost = sequelize.define('FavoriteTracksByAnArtistPost', {
       id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+      feed_item: {type: DataTypes.STRING},
       title: {
           type: DataTypes.STRING,
           allowNull: false

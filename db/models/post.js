@@ -5,6 +5,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false
       },
+      feed_item: {
+        type: DataTypes.STRING,
+      },
       type: {
         type: DataTypes.STRING,
         allowNull: true

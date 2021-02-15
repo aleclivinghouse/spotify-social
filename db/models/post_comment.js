@@ -1,6 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Postcomment = sequelize.define('Postcomment', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+    feed_item: {type: DataTypes.STRING},
     text: {
       type: DataTypes.STRING,
       allowNull: false

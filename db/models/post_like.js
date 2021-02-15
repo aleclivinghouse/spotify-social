@@ -1,6 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Postlike = sequelize.define('Postlike', {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false }    
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false } ,
+    feed_item: {type: DataTypes.STRING}   
   }, {});
 
   Postlike.associate = function(models){

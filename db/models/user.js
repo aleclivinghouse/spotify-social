@@ -24,10 +24,10 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.UserFavoriteTrack);
     User.hasMany(models.UserFavoriteGenre);
     User.hasMany(models.PmThreadMember);
-    User.hasMany(models.Follow, {as: 'follower', foreignKey: 'being_followedId', onDelete: 'CASCADE'});
-    User.hasMany(models.Follow, {as: 'being_followed', foreignKey: 'followerId', onDelete: 'CASCADE'});
-    User.hasMany(models.Block, {as: 'blocker', foreignKey: 'being_blockedId', onDelete: 'CASCADE'});
-    User.hasMany(models.Block, {as: 'being_blocked', foreignKey: 'blockerId', onDelete: 'CASCADE'});
+    User.hasMany(models.Follow, {as: 'follower', foreignKey: 'followerId', onDelete: 'CASCADE'});
+    User.hasMany(models.Follow, {as: 'being_followed', foreignKey: 'being_followedId', onDelete: 'CASCADE'});
+    User.hasMany(models.Block, {as: 'blocker', foreignKey: 'blockerId', onDelete: 'CASCADE'});
+    User.hasMany(models.Block, {as: 'being_blocked', foreignKey: 'being_blockedId', onDelete: 'CASCADE'});
     // User.hasMany(models.Follow, {as: 'follower'});
     // User.hasMany(models.Follow, {as: 'being_followed'});
     // User.belongsToMany(models.Artist, { through: 'User_Favorite_Artists'});

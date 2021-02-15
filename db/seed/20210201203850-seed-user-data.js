@@ -190,6 +190,7 @@ const createFavoriteTracksByAnArtistPost = (tracks, userIds) => {
     const artist = tracks[randomTrackIndex-1].ArtistId;
     const user = userIds[randomUserIndex-1].id;
     posts.push({
+      feed_item: "favorite_tracks_by_an_artist_post",
       title:  faker.lorem.words(),
       text:  faker.lorem.sentence(),
       UserId: user,
@@ -227,6 +228,7 @@ const createReposts = (posts, favoriteTracksByAnartistPosts, userIds) => {
       });
     } else {
       reposts.push({
+        feed_item: "repost",
         title:  faker.lorem.sentence(),
         text:  faker.lorem.sentence(),
         UserId: otherUserIds[randomUserIndex-1].id,
@@ -254,6 +256,7 @@ const createComments = (posts, reposts, favoriteTracksByAnArtistPosts, userIds) 
     const randomUserIndex = Math.floor(Math.random() * userIds.length) + 1;
     if(randomType !== 3 && randomType !== 5){
       comments.push({
+        feed_item: "post_comment",
         text: faker.lorem.sentence(),
         UserId: userIds[randomUserIndex-1].id,
         PostId: posts[randomPostIndex-1].id,
@@ -262,6 +265,7 @@ const createComments = (posts, reposts, favoriteTracksByAnArtistPosts, userIds) 
       })
     }else if(randomType !== 5){
       comments.push({
+        feed_item: "post_comment",
         text: faker.lorem.sentence(),
         UserId: userIds[randomUserIndex-1].id,
         FavoriteTracksByAnArtistPostId: favoriteTracksByAnArtistPosts[randomTracksByAnArtistPostIndex-1].id,
@@ -270,6 +274,7 @@ const createComments = (posts, reposts, favoriteTracksByAnArtistPosts, userIds) 
       })
     }else {
       comments.push({
+        feed_item: "post_comment",
         text: faker.lorem.sentence(),
         UserId: userIds[randomUserIndex-1].id,
         RepostId: reposts[randomRepostIndex-1].id,
@@ -293,6 +298,7 @@ const createPostLikes = (posts, reposts, favoriteTracksByAnArtistPosts, userIds)
     const randomType =  Math.floor(Math.random() * 5) + 1;
     if(randomType !== 3 && randomType !== 5){
       postLikes.push({
+        feed_item: "post_like",
         UserId: userIds[randomUserIndex-1].id,
         PostId: posts[ randomPostIndex-1].id,
         createdAt: date,
@@ -300,6 +306,7 @@ const createPostLikes = (posts, reposts, favoriteTracksByAnArtistPosts, userIds)
       })
     } else if(randomType !==5){
       postLikes.push({
+        feed_item: "post_like",
         UserId: userIds[randomUserIndex-1].id,
         FavoriteTracksByAnArtistPostId: favoriteTracksByAnArtistPosts[randomTracksByAnArtistPostIndex-1].id,
         createdAt: date,
@@ -307,6 +314,7 @@ const createPostLikes = (posts, reposts, favoriteTracksByAnArtistPosts, userIds)
       })
     } else {
       postLikes.push({
+        feed_item: "post_like",
         UserId: userIds[randomUserIndex-1].id,
         RepostId: reposts[randomRepostIndex-1].id,
         createdAt: date,
@@ -324,6 +332,7 @@ const createCommentLikes = (comments, userIds) => {
     const randomUserIndex = Math.floor(Math.random() * userIds.length) + 1;
     let date = randomDate();
     commentLikes.push({
+      feed_item: "comment_like",
       UserId: userIds[randomUserIndex-1].id,
       PostcommentId: comments[ randomCommentIndex-1].id,
       createdAt: date,
