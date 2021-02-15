@@ -11,6 +11,7 @@ dotenv.config();
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 const createFeed = require('../routeHelpers').createFeed;
+const createProfilePageData = require('../routeHelpers').createProfilePageData;
 
 
  //users feed
@@ -110,37 +111,32 @@ router.get("/feed/:id", async (req,res) => {
   });
 
   //user activity
-  router.get("/profile/:id", async (req,res) => {
+  router.get("/profile/activity/:id", async (req,res) => {
     const userId = req.params.id;
     try {
     const query = await db.User.findOne({ 
       where: {id: userId},
       include:[
         {
-        model: db.Profile,
-        separate: true
+        model: db.Profile
         },
         {
           model: db.UserFavoriteAlbum,
-          separate: true,
           include:[{
-            model: db.Album,
-            separate: true
+            model: db.Album
           }]
         },{
           model: db.UserFavoriteArtist,
           separate: true,
           include:[{
-            model: db.Artist,
-            separate: true
+            model: db.Artist
           }]
         },
         {
           model: db.UserFavoriteTrack,
           separate: true,
           include:[{
-            model: db.Track,
-            separate: true
+            model: db.Track
           }]
         },
         {
@@ -158,10 +154,19 @@ router.get("/feed/:id", async (req,res) => {
         {
           model: db.Commentlike,
           separate: true
+        },
+        {
+          model: db.Repost,
+          separate: true
+        },
+        {
+          model: db.FavoriteTracksByAnArtistPost,
+          separate: true
         }
-    ]
-      
-    });
+    ] 
+  });
+        const profilePageData = await createProfilePageData(query);
+        res.json(profilePageData);
 
    }catch(error){
     console.log("this is the error ", error);
