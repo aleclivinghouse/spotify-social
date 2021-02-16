@@ -220,6 +220,7 @@ const createReposts = (posts, favoriteTracksByAnartistPosts, userIds) => {
     if(randomType === 4){
       reposts.push({
         title:  faker.lorem.sentence(),
+        feed_item: "repost",
         text:  faker.lorem.sentence(),
         UserId: otherUserIds[randomUserIndex-1].id,
         PostId: posts[randomPostIndex-1].id,
