@@ -154,6 +154,76 @@ router.get("/repost/:id", async (req, res) => {
     }
 });
 
+router.post("/post/:userId", async (req, res) => {
+    const userId = req.params.userId;
+    const {title, feed_item, type, text, lyric_annotation, would_recommend, rating, artist, album, track} = req.body;
+    let idsObj = {};
+    console.log("this is the track ", track);
+    try{
+      if(artist.id){
+          const theArtist = await db.Artist.findOrCreate({
+            where: {spotify_id: artist.id},
+            defaults: {
+             spotify_id: artist.spotify_id,
+             name: artist.name,
+             href: artist.href,
+             external_url: artist.external_url,
+             followers_count: artist.followers_count
+            }
+          });
+          console.log("this is theArtist ", theArtist.toJSON());
+          idsObj.artistId = theArtist.toJSON().id;
+      }
+      if(track.id){
+          const theTrack = await db.Track.findOrCreate({
+            where: {spotify_id: track.id},
+            defaults: {
+             spotify_id: track.spotify_id,
+             tile: track.title,
+             href: track.href,
+             external_url: track.external_url,
+             preview_url: track.preview_url,
+             followers_count: artist.followers_count
+            }
+          });
+          console.log("this is theTrack ", theTrack);
+          idsObj.trackId = theTrack.toJSON().id;
+      }
+      if(album.id){
+        const theAlbum = await db.Album.findOrCreate({
+          where: {spotify_id: album.id},
+          defaults: {
+           spotify_id: album.spotify_id,
+           tile: album.title,
+           href: track.href,
+           external_url: track.external_url,
+           preview_url: track.preview_url,
+           release_date: track.release_date,
+           followers_count: artist.followers_count
+          }
+        });
+        console.log("this is theAlbum ", theAlbum);
+        idsObj.albumId = theAlbum.toJSON().id;
+    }
+      const post = await db.Post.create({
+         title,
+         feed_item,
+         type,
+         text,
+         lyric_annotation,
+         would_recommend,
+         rating,
+         ArtistId: idsObj.artistId,
+         TrackId: idsObj.trackId,
+         AlbumId: idsObj.albumId,
+       })
+        res.json(post);
+    } catch(error){
+        console.log("there was an error ", error);
+        res.status(404).json(error)
+    }
+});
+
 
 
 module.exports = router;
